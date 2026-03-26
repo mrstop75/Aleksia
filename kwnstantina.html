@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Η Βασίλισσα Αλεξία 🦄</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+  :root{--pink:#ff6eb4;--dpink:#e91e8c;--violet:#9b59b6;--dviolet:#6c3483;--gold:#ffd700;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',cursive;background:linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%);min-height:100vh;padding:0 0 40px;overflow-x:hidden;position:relative;}
+  .deco{position:fixed;pointer-events:none;z-index:0;font-size:2rem;animation:floatDeco 8s ease-in-out infinite;opacity:.45;}
+  .deco:nth-child(1){top:5%;left:2%;font-size:2.4rem;animation-delay:0s;}
+  .deco:nth-child(2){top:12%;right:3%;font-size:1.8rem;animation-delay:1.2s;}
+  .deco:nth-child(3){top:32%;left:1%;font-size:2rem;animation-delay:2s;}
+  .deco:nth-child(4){top:48%;right:2%;font-size:2.6rem;animation-delay:.6s;}
+  .deco:nth-child(5){top:65%;left:3%;font-size:1.6rem;animation-delay:3s;}
+  .deco:nth-child(6){top:78%;right:4%;font-size:2rem;animation-delay:1.8s;}
+  .deco:nth-child(7){top:88%;left:2%;font-size:2.2rem;animation-delay:2.5s;}
+  .deco:nth-child(8){top:22%;left:46%;font-size:1.5rem;animation-delay:4s;}
+  @keyframes floatDeco{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-18px) rotate(5deg);}}
+
+  .header{position:relative;z-index:2;text-align:center;padding:24px 20px 6px;}
+  .unicorn-banner{font-size:3rem;margin-bottom:4px;}
+  .header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(255,110,180,.5));line-height:1.15;}
+  .header .tagline{color:#ffd6f0;font-size:.95rem;margin-top:5px;font-weight:700;}
+  .rainbow-bar{height:6px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);max-width:500px;margin:10px auto 0;}
+  .stars-hud{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:10px;margin:12px auto 0;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,.25);border-radius:50px;padding:7px 22px;width:fit-content;font-family:'Fredoka One',cursive;color:#fff;font-size:1.05rem;}
+  #starCount{color:var(--gold);font-size:1.3rem;}
+  .star-burst{position:fixed;pointer-events:none;z-index:999;font-size:2.5rem;animation:burstAnim .9s forwards;}
+  @keyframes burstAnim{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-80px) scale(1.8);opacity:0;}}
+  .tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 14px 0;position:relative;z-index:2;}
+  .tab-btn{padding:9px 16px;border:2px solid rgba(255,255,255,.3);border-radius:30px;font-family:'Fredoka One',cursive;font-size:.88rem;cursor:pointer;background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(4px);transition:all .2s;}
+  .tab-btn.active{background:linear-gradient(135deg,var(--pink),var(--violet));border-color:transparent;box-shadow:0 4px 18px rgba(255,110,180,.5);transform:translateY(-2px);}
+  .tab-btn:hover:not(.active){background:rgba(255,255,255,.25);}
+  .content{position:relative;z-index:2;padding:18px 14px 0;}
+  .section{display:none;}.section.active{display:block;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:960px;margin:0 auto 30px;}
+  .letter-card{background:rgba(255,255,255,.95);border-radius:18px;padding:8px 6px 10px;text-align:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .15s,box-shadow .15s;user-select:none;border:2px solid transparent;overflow:hidden;}
+  .letter-card:hover{transform:scale(1.1) rotate(-2deg);box-shadow:0 8px 22px rgba(255,110,180,.45);border-color:var(--pink);}
+  .letter-card .upper{font-family:'Fredoka One',cursive;font-size:1.9rem;color:var(--dpink);line-height:1;}
+  .letter-card .lower{font-family:'Fredoka One',cursive;font-size:1.25rem;color:var(--violet);}
+  .letter-card .lname{font-size:.63rem;color:#bbb;font-weight:700;margin-top:1px;}
+  .card-illo{font-size:2.4rem;margin-top:4px;line-height:1;display:block;}
+
+  .detail-box{max-width:500px;margin:0 auto;background:rgba(255,255,255,.97);border-radius:28px;padding:24px 26px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center;border:3px solid var(--pink);}
+  .detail-letters{font-family:'Fredoka One',cursive;font-size:4.5rem;color:var(--dpink);line-height:1;}
+  .detail-letters span{color:var(--violet);}
+  .detail-name{font-size:1rem;color:#bbb;font-weight:700;margin:3px 0 6px;}
+  .detail-illo-wrap{position:relative;width:160px;margin:0 auto 10px;cursor:pointer;}
+  .detail-illo{font-size:7rem;line-height:1;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12));transition:transform .15s;}
+  .detail-illo:hover{transform:scale(1.08);}
+  .detail-illo-badge{position:absolute;bottom:-4px;right:-4px;background:linear-gradient(135deg,var(--pink),var(--violet));border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;}
+  .detail-word{font-size:1.5rem;font-weight:800;color:#333;}
+  .detail-hint{font-size:.93rem;color:#888;margin:5px 0 16px;}
+  .back-btn{display:inline-block;margin-top:12px;background:#f0e8ff;color:var(--dviolet);border:none;border-radius:30px;padding:7px 20px;font-size:.9rem;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;}
+
+  .panel{max-width:580px;margin:0 auto;background:rgba(255,255,255,.96);border-radius:28px;padding:24px 26px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center;border:3px solid var(--violet);}
+  .panel h2{font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:1.3rem;margin-bottom:5px;}
+
+  .quiz-question{font-size:1.1rem;color:#555;font-weight:700;margin-bottom:8px;}
+  .quiz-illo-wrap{position:relative;width:fit-content;margin:6px auto 14px;cursor:pointer;}
+  .quiz-illo{font-size:7rem;line-height:1;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.1));transition:transform .15s;}
+  .quiz-illo:hover{transform:scale(1.06);}
+  .quiz-illo-badge{position:absolute;bottom:-4px;right:-4px;background:linear-gradient(135deg,var(--pink),var(--violet));border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+  .quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px;}
+  .opt-btn{background:#fdf0ff;border:3px solid #e0c8ff;border-radius:18px;padding:11px 6px;cursor:pointer;font-family:'Fredoka One',cursive;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .opt-btn:hover{background:#f5d6ff;border-color:var(--violet);transform:scale(1.04);}
+  .opt-btn.correct{background:#d4f8d4;border-color:#52c752;}
+  .opt-btn.wrong{background:#fde0e0;border-color:#f06060;}
+  .opt-btn .ol{font-size:1.8rem;color:var(--dpink);line-height:1;}
+  .opt-btn .os{font-size:1.1rem;color:var(--violet);}
+  .quiz-result{font-size:1.1rem;min-height:30px;font-weight:800;color:var(--dviolet);margin-bottom:11px;}
+  .next-btn{background:linear-gradient(135deg,var(--violet),var(--dpink));color:#fff;border:none;border-radius:30px;padding:11px 28px;font-size:.95rem;font-family:'Fredoka One',cursive;cursor:pointer;}
+  .score-bar{font-size:.9rem;color:#aaa;margin-top:8px;font-weight:700;}
+
+  .match-cols{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;}
+  .match-col{display:flex;flex-direction:column;gap:10px;}
+  .match-card{width:88px;height:70px;border-radius:14px;border:3px solid #e0c8ff;background:#fdf0ff;font-family:'Fredoka One',cursive;font-size:1.7rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;user-select:none;flex-direction:column;gap:1px;}
+  .match-card .mn{font-size:.56rem;color:#ccc;font-family:'Nunito',sans-serif;font-weight:700;}
+  .upper-card{color:var(--dpink);}.lower-card{color:var(--violet);}
+  .match-card.selected{border-color:var(--pink);background:#ffe0f5;transform:scale(1.08);}
+  .match-card.matched{border-color:#52c752;background:#d4f8d4;cursor:default;}
+  .match-card.wrong{border-color:#f06060;background:#fde0e0;}
+  .match-result{font-size:1.05rem;font-weight:800;color:var(--dviolet);min-height:24px;margin-top:4px;}
+  .new-match-btn{margin-top:10px;background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;border:none;border-radius:30px;padding:9px 24px;font-size:.95rem;font-family:'Fredoka One',cursive;cursor:pointer;}
+
+  .trace-panel{max-width:560px;margin:0 auto;background:rgba(255,255,255,.96);border-radius:28px;padding:22px 22px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center;border:3px solid var(--pink);}
+  .trace-letter-select{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:14px;}
+  .tltr{background:#fdf0ff;border:2px solid #e0c8ff;border-radius:12px;padding:5px 9px;font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--dpink);cursor:pointer;transition:all .2s;min-width:42px;}
+  .tltr:hover{border-color:var(--pink);background:#ffe0f5;}
+  .tltr.active{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;border-color:transparent;}
+  .trace-display{font-family:'Fredoka One',cursive;font-size:2.8rem;color:var(--dpink);margin-bottom:2px;}
+  .trace-display span{color:var(--violet);}
+  .trace-word{font-size:.95rem;color:#888;margin-bottom:8px;font-weight:700;}
+  .canvas-wrap{position:relative;display:inline-block;margin-bottom:8px;}
+  #traceCanvas{border-radius:20px;background:#fff8ff;border:3px dashed #e0c8ff;touch-action:none;cursor:crosshair;display:block;}
+  .ghost-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);font-family:'Fredoka One',cursive;font-size:clamp(110px,28vw,170px);color:rgba(200,160,230,0.17);pointer-events:none;user-select:none;line-height:1;}
+  .color-row{display:flex;gap:7px;align-items:center;justify-content:center;flex-wrap:wrap;}
+  .btn-color{width:32px;height:32px;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);padding:0;transition:transform .15s;}
+  .btn-color.active-color{transform:scale(1.28);box-shadow:0 0 0 3px var(--gold);}
+  .size-row{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:7px;}
+  .size-btn{width:32px;height:32px;border-radius:50%;border:3px solid #e0c8ff;background:#fdf0ff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+  .size-btn.active-size{border-color:var(--violet);background:#e0c8ff;}
+  .size-dot{background:var(--violet);border-radius:50%;}
+  .trace-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+  .trace-btn{border:none;border-radius:30px;padding:9px 20px;font-size:.9rem;font-family:'Fredoka One',cursive;cursor:pointer;transition:transform .15s;}
+  .trace-btn:hover{transform:scale(1.05);}
+  .btn-clear{background:#f0e8ff;color:var(--dviolet);}
+  .btn-star{background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;}
+
+  .speak-task-btn{display:flex;align-items:center;gap:8px;margin:0 auto 16px;background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;border:none;border-radius:30px;padding:11px 24px;font-size:1rem;font-family:'Fredoka One',cursive;cursor:pointer;box-shadow:0 4px 16px rgba(255,180,0,.4);transition:transform .15s;width:fit-content;}
+  .speak-task-btn:hover{transform:scale(1.05);}
+
+  .stars-page{max-width:560px;margin:0 auto;background:rgba(255,255,255,.96);border-radius:28px;padding:26px 28px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center;border:3px solid var(--gold);}
+  .stars-page h2{font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:1.6rem;}
+  .stars-page .big-star{font-size:3.2rem;margin:7px 0;}
+  .star-total{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--gold);}
+  .star-label{color:#aaa;font-size:.88rem;margin-bottom:16px;font-weight:700;}
+  .badges{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-top:10px;}
+  .badge{background:#f8f0ff;border-radius:14px;padding:11px 12px;border:2px solid #e0c8ff;text-align:center;min-width:96px;opacity:.35;transition:all .3s;}
+  .badge.earned{opacity:1;border-color:var(--gold);background:linear-gradient(135deg,#fff9e6,#fff0f8);box-shadow:0 4px 14px rgba(255,215,0,.3);}
+  .badge .badge-icon{font-size:1.8rem;}
+  .badge .badge-name{font-size:.75rem;font-weight:800;color:var(--dviolet);margin-top:3px;}
+  .badge .badge-req{font-size:.7rem;color:#bbb;}
+  .progress-wrap{background:#f0e8ff;border-radius:20px;height:15px;margin:13px 0 5px;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .5s;}
+  .progress-label{font-size:.85rem;color:#999;font-weight:700;}
+</style>
+</head>
+<body>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div>
+<div class="deco">💜</div><div class="deco">🌸</div>
+
+<div class="header">
+  <div class="unicorn-banner">🦄🌈🦄</div>
+  <h1>Το Βασίλειο του Αλφαβήτου</h1>
+  <p class="tagline" id="mainTagline">✨ Μάθε τα ελληνικά γράμματα & κέρδισε αστέρια, Κωνσταντίνα! ✨</p>
+  <div class="rainbow-bar"></div>
+</div>
+
+<div class="stars-hud">
+  <span style="font-size:1.4rem">⭐</span>
+  <span>Αστέρια: <span id="starCount">0</span></span>
+  <span style="font-size:1.4rem">🦄</span>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('alphabet',event)">🔤 Αλφάβητο</button>
+  <button class="tab-btn" onclick="showTab('quiz',event)">🎯 Κουίζ</button>
+  <button class="tab-btn" onclick="showTab('match',event)">🔗 Ταίριαξε</button>
+  <button class="tab-btn" onclick="showTab('trace',event)">✏️ Γράψε</button>
+  <button class="tab-btn" onclick="showTab('stars',event)">⭐ Αστέρια</button>
+</div>
+
+<div class="content">
+
+  <!-- ALPHABET -->
+  <div id="sec-alphabet" class="section active">
+    <div class="grid" id="alphaGrid"></div>
+    <div id="detailView" style="display:none">
+      <div class="detail-box">
+        <div class="detail-letters" id="dLetters"></div>
+        <div class="detail-name" id="dName"></div>
+        <div class="detail-illo-wrap" onclick="speakCurrent()">
+          <span class="detail-illo" id="dIllo"></span>
+          <div class="detail-illo-badge">🔊</div>
+        </div>
+        <div class="detail-word" id="dWord"></div>
+        <div class="detail-hint" id="dHint"></div>
+        <button class="back-btn" onclick="showGrid()">← Πίσω στο Αλφάβητο</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="sec-quiz" class="section">
+    <div class="panel">
+      <button class="speak-task-btn" onclick="speakTask('quiz')">🔊 Άκουσε τι να κάνεις!</button>
+      <div class="quiz-question">Με ποιο γράμμα αρχίζει αυτή η εικόνα;</div>
+      <div class="quiz-illo-wrap" onclick="speakQuizWord()">
+        <span class="quiz-illo" id="qIllo"></span>
+        <div class="quiz-illo-badge">🔊</div>
+      </div>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-result" id="qResult"></div>
+      <button class="next-btn" onclick="nextQuiz()">Επόμενο ➜</button>
+      <div class="score-bar" id="qScore"></div>
+    </div>
+  </div>
+
+  <!-- MATCH -->
+  <div id="sec-match" class="section">
+    <div class="panel">
+      <button class="speak-task-btn" onclick="speakTask('match')">🔊 Άκουσε τι να κάνεις!</button>
+      <h2>🔗 Ταίριαξε Κεφαλαία & Μικρά</h2>
+      <div class="match-cols">
+        <div class="match-col" id="upperCol"></div>
+        <div class="match-col" id="lowerCol"></div>
+      </div>
+      <div class="match-result" id="matchResult"></div>
+      <button class="new-match-btn" onclick="newMatchRound()">Νέος Γύρος 🔄</button>
+    </div>
+  </div>
+
+  <!-- TRACING -->
+  <div id="sec-trace" class="section">
+    <div class="trace-panel">
+      <button class="speak-task-btn" onclick="speakTask('trace')">🔊 Άκουσε τι να κάνεις!</button>
+      <div style="margin-bottom:12px">
+        <div style="font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:1.2rem;margin-bottom:7px;">Διάλεξε γράμμα:</div>
+        <div class="trace-letter-select" id="traceLetterBtns"></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px">
+        <button class="tltr active" id="traceUpper">Κεφαλαίο</button>
+        <button class="tltr" id="traceLower">Μικρό</button>
+      </div>
+      <div class="trace-display" id="traceDisplay">Α <span>α</span></div>
+      <div class="trace-word" id="traceWord"></div>
+      <div class="canvas-wrap">
+        <canvas id="traceCanvas" width="320" height="280"></canvas>
+        <div class="ghost-letter" id="ghostLetter">Α</div>
+      </div>
+      <div class="color-row" id="colorRow"></div>
+      <div class="size-row" id="sizeRow"></div>
+      <div class="trace-controls">
+        <button class="trace-btn btn-clear" onclick="clearCanvas()">🗑️ Σβήσε</button>
+        <button class="trace-btn btn-star" onclick="praiseTrace()">⭐ Μπράβο μου!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARS -->
+  <div id="sec-stars" class="section">
+    <div class="stars-page">
+      <h2 id="starsHeading">⭐ Τα Αστέρια της Κωνσταντίνας ⭐</h2>
+      <div class="big-star">🌟</div>
+      <div class="star-total" id="bigStarCount">0</div>
+      <div class="star-label">Συνολικά Αστέρια</div>
+      <div class="progress-wrap"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-label" id="progressLabel"></div>
+      <div class="badges" id="badgeGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = [
+  { l:'Α', s:'α', name:'Άλφα',    word:'Αστέρι',        illo:'⭐', tts:'Άλφα. Αστέρι.' },
+  { l:'Β', s:'β', name:'Βήτα',    word:'Βιβλίο',        illo:'📚', tts:'Βήτα. Βιβλίο.' },
+  { l:'Γ', s:'γ', name:'Γάμμα',   word:'Γάτα',          illo:'🐱', tts:'Γάμμα. Γάτα.' },
+  { l:'Δ', s:'δ', name:'Δέλτα',   word:'Δέντρο',        illo:'🌳', tts:'Δέλτα. Δέντρο.' },
+  { l:'Ε', s:'ε', name:'Έψιλον',  word:'Ελέφαντας',     illo:'🐘', tts:'Έψιλον. Ελέφαντας.' },
+  { l:'Ζ', s:'ζ', name:'Ζήτα',    word:'Ζέβρα',         illo:'🦓', tts:'Ζήτα. Ζέβρα.' },
+  { l:'Η', s:'η', name:'Ήτα',     word:'Ήλιος',         illo:'☀️', tts:'Ήτα. Ήλιος.' },
+  { l:'Θ', s:'θ', name:'Θήτα',    word:'Θάλασσα',       illo:'🌊', tts:'Θήτα. Θάλασσα.' },
+  { l:'Ι', s:'ι', name:'Ιώτα',    word:'Ιπποπόταμος',   illo:'🦛', tts:'Ιώτα. Ιπποπόταμος.' },
+  { l:'Κ', s:'κ', name:'Κάπα',    word:'Καπέλο',        illo:'🎩', tts:'Κάπα. Καπέλο.' },
+  { l:'Λ', s:'λ', name:'Λάμδα',   word:'Λεμόνι',        illo:'🍋', tts:'Λάμδα. Λεμόνι.' },
+  { l:'Μ', s:'μ', name:'Μι',      word:'Μήλο',          illo:'🍎', tts:'Μι. Μήλο.' },
+  { l:'Ν', s:'ν', name:'Νι',      word:'Νησί',          illo:'🏝️', tts:'Νι. Νησί.' },
+  { l:'Ξ', s:'ξ', name:'Ξι',      word:'Ξίφος',         illo:'⚔️', tts:'Ξι. Ξίφος.' },
+  { l:'Ο', s:'ο', name:'Όμικρον', word:'Ομπρέλα',       illo:'☂️', tts:'Όμικρον. Ομπρέλα.' },
+  { l:'Π', s:'π', name:'Πι',      word:'Παγωτό',        illo:'🍦', tts:'Πι. Παγωτό.' },
+  { l:'Ρ', s:'ρ', name:'Ρο',      word:'Ρόδα',          illo:'🎡', tts:'Ρο. Ρόδα.' },
+  { l:'Σ', s:'σ', name:'Σίγμα',   word:'Σκύλος',        illo:'🐶', tts:'Σίγμα. Σκύλος.' },
+  { l:'Τ', s:'τ', name:'Ταυ',     word:'Τρένο',         illo:'🚂', tts:'Ταυ. Τρένο.' },
+  { l:'Υ', s:'υ', name:'Ύψιλον',  word:'Υπολογιστής',   illo:'💻', tts:'Ύψιλον. Υπολογιστής.' },
+  { l:'Φ', s:'φ', name:'Φι',      word:'Φανάρι',        illo:'🚦', tts:'Φι. Φανάρι.' },
+  { l:'Χ', s:'χ', name:'Χι',      word:'Χελώνα',        illo:'🐢', tts:'Χι. Χελώνα.' },
+  { l:'Ψ', s:'ψ', name:'Ψι',      word:'Ψάρι',          illo:'🐟', tts:'Ψι. Ψάρι.' },
+  { l:'Ω', s:'ω', name:'Ωμέγα',   word:'Ώρα',           illo:'🕐', tts:'Ωμέγα. Ώρα.' },
+];
+
+const BADGES=[
+  {icon:'🌸',name:'Πρώτο Βήμα',req:5},
+  {icon:'🌈',name:'Ουράνιο Τόξο',req:15},
+  {icon:'🦋',name:'Πεταλούδα',req:30},
+  {icon:'💜',name:'Μοβ Καρδιά',req:50},
+  {icon:'🌟',name:'Λαμπερό Αστέρι',req:75},
+  {icon:'👑',name:'Βασίλισσα',req:110},
+  {icon:'🦄',name:'Μαγεία Μονόκερου',req:160},
+  {icon:'🏆',name:'Πρωταθλήτρια',req:250},
+];
+
+// Fixed child name
+const childName = 'Κωνσταντίνα';
+
+const TASK_TEXTS={
+  quiz: ()=>`Γεια σου ${childName}! Κοίτα την εικόνα και πάτα το γράμμα που αρχίζει αυτή η λέξη!`,
+  match:()=>`Γεια σου ${childName}! Ταίριαξε τα μεγάλα γράμματα με τα μικρά τους. Πάτα ένα κεφαλαίο γράμμα και μετά το μικρό του!`,
+  trace:()=>`Γεια σου ${childName}! Διάλεξε ένα γράμμα και ζωγράφισέ το με το δάχτυλό σου πάνω στο γκρίζο γράμμα!`
+};
+function speakTask(tab){ speakGreek(TASK_TEXTS[tab]()); }
+
+// ── STARS (persisted in localStorage) ──
+let stars = 0;
+function loadStars(){
+  try { const v = localStorage.getItem('alphabet_stars_konstantina'); if(v!==null) stars = parseInt(v)||0; } catch(e){}
+}
+function saveStars(){
+  try { localStorage.setItem('alphabet_stars_konstantina', stars); } catch(e){}
+}
+
+function addStars(n,x,y){
+  stars+=n; saveStars();
+  document.getElementById('starCount').textContent=stars;
+  document.getElementById('bigStarCount').textContent=stars;
+  updateBadges();
+  for(let i=0;i<Math.min(n,4);i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');el.className='star-burst';el.textContent='⭐';
+      el.style.left=(x||window.innerWidth/2)+'px';el.style.top=(y||window.innerHeight/2)+'px';
+      document.body.appendChild(el);setTimeout(()=>el.remove(),1000);
+    },i*130);
+  }
+}
+
+// ── GOOGLE TTS ──
+let currentAudio=null;
+let lastSpokenText=null;
+function stopSpeech(){
+  if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;}
+  if(window.speechSynthesis)window.speechSynthesis.cancel();
+}
+function speakGreek(text){
+  // If same text is already playing, stop it (toggle off)
+  if(currentAudio && !currentAudio.paused && lastSpokenText===text){
+    stopSpeech(); lastSpokenText=null; return;
+  }
+  stopSpeech();
+  lastSpokenText=text;
+  const url=`https://translate.google.com/translate_tts?ie=UTF-8&tl=el&client=tw-ob&q=${encodeURIComponent(text)}`;
+  const a=new Audio(url);currentAudio=a;
+  a.onended=()=>{currentAudio=null;lastSpokenText=null;};
+  a.play().catch(()=>{
+    if(!window.speechSynthesis)return;
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='el-GR';u.rate=0.8;u.pitch=1.2;
+    u.onend=()=>{lastSpokenText=null;};
+    window.speechSynthesis.speak(u);
+  });
+}
+
+// ── TABS ──
+function showTab(id,e){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if(e)e.target.classList.add('active');
+  if(id==='quiz'&&!quizInit)initQuiz();
+  if(id==='match')newMatchRound();
+  if(id==='trace')initTrace();
+}
+
+// ── BADGES ──
+function buildBadges(){
+  const g=document.getElementById('badgeGrid');
+  BADGES.forEach(b=>{
+    const d=document.createElement('div');d.className='badge';
+    d.innerHTML=`<div class="badge-icon">${b.icon}</div><div class="badge-name">${b.name}</div><div class="badge-req">${b.req} ⭐</div>`;
+    g.appendChild(d);
+  });
+  updateBadges();
+}
+function updateBadges(){
+  document.getElementById('starCount').textContent=stars;
+  document.getElementById('bigStarCount').textContent=stars;
+  const nb=BADGES.find(b=>stars<b.req);
+  const idx=nb?BADGES.indexOf(nb):BADGES.length;
+  const pr=idx>0?BADGES[idx-1].req:0;
+  const nr=nb?nb.req:BADGES[BADGES.length-1].req;
+  const pct=nb?Math.min(100,((stars-pr)/(nr-pr))*100):100;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=nb
+    ?`${nr-stars} αστέρια ακόμα για το "${nb.name}"! 💜`
+    :'🏆 Τα κέρδισες όλα! Είσαι καταπληκτική!';
+  document.querySelectorAll('.badge').forEach((el,i)=>el.classList.toggle('earned',stars>=BADGES[i].req));
+}
+
+// ── ALPHABET ──
+let currentLetter=null;
+function speakCurrent(){if(currentLetter)speakGreek(currentLetter.tts);}
+function buildGrid(){
+  const g=document.getElementById('alphaGrid');
+  DATA.forEach(d=>{
+    const c=document.createElement('div');c.className='letter-card';
+    c.innerHTML=`<div class="upper">${d.l}</div><div class="lower">${d.s}</div><div class="lname">${d.name}</div><span class="card-illo">${d.illo}</span>`;
+    c.onclick=(e)=>openDetail(d,e);
+    g.appendChild(c);
+  });
+}
+function openDetail(d,e){
+  currentLetter=d;
+  document.getElementById('alphaGrid').style.display='none';
+  document.getElementById('detailView').style.display='block';
+  document.getElementById('dLetters').innerHTML=`${d.l} <span>${d.s}</span>`;
+  document.getElementById('dName').textContent=d.name;
+  document.getElementById('dIllo').textContent=d.illo;
+  document.getElementById('dWord').textContent=d.word;
+  document.getElementById('dHint').textContent='"'+d.l+'" όπως '+d.word;
+  const rect=e?.target?.getBoundingClientRect();
+  addStars(1,rect?.left,rect?.top);
+  speakGreek(d.tts);
+}
+function showGrid(){
+  document.getElementById('alphaGrid').style.display='grid';
+  document.getElementById('detailView').style.display='none';
+  currentLetter=null;
+}
+
+// ── QUIZ ──
+let quizInit=false,quizScore=0,quizTotal=0,quizActive=false,quizCorrect=null;
+function initQuiz(){quizInit=true;nextQuiz();}
+function speakQuizWord(){if(quizCorrect)speakGreek(quizCorrect.word);}
+function nextQuiz(){
+  quizActive=true;
+  document.getElementById('qResult').textContent='';
+  quizCorrect=DATA[Math.floor(Math.random()*DATA.length)];
+  document.getElementById('qIllo').textContent=quizCorrect.illo;
+  const opts=[quizCorrect];
+  while(opts.length<4){const r=DATA[Math.floor(Math.random()*DATA.length)];if(!opts.find(o=>o.l===r.l))opts.push(r);}
+  opts.sort(()=>Math.random()-.5);
+  const container=document.getElementById('qOptions');container.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='opt-btn';
+    b.innerHTML=`<span class="ol">${o.l}</span><span class="os">${o.s}</span>`;
+    b.onclick=(ev)=>{
+      if(!quizActive)return;
+      quizActive=false;quizTotal++;
+      const rect=ev.currentTarget.getBoundingClientRect();
+      if(o.l===quizCorrect.l){
+        b.classList.add('correct');
+        const praise=`Μπράβο ${childName}!`;
+        document.getElementById('qResult').textContent=`🎉 ${praise}`;
+        quizScore++;addStars(2,rect.left+rect.width/2,rect.top);
+        speakGreek(praise+' '+quizCorrect.word+' αρχίζει με '+quizCorrect.name);
+      } else {
+        b.classList.add('wrong');
+        container.querySelectorAll('.opt-btn').forEach(btn=>{if(btn.querySelector('.ol').textContent===quizCorrect.l)btn.classList.add('correct');});
+        document.getElementById('qResult').textContent=`Ήταν το ${quizCorrect.l} — ${quizCorrect.word}!`;
+        speakGreek(quizCorrect.word+' αρχίζει με '+quizCorrect.name+'. Δοκίμασε ξανά!');
+      }
+      document.getElementById('qScore').textContent=`⭐ Σκορ: ${quizScore} / ${quizTotal}`;
+    };
+    container.appendChild(b);
+  });
+}
+
+// ── MATCH ──
+let matchSelected=null,matchPairs=[],matchDone=0;
+function newMatchRound(){
+  matchSelected=null;matchDone=0;
+  document.getElementById('matchResult').textContent='';
+  const picked=[...DATA].sort(()=>Math.random()-.5).slice(0,5);
+  matchPairs=picked;
+  renderMatch('upperCol',[...picked].sort(()=>Math.random()-.5),'upper-card',true);
+  renderMatch('lowerCol',[...picked].sort(()=>Math.random()-.5),'lower-card',false);
+}
+function renderMatch(colId,items,cls,isUpper){
+  const col=document.getElementById(colId);col.innerHTML='';
+  items.forEach(d=>{
+    const c=document.createElement('div');c.className=`match-card ${cls}`;
+    c.innerHTML=`${isUpper?d.l:d.s}<div class="mn">${d.name}</div>`;
+    c.dataset.letter=d.l;c.dataset.isUpper=isUpper?'1':'0';
+    c.onclick=(e)=>handleMatch(c,d,e);
+    col.appendChild(c);
+  });
+}
+function handleMatch(card,d,e){
+  if(card.classList.contains('matched'))return;
+  speakGreek(d.name);
+  if(!matchSelected){matchSelected=card;card.classList.add('selected');}
+  else{
+    if(matchSelected===card){card.classList.remove('selected');matchSelected=null;return;}
+    if(matchSelected.dataset.letter===card.dataset.letter&&matchSelected.dataset.isUpper!==card.dataset.isUpper){
+      matchSelected.classList.remove('selected');matchSelected.classList.add('matched');
+      card.classList.add('matched');matchSelected=null;matchDone++;
+      const rect=e.target.getBoundingClientRect();
+      addStars(1,rect.left+rect.width/2,rect.top);
+      speakGreek('Μπράβο!');
+      if(matchDone===matchPairs.length){
+        const praise=`Τα ταίριαξες όλα, ${childName}!`;
+        document.getElementById('matchResult').textContent=`🏆 ${praise}`;
+        addStars(3,window.innerWidth/2,window.innerHeight/3);
+        speakGreek(praise);
+      }
+    } else {
+      matchSelected.classList.add('wrong');card.classList.add('wrong');
+      speakGreek('Δοκίμασε ξανά!');
+      setTimeout(()=>{matchSelected.classList.remove('wrong','selected');card.classList.remove('wrong');matchSelected=null;},700);
+    }
+  }
+}
+
+// ── TRACING ──
+let traceIdx=0,drawing=false,traceColor='#e91e8c',traceSize=14,traceCase='upper';
+const COLORS=['#e91e8c','#9b59b6','#3498db','#27ae60','#e67e22','#e74c3c','#f39c12','#1abc9c'];
+const SIZES=[8,14,22];
+
+function initTrace(){
+  if(document.getElementById('traceLetterBtns').children.length>0){
+    updateGhost(); return;
+  }
+  const row=document.getElementById('traceLetterBtns');
+  DATA.forEach((d,i)=>{
+    const b=document.createElement('button');b.className='tltr'+(i===0?' active':'');
+    b.textContent=d.l;b.onclick=()=>selectTraceLetter(i,b);
+    row.appendChild(b);
+  });
+  const cr=document.getElementById('colorRow');
+  COLORS.forEach((c,i)=>{
+    const b=document.createElement('button');b.className='btn-color'+(i===0?' active-color':'');
+    b.style.background=c;
+    b.onclick=()=>{traceColor=c;document.querySelectorAll('.btn-color').forEach(x=>x.classList.remove('active-color'));b.classList.add('active-color');};
+    cr.appendChild(b);
+  });
+  const sr=document.getElementById('sizeRow');
+  SIZES.forEach((s,i)=>{
+    const b=document.createElement('button');b.className='size-btn'+(i===1?' active-size':'');
+    const dot=document.createElement('div');dot.className='size-dot';dot.style.width=s*0.7+'px';dot.style.height=s*0.7+'px';
+    b.appendChild(dot);
+    b.onclick=()=>{traceSize=s;document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active-size'));b.classList.add('active-size');};
+    sr.appendChild(b);
+  });
+  document.getElementById('traceUpper').onclick=()=>setTraceCase('upper');
+  document.getElementById('traceLower').onclick=()=>setTraceCase('lower');
+  traceCase='upper';
+  selectTraceLetter(0,row.querySelector('.tltr'));
+  setupCanvas();
+}
+
+function selectTraceLetter(i,btn){
+  traceIdx=i;
+  document.querySelectorAll('#traceLetterBtns .tltr').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const d=DATA[i];
+  document.getElementById('traceDisplay').innerHTML=`${d.l} <span>${d.s}</span>`;
+  document.getElementById('traceWord').textContent=d.illo+' '+d.word;
+  updateGhost();
+  clearCanvas();
+  speakGreek(d.tts);
+}
+function setTraceCase(c){
+  traceCase=c;
+  document.getElementById('traceUpper').classList.toggle('active',c==='upper');
+  document.getElementById('traceLower').classList.toggle('active',c==='lower');
+  updateGhost();
+  clearCanvas();
+  speakGreek(c==='upper'?DATA[traceIdx].l:DATA[traceIdx].s);
+}
+function updateGhost(){
+  document.getElementById('ghostLetter').textContent=traceCase==='upper'?DATA[traceIdx].l:DATA[traceIdx].s;
+}
+function setupCanvas(){
+  const canvas=document.getElementById('traceCanvas');
+  const ctx=canvas.getContext('2d');
+  const w=Math.min(320,canvas.parentElement.clientWidth-6);
+  canvas.width=w;canvas.height=Math.round(w*0.875);
+  canvas.style.width=w+'px';canvas.style.height=Math.round(w*0.875)+'px';
+  function pos(e){
+    const r=canvas.getBoundingClientRect();
+    const src=e.touches?e.touches[0]:e;
+    return {x:src.clientX-r.left,y:src.clientY-r.top};
+  }
+  canvas.addEventListener('mousedown',e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  canvas.addEventListener('mousemove',e=>{if(!drawing)return;draw(ctx,pos(e));});
+  canvas.addEventListener('mouseup',()=>{drawing=false;ctx.beginPath();});
+  canvas.addEventListener('mouseleave',()=>{drawing=false;ctx.beginPath();});
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;draw(ctx,pos(e));},{passive:false});
+  canvas.addEventListener('touchend',()=>{drawing=false;ctx.beginPath();});
+}
+function draw(ctx,p){
+  ctx.lineWidth=traceSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=traceColor;
+  ctx.lineTo(p.x,p.y);ctx.stroke();ctx.beginPath();ctx.moveTo(p.x,p.y);
+}
+function clearCanvas(){document.getElementById('traceCanvas').getContext('2d').clearRect(0,0,9999,9999);}
+function praiseTrace(){
+  addStars(2,window.innerWidth/2,200);
+  speakGreek(`Μπράβο ${childName}! Έγραψες το γράμμα ${DATA[traceIdx].name}! Πολύ ωραία!`);
+}
+
+// ── INIT ──
+loadStars();
+buildGrid();
+buildBadges();
+</script>
+</body>
+</html>
