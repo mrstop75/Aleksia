@@ -51,6 +51,7 @@ main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:14px 14px
 .slots,.bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0}
 .slot{min-width:44px;height:56px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--violet);border-radius:12px;background:#fdf0ff;border-bottom:4px solid #e0c8ff}
 .slot.on{background:#ffe0f5;border-color:var(--pink)}
+.slot.gap{margin-left:24px}
 .tile{width:54px;height:62px;font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--dpink);background:#fdf0ff;border:3px solid #e0c8ff;border-radius:14px;transition:all .2s}
 .tile:hover{border-color:var(--pink)}.tile.used{opacity:.3;transform:scale(.9)}.tile.hint{animation:pl .8s infinite}
 @keyframes pl{50%{transform:scale(1.15);background:#ffe0f5}}
@@ -115,7 +116,7 @@ label>input:checked+span{background:#ffe0f5;box-shadow:0 0 0 3px var(--pink)}
 
 <section id="p-math" class="panel hide" style="--c:#6b8cff">
 <h2>🔢 Μαθηματικά</h2>
-<div style="display:flex;justify-content:center;margin:10px 0"><div class="seg"><button id="mCount" onclick="setMode('count')">Μέτρημα</button><button id="mAdd" onclick="setMode('add')">Πρόσθεση +</button></div></div>
+<div style="display:flex;justify-content:center;margin:10px 0"><div class="seg"><button id="mAdd" onclick="setMode('add')">Πρόσθεση +</button><button id="mCount" onclick="setMode('count')">Μέτρημα</button></div></div>
 <div id="mQ" class="qq"></div><div id="stage" class="stage"></div>
 <div id="mWrap" class="cnt">Μέτρησες: <b id="mN">0</b></div><div id="mFb" class="fb"></div><div id="mChoices" class="nums"></div>
 <div class="foot"><span>Αριθμοί: 1 έως <b id="mLim"></b></span><button onclick="nextMath()">Επόμενο ➜</button></div></section>
@@ -129,7 +130,7 @@ label>input:checked+span{background:#ffe0f5;box-shadow:0 0 0 3px var(--pink)}
 <div style="font-size:3.4rem">📬</div><h2>Το Γραμματοκιβώτιο της Αλεξίας! 📮</h2>
 <p style="margin:8px 0;color:#666">Θέλεις να αφήσεις ένα μήνυμα, μια ευχή ή μοιράστεις μια ιδέα με την Αλεξία; Πάτησε το κουμπί για να ανοίξεις το πραγματικό της ηλεκτρονικό γραμματοκιβώτιο!</p>
 <a class="go" target="_blank" rel="noopener noreferrer" onclick="snd.ok()" href="https://docs.google.com/forms/d/e/1FAIpQLSftQvbJWGhmQDUJiOEo9lEfHGFpRau6RYgTjYwggVz_ZNmwyw/viewform">✍️ Άνοιξε το Γραμματοκιβώτιο ↗</a>
-<p style="font-size:.8rem;color:#aaa">Ασφαλές & Προσωπικό. Μόνο η Αλεξία και η οικογένειά της το διαβάζουν.</p></section>
+<p style="font-size:.8rem;color:#aaa">Ασφαλές &amp; Προσωπικό. Μόνο η Αλεξία και η οικογένειά της το διαβάζουν.</p></section>
 </main>
 
 <div id="pModal" class="modal hide"><div>
@@ -142,7 +143,7 @@ label>input:checked+span{background:#ffe0f5;box-shadow:0 0 0 3px var(--pink)}
 <h3>⚙️ Ρυθμίσεις Μαθήματος</h3>
 <form onsubmit="saveCfg(event)"><label class="f">Λέξεις (με κόμμα). Για εικόνα γράψε λέξη=🍎</label>
 <textarea id="cWords" rows="4" required></textarea>
-<small>Λέξεις χωρίς εικόνα εμφανίζονται μόνο στο «Φτιάξε τη λέξη».</small>
+<small>Λέξεις χωρίς εικόνα εμφανίζονται με 🔤. Για δύο λέξεις γράψε π.χ. το παπί=🦆</small>
 <label class="f">Μέγιστος αριθμός:</label><div class="mx"><label><input type="radio" name="mx" value="5"><span>Έως 5</span></label><label><input type="radio" name="mx" value="10"><span>Έως 10</span></label></div>
 <label class="f">Εφεδρική φωνή (αν δεν παίξει η φωνή της Google):</label><select id="cVoice"></select><small id="vNote" style="color:#e11d48"></small>
 <button type="button" class="say" style="margin-top:10px" onclick="say('Καλημέρα! Πάμε να παίξουμε!')">▶ Δοκιμή φωνής</button>
@@ -159,7 +160,7 @@ const fb=(e,t,ok)=>{e.textContent=t;e.style.color=ok?'#059669':'#e11d48'};
 
 /* ---- DATA ---- */
 // Μόνο λέξεις που έχουν σωστή εικόνα. Οι υπόλοιπες παίζουν στο «Φτιάξε τη λέξη».
-const PIC={'πατάτα':'🥔','παπί':'🦆','τόπι':'⚽','το τόπι':'⚽','αλάτι':'🧂','πίτα':'🥧','ποτό':'🥤','έλατο':'🌲'};
+const PIC={'πατάτα':'🥔','η πατάτα':'🥔','παπί':'🦆','το παπί':'🦆','τόπι':'⚽','το τόπι':'⚽','αλάτι':'🧂','το αλάτι':'🧂','πίτα':'🥧','η πίτα':'🥧','ποτό':'🥤','το ποτό':'🥤','ποτά':'🍹','έλατο':'🌲','το έλατο':'🌲','πιπίλα':'👶','η πιπίλα':'👶','λέλα':'👧','λόλα':'👩','πέτα':'🕊️','όλα':'🌍','έλα':'👋'};
 const DEF='πατάτα, παπί, τόπι, αλάτι, πιπίλα, πίτα, ποτό, έλατο, Λέλα, πέτα, όλα';
 const BADGES=[[10,'🌱','Πρώτο Βήμα'],[30,'🌈','Ουράνιο Τόξο'],[60,'🦋','Πεταλούδα'],[100,'💜','Μοβ Καρδιά'],[150,'🌟','Λαμπερό Αστέρι'],[225,'👑','Στέμμα'],[325,'🐉','Μαγικός Δράκος'],[500,'🏆','Κύπελλο Πρωταθλητή']];
 const AV=['👧','🧒','🦄','🚀','🐱','⭐','🐶','🦖'];
@@ -225,22 +226,24 @@ function chips(){const c=$('chips');c.replaceChildren();words().forEach(x=>c.app
 
 /* ---- READING ---- */
 let rw,rLock,rBag=[],lastR='';
-function nextReading(){clearTimeout(timer);rLock=false;fb($('rFb'),'');const all=words(),pic=all.filter(x=>x.e),g=$('rGrid');g.replaceChildren();
+function nextReading(){clearTimeout(timer);rLock=false;fb($('rFb'),'');const all=words(),pic=all,g=$('rGrid');g.replaceChildren();
  if(!pic.length){$('rVis').textContent='✏️';fb($('rFb'),'Πρόσθεσε εικόνα στις ρυθμίσεις: λέξη=🍎');return}
  rBag=rBag.filter(w=>pic.some(x=>x.w===w));
  if(!rBag.length){rBag=shuffle(pic.map(x=>x.w));if(rBag.length>1&&rBag[rBag.length-1]===lastR)rBag.unshift(rBag.pop())}
- lastR=rBag.pop();rw=pic.find(x=>x.w===lastR);$('rVis').textContent=rw.e;
+ lastR=rBag.pop();rw=pic.find(x=>x.w===lastR);$('rVis').textContent=rw.e||'🔤';
  shuffle([rw,...shuffle(all.filter(x=>x.w!==rw.w)).slice(0,2)]).forEach(x=>{const b=el('button','choice',x.w);
   b.onclick=()=>{if(rLock)return;
    if(x.w===rw.w){rLock=true;b.classList.add('good');win($('rFb'),rw.w);timer=setTimeout(nextReading,1600)}
    else{snd.no();b.classList.add('bad');fb($('rFb'),'Προσπάθησε πάλι! Άκουσε τη λεξούλα 🔊')}};g.append(b)})}
 
 /* ---- SPELLING ---- */
-let sw,sl=[],sa=[],tiles=[],miss=0,sLock;
-function nextSpell(){clearTimeout(timer);const a=words();sw=a[rnd(a.length)];$('sVis').textContent=sw.e||'🔤';
- sl=Array.from(sw.w.normalize('NFC').replace(/\s+/g,''));resetSpell()}
+let sw,sl=[],sg=new Set(),sa=[],tiles=[],miss=0,sLock;
+function nextSpell(){clearTimeout(timer);const a=words();
+ sw=a[rnd(a.length)];$('sVis').textContent=sw.e||'🔤';
+ const ws=sw.w.normalize('NFC').split(/\s+/);sl=Array.from(ws.join(''));sg=new Set();let n=0;ws.slice(0,-1).forEach(x=>{n+=Array.from(x).length;sg.add(n)});
+ resetSpell()}
 function resetSpell(){sa=[];miss=0;sLock=false;fb($('sFb'),'');tiles=shuffle(sl.map(c=>({c,used:false})));drawSpell()}
-function drawSpell(){const r=$('slots');r.replaceChildren();sl.forEach((c,i)=>r.append(el('div','slot'+(i<sa.length?' on':''),sa[i]||'')));
+function drawSpell(){const r=$('slots');r.replaceChildren();sl.forEach((c,i)=>r.append(el('div','slot'+(i<sa.length?' on':'')+(sg.has(i)?' gap':''),sa[i]||'')));
  const k=$('bank');k.replaceChildren();
  tiles.forEach(t=>{const b=el('button','tile'+(t.used?' used':'')+(miss>=3&&!t.used&&t.c===sl[sa.length]?' hint':''),t.c);
   b.onclick=()=>{if(t.used||sLock)return;
@@ -249,7 +252,7 @@ function drawSpell(){const r=$('slots');r.replaceChildren();sl.forEach((c,i)=>r.
    else{miss++;snd.no();drawSpell();fb($('sFb'),'Ξαναδοκίμασε! 💪')}};k.append(b)})}
 
 /* ---- MATH ---- */
-let mm='count',mt=0,mc=0,mLock;
+let mm='add',mt=0,mc=0,mLock;
 function setMode(m){mm=m;snd.boop();$('mCount').classList.toggle('on',m==='count');$('mAdd').classList.toggle('on',m==='add');
  $('mWrap').classList.toggle('hide',m!=='count');$('mQ').textContent=m==='count'?'Πάτησε κάθε εικόνα για να μετρήσεις!':'Πόσα είναι όλα μαζί;';nextMath()}
 function nextMath(){clearTimeout(timer);mc=0;mLock=false;$('mN').textContent=0;fb($('mFb'),'');$('mLim').textContent=C.max;
@@ -288,6 +291,6 @@ function saveCfg(e){e.preventDefault();C.words=$('cWords').value;if(!words().len
 
 /* ---- INIT ---- */
 $('mu').textContent=C.mute?'🔇':'🔊';
-ui();chips();tab('reading');nextReading();nextSpell();setMode('count');
+ui();chips();tab('reading');nextReading();nextSpell();setMode('add');
 if(!S.cur)openPlayer(true);
 </script></body></html>
