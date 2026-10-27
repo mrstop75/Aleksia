@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="el"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Το Σχολείο των Φίλων 🦄</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+:root{--pink:#ff6eb4;--dpink:#e91e8c;--violet:#9b59b6;--dviolet:#6c3483;--gold:#ffd700}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',cursive;font-weight:700;color:#334155;background:linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%);min-height:100vh;padding:0 0 40px;overflow-x:hidden;position:relative;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+.hide{display:none!important}
+.deco{position:fixed;pointer-events:none;z-index:0;font-size:2rem;animation:fd 8s ease-in-out infinite;opacity:.45}
+.deco:nth-child(1){top:5%;left:2%;font-size:2.4rem}.deco:nth-child(2){top:12%;right:3%;font-size:1.8rem;animation-delay:1.2s}
+.deco:nth-child(3){top:32%;left:1%;animation-delay:2s}.deco:nth-child(4){top:48%;right:2%;font-size:2.6rem;animation-delay:.6s}
+.deco:nth-child(5){top:65%;left:3%;font-size:1.6rem;animation-delay:3s}.deco:nth-child(6){top:78%;right:4%;animation-delay:1.8s}
+.deco:nth-child(7){top:88%;left:2%;font-size:2.2rem;animation-delay:2.5s}.deco:nth-child(8){top:22%;left:46%;font-size:1.5rem;animation-delay:4s}
+@keyframes fd{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+.header{position:relative;z-index:2;text-align:center;padding:24px 20px 6px}
+.unicorn-banner{font-size:3rem;margin-bottom:4px}
+h1{font-family:'Fredoka One',cursive;font-weight:400;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(255,110,180,.5));line-height:1.15}
+.tagline{color:#ffd6f0;font-size:.95rem;margin-top:5px}
+.rainbow-bar{height:6px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);max-width:500px;margin:10px auto 0}
+.hud{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:10px;margin:12px auto 0;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,.25);border-radius:50px;padding:7px 22px;width:fit-content;font-family:'Fredoka One',cursive;color:#fff;font-size:1.05rem}
+.hud b{color:var(--gold);font-size:1.3rem;font-weight:400}.hud span:first-child,#av{font-size:1.4rem}
+.topbtns{position:relative;z-index:2;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.glass{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-family:'Fredoka One',cursive;font-size:.9rem;padding:6px 18px;backdrop-filter:blur(4px)}
+main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:14px 14px 0}
+.words{max-width:580px;margin:0 auto 12px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:20px;padding:8px 12px;color:#ffd6f0;font-size:.85rem;backdrop-filter:blur(6px)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{background:rgba(255,255,255,.92);color:var(--dviolet);border-radius:12px;padding:3px 9px;font-size:.8rem}
+.tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:2px 0 16px}
+.tab{display:flex;align-items:center;gap:5px;padding:9px 16px;border:2px solid rgba(255,255,255,.3);border-radius:30px;font-family:'Fredoka One',cursive;font-size:.88rem;background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(4px);transition:all .2s}
+.tab b{font-weight:400}.tab:hover{background:rgba(255,255,255,.25)}
+.tab.on{background:linear-gradient(135deg,var(--pink),var(--violet));border-color:transparent;box-shadow:0 4px 18px rgba(255,110,180,.5);transform:translateY(-2px)}
+.panel{max-width:580px;margin:0 auto;background:rgba(255,255,255,.96);border-radius:28px;padding:24px 26px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center;border:3px solid var(--c,var(--violet))}
+.panel h2{font-family:'Fredoka One',cursive;font-weight:400;color:var(--dviolet);font-size:1.5rem}
+.qq{font-size:1.1rem;color:#555;margin-bottom:6px}
+.big{font-size:7rem;line-height:1;margin:6px 0 12px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+.say{display:inline-flex;align-items:center;gap:8px;margin:0 auto 12px;background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;border-radius:30px;padding:11px 24px;font-size:1rem;font-family:'Fredoka One',cursive;box-shadow:0 4px 16px rgba(255,180,0,.4);transition:transform .15s}
+.say:hover{transform:scale(1.05)}
+.fb{min-height:28px;margin-top:8px;font-size:1.1rem;font-weight:800}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:11px;margin-top:14px}
+.choice{padding:14px 6px;font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--dpink);background:#fdf0ff;border:3px solid #e0c8ff;border-radius:18px;transition:all .2s}
+.choice:hover{background:#f5d6ff;border-color:var(--violet);transform:scale(1.04)}
+.good{background:#d4f8d4!important;border-color:#52c752!important;color:#2d6a2d!important}
+.bad{background:#fde0e0!important;border-color:#f06060!important;color:#a33!important}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:18px;font-size:.9rem;color:#aaa}
+.foot button{background:#f0e8ff;color:var(--dviolet);border-radius:30px;padding:8px 20px;font-family:'Fredoka One',cursive;font-size:.9rem}
+.foot button:last-child{background:linear-gradient(135deg,var(--violet),var(--dpink));color:#fff}
+.slots,.bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0}
+.slot{min-width:44px;height:56px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--violet);border-radius:12px;background:#fdf0ff;border-bottom:4px solid #e0c8ff}
+.slot.on{background:#ffe0f5;border-color:var(--pink)}
+.slot.gap{margin-left:24px}
+.tile{width:54px;height:62px;font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--dpink);background:#fdf0ff;border:3px solid #e0c8ff;border-radius:14px;transition:all .2s}
+.tile:hover{border-color:var(--pink)}.tile.used{opacity:.3;transform:scale(.9)}.tile.hint{animation:pl .8s infinite}
+@keyframes pl{50%{transform:scale(1.15);background:#ffe0f5}}
+.seg{display:flex;gap:6px;background:#f0e8ff;padding:4px;border-radius:30px}
+.seg button{padding:6px 14px;border-radius:30px;font-family:'Fredoka One',cursive;font-size:.85rem;color:var(--dviolet)}
+.seg .on{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}
+.stage{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:14px 0;min-height:90px}
+.item{width:56px;height:56px;font-size:1.9rem;background:#fdf0ff;border:3px solid #e0c8ff;border-radius:16px}
+.item.t{background:#fff0b3;border-color:var(--gold);font-family:'Fredoka One',cursive;font-size:1.3rem;color:#7a4a00}
+.grp{display:flex;flex-wrap:wrap;gap:6px;background:#fdf0ff;padding:10px;border:3px solid #e0c8ff;border-radius:16px;justify-content:center}
+.em{font-size:1.9rem}.dim{opacity:.4}.eq{width:100%;font-family:'Fredoka One',cursive;font-size:3rem;color:var(--dviolet)}
+.cnt{display:inline-block;background:#fdf0ff;border:3px solid #e0c8ff;padding:3px 16px;border-radius:30px;color:var(--dviolet)}
+.nums{display:flex;gap:12px;max-width:380px;margin:12px auto 0}.nums.off{opacity:.35}
+.num{flex:1;padding:12px;font-family:'Fredoka One',cursive;font-size:1.9rem;color:#fff;background:linear-gradient(135deg,var(--violet),var(--dpink));border-radius:18px;border:3px solid transparent}
+#big{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--gold);line-height:1.1}
+.barw{height:15px;background:#f0e8ff;border-radius:20px;overflow:hidden;margin:13px 0 5px}
+.barw i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .5s}
+.bdgs{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-top:12px}
+.bdg{background:#f8f0ff;border-radius:14px;padding:11px 12px;border:2px solid #e0c8ff;min-width:96px;opacity:.35;transition:all .3s;font-size:.75rem;color:var(--dviolet)}
+.bdg.got{opacity:1;border-color:var(--gold);background:linear-gradient(135deg,#fff9e6,#fff0f8);box-shadow:0 4px 14px rgba(255,215,0,.3)}
+.bdg.next{opacity:1;border-color:var(--pink)}
+.bi{font-size:1.8rem}.bdg small{color:#bbb}
+.go{display:inline-block;margin:10px 0;padding:12px 28px;background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;border-radius:30px;font-family:'Fredoka One',cursive;font-size:1.1rem;text-decoration:none;box-shadow:0 4px 18px rgba(255,110,180,.5)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal>div{background:#fff;border-radius:28px;padding:26px 24px;max-width:360px;width:100%;max-height:92vh;overflow:auto;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);border:3px solid var(--pink)}
+.modal h3{font-family:'Fredoka One',cursive;font-weight:400;color:var(--dviolet);font-size:1.4rem;margin-bottom:6px}
+.modal small{color:#aaa;display:block}
+.modal label.f{display:block;font-size:.8rem;margin:12px 0 4px;color:var(--dviolet);text-align:left}
+input[type=text],textarea,select{width:100%;padding:11px 14px;border:3px solid #e0c8ff;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--dviolet);outline:none;text-align:center}
+textarea{font-family:'Nunito',cursive;font-size:.95rem;text-align:left}
+label>input[type=radio]{display:none}
+label>input:checked+span{background:#ffe0f5;box-shadow:0 0 0 3px var(--pink)}
+.avs,.mx{display:grid;gap:6px}.avs{grid-template-columns:repeat(4,1fr)}.mx{grid-template-columns:1fr 1fr}
+.avs span{display:block;font-size:1.8rem;padding:4px;border-radius:12px}
+.mx span{display:block;padding:8px;border:3px solid #e0c8ff;border-radius:16px;font-family:'Fredoka One',cursive}
+.act{display:flex;gap:10px;margin-top:16px;justify-content:center}
+.act button{padding:11px 22px;border-radius:30px;background:#f0e8ff;color:var(--dviolet);font-family:'Fredoka One',cursive;font-size:1rem}
+.act .p{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;padding:12px 22px;border-radius:30px;z-index:1100;font-family:'Fredoka One',cursive;font-size:1.1rem;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+</style></head>
+<body>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div><div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div><div class="deco">💜</div><div class="deco">🌸</div>
+<div id="toast" class="hide"></div>
+<div class="header"><div class="unicorn-banner">🦄🌈🦄</div><h1>Το Σχολείο των Φίλων</h1><p class="tagline" id="tag"></p><div class="rainbow-bar"></div></div>
+<div class="topbtns"><a href="index.html" class="glass" aria-label="Πίσω στην αρχική" title="Αρχική">🏰</a><button class="glass" onclick="openPlayer()">✏️ Άλλαξε όνομα (<span id="nm">?</span>)</button><button class="glass" id="mu" onclick="mute()">🔊</button><button class="glass" onclick="openCfg()">⚙️</button></div>
+<div class="hud"><span>⭐</span><span>Αστέρια: <b id="stars">0</b></span><span id="av">🦄</span></div>
+<main>
+<div class="words">📖 Οι Λέξεις Μας Σήμερα<div id="chips" class="chips"></div></div>
+<nav class="tabs" id="tabs"></nav>
+
+<section id="p-reading" class="panel" style="--c:var(--pink)">
+<div class="qq">Βρες τη σωστή λέξη για την εικόνα!</div><div id="rVis" class="big"></div>
+<button class="say" onclick="say(rw&&rw.w,rw&&rw.w)">🔊 Άκουσε τη λεξούλα</button><div id="rFb" class="fb"></div>
+<div id="rGrid" class="choices"></div>
+<div class="foot"><span></span><button onclick="nextReading()">Επόμενο ➜</button></div></section>
+
+<section id="p-spelling" class="panel hide">
+<h2>🧩 Φτιάξε τη λέξη</h2><div class="qq">Πάτα τα γράμματα με τη σωστή σειρά!</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px;margin:8px 0"><span id="sVis" style="font-size:3.4rem"></span><button class="say" style="margin:0" onclick="say(sw.w,sw.w)">🔊 Άκουσε</button></div>
+<div id="slots" class="slots"></div><div id="sFb" class="fb"></div><div id="bank" class="bank"></div>
+<div class="foot"><button onclick="resetSpell()">🗑️ Σβήσε</button><button onclick="nextSpell()">Επόμενη ➜</button></div></section>
+
+<section id="p-math" class="panel hide" style="--c:#6b8cff">
+<h2>🔢 Μαθηματικά</h2>
+<div style="display:flex;justify-content:center;margin:10px 0"><div class="seg"><button id="mAdd" onclick="setMode('add')">Πρόσθεση +</button><button id="mCount" onclick="setMode('count')">Μέτρημα</button></div></div>
+<div id="mQ" class="qq"></div><div id="stage" class="stage"></div>
+<div id="mWrap" class="cnt">Μέτρησες: <b id="mN">0</b></div><div id="mFb" class="fb"></div><div id="mChoices" class="nums"></div>
+<div class="foot"><span>Αριθμοί: 1 έως <b id="mLim"></b></span><button onclick="nextMath()">Επόμενο ➜</button></div></section>
+
+<section id="p-stars" class="panel hide" style="--c:var(--gold)">
+<h2>⭐ Τα Αστέρια μου ⭐</h2><div style="font-size:3.2rem;margin:7px 0">🌟</div><div id="big">0</div>
+<div style="color:#aaa;font-size:.88rem">Συνολικά Αστέρια</div>
+<div class="barw"><i id="bar"></i></div><div id="goal" style="font-size:.9rem;color:#999"></div><div id="bdgs" class="bdgs"></div></section>
+
+<section id="p-board" class="panel hide" style="--c:var(--pink)">
+<div style="font-size:3.4rem">📬</div><h2>Το Γραμματοκιβώτιο της Αλεξίας! 📮</h2>
+<p style="margin:8px 0;color:#666">Θέλεις να αφήσεις ένα μήνυμα, μια ευχή ή μοιράστεις μια ιδέα με την Αλεξία; Πάτησε το κουμπί για να ανοίξεις το πραγματικό της ηλεκτρονικό γραμματοκιβώτιο!</p>
+<a class="go" target="_blank" rel="noopener noreferrer" onclick="snd.ok()" href="https://docs.google.com/forms/d/e/1FAIpQLSftQvbJWGhmQDUJiOEo9lEfHGFpRau6RYgTjYwggVz_ZNmwyw/viewform">✍️ Άνοιξε το Γραμματοκιβώτιο ↗</a>
+<p style="font-size:.8rem;color:#aaa">Ασφαλές &amp; Προσωπικό. Μόνο η Αλεξία και η οικογένειά της το διαβάζουν.</p></section>
+</main>
+
+<div id="pModal" class="modal hide"><div>
+<div style="font-size:2.5rem;margin-bottom:6px">🦄</div><h3>Ποιο είναι το όνομά σου;</h3><small>Νέο όνομα = νέο ξεκίνημα με 0 αστέρια!</small>
+<form onsubmit="savePlayer(event)" style="margin-top:14px"><input type="text" id="pName" required maxlength="20" placeholder="Γράψε το όνομά σου...">
+<label class="f">Διάλεξε αυτοκόλλητο:</label><div id="avs" class="avs"></div>
+<div class="act"><button class="p">✅ Εντάξει!</button><button type="button" id="pCancel" onclick="$('pModal').classList.add('hide')">✖ Άκυρο</button></div></form></div></div>
+
+<div id="cfg" class="modal hide"><div style="border-color:var(--gold)">
+<h3>⚙️ Ρυθμίσεις Μαθήματος</h3>
+<form onsubmit="saveCfg(event)"><label class="f">Λέξεις (με κόμμα). Για εικόνα γράψε λέξη=🍎</label>
+<textarea id="cWords" rows="4" required></textarea>
+<small>Λέξεις χωρίς εικόνα εμφανίζονται με 🔤. Για δύο λέξεις γράψε π.χ. το παπί=🦆</small>
+<label class="f">Μέγιστος αριθμός:</label><div class="mx"><label><input type="radio" name="mx" value="5"><span>Έως 5</span></label><label><input type="radio" name="mx" value="10"><span>Έως 10</span></label></div>
+<label class="f">Φωνή:</label><select id="cVoice"></select><small id="vNote" style="color:#e11d48"></small>
+<button type="button" class="say" style="margin-top:10px" onclick="say('Καλημέρα! Πάμε να παίξουμε!')">▶ Δοκιμή φωνής</button>
+<div class="act"><button class="p">Αποθήκευση ✓</button><button type="button" onclick="$('cfg').classList.add('hide')">Άκυρο</button></div></form></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const rnd=n=>Math.floor(Math.random()*n);
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const fb=(e,t,ok)=>{e.textContent=t;e.style.color=ok?'#059669':'#e11d48'};
+
+/* ---- DATA ---- */
+// Μόνο λέξεις που έχουν σωστή εικόνα. Οι υπόλοιπες παίζουν στο «Φτιάξε τη λέξη».
+const PIC={'πατάτα':'🥔','η πατάτα':'🥔','παπί':'🦆','το παπί':'🦆','τόπι':'⚽','το τόπι':'⚽','αλάτι':'🧂','το αλάτι':'🧂','πίτα':'🥧','η πίτα':'🥧','ποτό':'🥤','το ποτό':'🥤','ποτά':'🍹','έλατο':'🌲','το έλατο':'🌲','πιπίλα':'👶','η πιπίλα':'👶','λέλα':'👧','λόλα':'👩','πέτα':'🕊️','όλα':'🌍','έλα':'👋'};
+const DEF='πατάτα, το παπί, το τόπι, αλάτι, πιπίλα, πίτα, ποτό, έλατο, Λέλα, πέτα, όλα';
+const BADGES=[[10,'🌱','Πρώτο Βήμα'],[30,'🌈','Ουράνιο Τόξο'],[60,'🦋','Πεταλούδα'],[100,'💜','Μοβ Καρδιά'],[150,'🌟','Λαμπερό Αστέρι'],[225,'👑','Στέμμα'],[325,'🐉','Μαγικός Δράκος'],[500,'🏆','Κύπελλο Πρωταθλητή']];
+const AV=['👧','🧒','🦄','🚀','🐱','⭐','🐶','🦖'];
+const EMO=['🦆','🥔','⚽','🎈','⭐','🍎','🚗','🐰','🍭','🍓'];
+
+let S=load('alc2',null)||migrate();
+let C=load('alc2c',{words:DEF,max:10,voice:'',mute:false});
+function migrate(){const o={cur:'',av:'👧',p:{}};
+ try{const q=JSON.parse(localStorage.getItem('aleksia_player_info'));
+  if(q){o.cur=q.name;o.av=q.avatar;o.p[q.name]={s:+localStorage.getItem('aleksia_stars_count')||0}}
+  const w=JSON.parse(localStorage.getItem('aleksia_custom_words'));if(Array.isArray(w))C0=w.join(', ')}catch(e){}
+ return o}
+var C0;if(C0&&!localStorage.getItem('alc2c'))C.words=C0;
+
+function words(){const seen={};return C.words.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).map(s=>{const[w,e]=s.split('=').map(x=>x.trim());return{w,e:e||PIC[w.toLowerCase()]||''}}).filter(x=>x.w&&!seen[x.w]&&(seen[x.w]=1))}
+
+/* ---- SOUND & SPEECH ---- */
+let ac;
+function tone(f,ty,d,dl=0,g=.15){if(C.mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();
+ const o=ac.createOscillator(),n=ac.createGain(),t=ac.currentTime+dl;o.type=ty;o.frequency.value=f;n.gain.setValueAtTime(g,t);n.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(n);n.connect(ac.destination);o.start(t);o.stop(t+d)}catch(e){}}
+const snd={ok(){[523,659,784,1047].forEach((f,i)=>tone(f,'sine',.18,i*.08,.2))},boop(){tone(360,'sine',.09,0,.12)},no(){tone(280,'sine',.12);tone(220,'sine',.18,.1,.1)},tap(i){tone(420+i*50,'triangle',.12)}};
+
+// Προαιρετικά: βάλε ηχογραφημένες λέξεις (π.χ. audio/πατάτα.mp3) και γράψε AUDIO_DIR='audio/'
+const AUDIO_DIR='';
+let voices=[],au;
+function loadVoices(){voices=speechSynthesis.getVoices().filter(v=>/^el/i.test(v.lang));fillVoices()}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+function bestVoice(){const w=voices.find(v=>v.name===C.voice);if(w)return w;
+ const sc=v=>(/natural|online/i.test(v.name)?4:0)+(/google/i.test(v.name)?3:0)+(/melina|nestoras|athina|stefanos/i.test(v.name)?2:0)+(v.localService?0:1);
+ return[...voices].sort((a,b)=>sc(b)-sc(a))[0]}
+function say(t,file){if(C.mute||!t)return;if(au){au.pause();au=null}
+ const txt=t.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'').trim();if(!txt)return;
+ const tts=()=>{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt),v=voices.find(x=>x.name===C.voice);
+  if(v)u.voice=v;u.lang='el-GR';u.rate=.85;speechSynthesis.speak(u)};
+ const g=()=>{if('speechSynthesis' in window)speechSynthesis.cancel();
+  au=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&tl=el&client=tw-ob&q='+encodeURIComponent(txt));au.play().catch(tts)};
+ const base=C.voice==='google'?g:tts;
+ if(AUDIO_DIR&&file){au=new Audio(AUDIO_DIR+encodeURIComponent(file)+'.mp3');au.play().catch(base)}else base()}
+function mute(){C.mute=!C.mute;store('alc2c',C);$('mu').textContent=C.mute?'🔇':'🔊';if(C.mute&&'speechSynthesis' in window)speechSynthesis.cancel()}
+
+/* ---- STARS & BADGES ---- */
+const fire=n=>{if(typeof confetti==='function')confetti({particleCount:n,spread:n>100?100:60,origin:{y:.65}})};
+const showStars=()=>{$('stars').textContent=(S.p[S.cur]||{s:0}).s};
+const praise=()=>[`Μπράβο ${S.cur}! 🌟`,`Φανταστικά, ${S.cur}! 🎉`,`Είσαι αστέρι, ${S.cur}! ⭐`,`Πολύ ωραία, ${S.cur}! 👏`,`Τέλεια δουλειά, ${S.cur}! 💖`][rnd(5)];
+function award(){const p=S.p[S.cur]=S.p[S.cur]||{s:0};p.s++;store('alc2',S);showStars();
+ const nb=BADGES.find(b=>b[0]===p.s);
+ if(nb){fire(160);toast(`${nb[1]} ${nb[2]}!`)}else fire(35);return nb}
+function win(f,w){snd.ok();const nb=award(),pr=praise();fb(f,pr,1);say(`${w}! ${pr}`+(nb?` Κέρδισες το ${nb[2]}!`:''),null)}
+function toast(t){const e=$('toast');e.textContent='Νέο έπαθλο! '+t;e.classList.remove('hide');setTimeout(()=>e.classList.add('hide'),3500)}
+function renderStars(){const s=(S.p[S.cur]||{s:0}).s,nx=BADGES.find(b=>b[0]>s),pv=[...BADGES].reverse().find(b=>b[0]<=s),lo=pv?pv[0]:0;
+ $('big').textContent=s;$('bar').style.width=nx?((s-lo)/(nx[0]-lo)*100)+'%':'100%';
+ $('goal').textContent=nx?`Ακόμα ${nx[0]-s} αστέρια για το «${nx[2]}»! 💜`:'Τα κέρδισες όλα! Είσαι σούπερ! 🎉';
+ const g=$('bdgs');g.replaceChildren();
+ BADGES.forEach(b=>{const d=el('div','bdg'+(s>=b[0]?' got':'')+(nx===b?' next':''));d.append(el('div','bi',b[1]),el('div','',b[2]),el('small','',b[0]+' ⭐'));g.append(d)})}
+
+/* ---- NAV ---- */
+let timer;
+const TABS=[['reading','👀','Διάβασμα'],['spelling','🧩','Φτιάξε'],['math','🔢','Αριθμοί'],['stars','⭐','Αστέρια'],['board','📬','Μήνυμα']];
+TABS.forEach(t=>{const b=el('button','tab');b.id='t-'+t[0];b.append(el('span','',t[1]),el('b','',t[2]));b.onclick=()=>tab(t[0]);$('tabs').append(b)});
+function tab(k){snd.boop();clearTimeout(timer);if('speechSynthesis' in window)speechSynthesis.cancel();
+ TABS.forEach(t=>{$('p-'+t[0]).classList.toggle('hide',t[0]!==k);$('t-'+t[0]).classList.toggle('on',t[0]===k)});
+ if(k==='stars')renderStars()}
+function chips(){const c=$('chips');c.replaceChildren();words().forEach(x=>c.append(el('span','chip',(x.e||'🔤')+' '+x.w)))}
+
+/* ---- READING ---- */
+let rw,rLock,rBag=[],lastR='';
+function nextReading(){clearTimeout(timer);rLock=false;fb($('rFb'),'');const all=words(),pic=all,g=$('rGrid');g.replaceChildren();
+ if(!pic.length){$('rVis').textContent='✏️';fb($('rFb'),'Πρόσθεσε εικόνα στις ρυθμίσεις: λέξη=🍎');return}
+ rBag=rBag.filter(w=>pic.some(x=>x.w===w));
+ if(!rBag.length){rBag=shuffle(pic.map(x=>x.w));if(rBag.length>1&&rBag[rBag.length-1]===lastR)rBag.unshift(rBag.pop())}
+ lastR=rBag.pop();rw=pic.find(x=>x.w===lastR);$('rVis').textContent=rw.e||'🔤';
+ shuffle([rw,...shuffle(all.filter(x=>x.w!==rw.w)).slice(0,2)]).forEach(x=>{const b=el('button','choice',x.w);
+  b.onclick=()=>{if(rLock)return;
+   if(x.w===rw.w){rLock=true;b.classList.add('good');win($('rFb'),rw.w);timer=setTimeout(nextReading,1600)}
+   else{snd.no();b.classList.add('bad');fb($('rFb'),'Προσπάθησε πάλι! Άκουσε τη λεξούλα 🔊')}};g.append(b)})}
+
+/* ---- SPELLING ---- */
+let sw,sl=[],sg=new Set(),sa=[],tiles=[],miss=0,sLock;
+function nextSpell(){clearTimeout(timer);const a=words();
+ sw=a[rnd(a.length)];$('sVis').textContent=sw.e||'🔤';
+ const ws=sw.w.normalize('NFC').split(/\s+/);sl=Array.from(ws.join(''));sg=new Set();let n=0;ws.slice(0,-1).forEach(x=>{n+=Array.from(x).length;sg.add(n)});
+ resetSpell()}
+function resetSpell(){sa=[];miss=0;sLock=false;fb($('sFb'),'');tiles=shuffle(sl.map(c=>({c,used:false})));drawSpell()}
+function drawSpell(){const r=$('slots');r.replaceChildren();sl.forEach((c,i)=>r.append(el('div','slot'+(i<sa.length?' on':'')+(sg.has(i)?' gap':''),sa[i]||'')));
+ const k=$('bank');k.replaceChildren();
+ tiles.forEach(t=>{const b=el('button','tile'+(t.used?' used':'')+(miss>=3&&!t.used&&t.c===sl[sa.length]?' hint':''),t.c);
+  b.onclick=()=>{if(t.used||sLock)return;
+   if(t.c===sl[sa.length]){t.used=true;sa.push(t.c);miss=0;fb($('sFb'),'');snd.boop();
+    if(sa.length===sl.length){sLock=true;drawSpell();win($('sFb'),sw.w);timer=setTimeout(nextSpell,1700)}else{say(t.c);drawSpell()}}
+   else{miss++;snd.no();drawSpell();fb($('sFb'),'Ξαναδοκίμασε! 💪')}};k.append(b)})}
+
+/* ---- MATH ---- */
+let mm='add',mt=0,mc=0,mLock;
+function setMode(m){mm=m;snd.boop();$('mCount').classList.toggle('on',m==='count');$('mAdd').classList.toggle('on',m==='add');
+ $('mWrap').classList.toggle('hide',m!=='count');$('mQ').textContent=m==='count'?'Πάτησε κάθε εικόνα για να μετρήσεις!':'Πόσα είναι όλα μαζί;';nextMath()}
+function nextMath(){clearTimeout(timer);mc=0;mLock=false;$('mN').textContent=0;fb($('mFb'),'');$('mLim').textContent=C.max;
+ const st=$('stage'),c=$('mChoices'),e=EMO[rnd(EMO.length)],max=C.max;st.replaceChildren();c.replaceChildren();
+ if(mm==='count'){mt=rnd(max)+1;
+  for(let i=0;i<mt;i++){const b=el('button','item',e);
+   b.onclick=()=>{if(b.dataset.t)return;b.dataset.t=1;mc++;snd.tap(mc);say(String(mc));b.classList.add('t');b.textContent=mc;$('mN').textContent=mc;
+   };st.append(b)}}
+ else{const lim=max<=5?5:10,a=rnd(lim-1)+1,b=rnd(lim-a)+1;mt=a+b;
+  [a,b].forEach((n,i)=>{if(i)st.append(el('div','em','➕'));const g=el('div','grp');
+   for(let j=0;j<n;j++){const s=el('span','em',e);s.onclick=()=>{snd.boop();s.classList.toggle('dim')};g.append(s)}st.append(g)});
+  st.append(el('div','eq',`${a} + ${b} = ?`))}
+ const lim2=mm==='count'?max:(max<=5?5:10),s=new Set([mt]);while(s.size<3)s.add(rnd(lim2)+1);
+ shuffle([...s]).forEach(n=>{const b=el('button','num',n);
+  b.onclick=()=>{if(mLock)return;
+   if(n===mt){mLock=true;b.classList.add('good');win($('mFb'),String(mt));timer=setTimeout(nextMath,1800)}
+   else{snd.no();b.classList.add('bad');b.disabled=true;fb($('mFb'),'Προσπάθησε άλλη μια φορά!')}};c.append(b)})}
+
+/* ---- PLAYER ---- */
+AV.forEach((a,i)=>{const l=el('label'),r=el('input');r.type='radio';r.name='av';r.value=a;if(!i)r.checked=true;l.append(r,el('span','',a));$('avs').append(l)});
+function openPlayer(first){snd.boop();$('pName').value=first===true?'':S.cur;
+ const r=document.querySelector(`input[name=av][value="${S.av}"]`);if(r)r.checked=true;
+ $('pCancel').classList.toggle('hide',first===true||!S.cur);$('pModal').classList.remove('hide')}
+function savePlayer(e){e.preventDefault();const n=$('pName').value.trim();if(!n)return;
+ S.cur=n;S.av=document.querySelector('input[name=av]:checked').value;if(!S.p[n])S.p[n]={s:0}; // νέο όνομα = νέο ξεκίνημα
+ store('alc2',S);ui();$('pModal').classList.add('hide');snd.ok();say(`Καλωσόρισες ${n}!`)}
+function ui(){$('tag').textContent=S.cur?`✨ Μάθε παίζοντας & κέρδισε αστέρια, ${S.cur}! ✨`:'✨ Μάθε παίζοντας & κέρδισε αστέρια! ✨';$('nm').textContent=S.cur||'?';$('av').textContent=S.av;showStars();renderStars()}
+
+/* ---- SETTINGS ---- */
+function fillVoices(){const s=$('cVoice');s.replaceChildren(new Option('Φωνή συσκευής (όπως στα Αγγλικά)',''),new Option('Φωνή Google (ίντερνετ)','google'));voices.forEach(v=>s.add(new Option(v.name,v.name)));s.value=C.voice;
+ $('vNote').textContent=voices.length?'':'Δεν βρέθηκε ελληνική φωνή σε αυτή τη συσκευή.'}
+function openCfg(){snd.boop();$('cWords').value=C.words;document.querySelector(`input[name=mx][value="${C.max}"]`).checked=true;fillVoices();$('cfg').classList.remove('hide')}
+function saveCfg(e){e.preventDefault();C.words=$('cWords').value;if(!words().length)C.words=DEF;
+ C.max=+document.querySelector('input[name=mx]:checked').value;C.voice=$('cVoice').value;store('alc2c',C);
+ $('cfg').classList.add('hide');chips();nextReading();nextSpell();nextMath();snd.ok()}
+
+/* ---- INIT ---- */
+$('mu').textContent=C.mute?'🔇':'🔊';
+ui();chips();tab('reading');nextReading();nextSpell();setMode('add');
+if(!S.cur)openPlayer(true);
+</script></body></html>
