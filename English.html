@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Μάθετε Αγγλικά! - Learn English!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+  :root { --pink:#ff6eb4; --dpink:#e91e8c; --violet:#9b59b6; --dviolet:#6c3483; --gold:#ffd700; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; font-weight: 700; color: #334155; background: linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%); background-attachment: fixed; min-height: 100vh; overflow-x: hidden; position: relative; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
+  button { font: inherit; }
+  a { text-decoration: none; }
+
+  /* Floating decorations */
+  .deco { position: fixed; pointer-events: none; z-index: 0; font-size: 2rem; animation: fd 8s ease-in-out infinite; opacity: .45; }
+  .deco:nth-child(1) { top: 5%; left: 2%; font-size: 2.4rem; }
+  .deco:nth-child(2) { top: 12%; right: 3%; font-size: 1.8rem; animation-delay: 1.2s; }
+  .deco:nth-child(3) { top: 32%; left: 1%; animation-delay: 2s; }
+  .deco:nth-child(4) { top: 48%; right: 2%; font-size: 2.6rem; animation-delay: .6s; }
+  .deco:nth-child(5) { top: 65%; left: 3%; font-size: 1.6rem; animation-delay: 3s; }
+  .deco:nth-child(6) { top: 78%; right: 4%; animation-delay: 1.8s; }
+  .deco:nth-child(7) { top: 88%; left: 2%; font-size: 2.2rem; animation-delay: 2.5s; }
+  .deco:nth-child(8) { top: 22%; left: 46%; font-size: 1.5rem; animation-delay: 4s; }
+  @keyframes fd { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-18px) rotate(5deg); } }
+
+  header { position: relative; z-index: 2; text-align: center; padding: 24px 20px 6px; color: white; }
+  .unicorn-banner { font-size: 3rem; margin-bottom: 4px; }
+  header h1 { font-family: 'Fredoka One', cursive; font-weight: 400; font-size: clamp(1.6rem,5vw,2.8rem); background: linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 8px rgba(255,110,180,.5)); line-height: 1.15; margin-bottom: 0; }
+  header p { color: #ffd6f0; font-size: .95rem; margin-top: 5px; opacity: 1; }
+  .rainbow-bar { height: 6px; border-radius: 10px; background: linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff); max-width: 500px; margin: 10px auto 0; }
+
+  .topbtns { position: relative; z-index: 2; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .glass { display: inline-block; background: rgba(255,255,255,.18); border: 2px solid rgba(255,255,255,.35); border-radius: 30px; color: #fff; font-family: 'Fredoka One', cursive; font-size: .9rem; padding: 6px 18px; backdrop-filter: blur(4px); cursor: pointer; }
+
+  nav { position: sticky; top: 0; z-index: 100; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 12px 14px; margin-top: 10px; background: rgba(45,0,80,.55); backdrop-filter: blur(8px); border-bottom: 2px solid rgba(255,255,255,.2); }
+  nav button { display: flex; align-items: center; gap: 5px; padding: 7px 15px; border: 2px solid rgba(255,255,255,.3); border-radius: 30px; background: rgba(255,255,255,.15); color: #fff; font-family: 'Fredoka One', cursive; font-weight: 400; font-size: .85rem; cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; }
+  nav button:hover { background: rgba(255,255,255,.25); }
+  nav button.active { background: linear-gradient(135deg,var(--pink),var(--violet)); border-color: transparent; box-shadow: 0 4px 18px rgba(255,110,180,.5); transform: translateY(-2px); color: #fff; }
+
+  #content { position: relative; z-index: 2; }
+  .section { padding: 2rem 1rem 1rem; max-width: 1100px; margin: 0 auto; }
+  .section h2 { font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 1.5rem; color: #fff; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 3px solid rgba(255,255,255,.3); display: flex; align-items: center; gap: 8px; text-shadow: 0 2px 8px rgba(0,0,0,.2); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .card { background: rgba(255,255,255,.96); border-radius: 24px; padding: 1rem 0.8rem 0.8rem; text-align: center; cursor: pointer; border: 3px solid var(--violet); box-shadow: 0 10px 40px rgba(0,0,0,.2); transition: all 0.2s; user-select: none; }
+  .card:hover { border-color: var(--pink); transform: translateY(-3px); box-shadow: 0 12px 34px rgba(255,110,180,.4); }
+  .card.playing { border-color: var(--pink); background: #ffe0f5; transform: scale(0.97); }
+  .card .emoji { font-size: 2.4rem; margin-bottom: 0.5rem; line-height: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,.12)); }
+  .card .word { font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 1.25rem; color: var(--dviolet); margin-bottom: 2px; }
+  .card .meaning { font-size: 0.85rem; color: #555; margin-bottom: 6px; }
+  .btn-row { display: flex; gap: 6px; justify-content: center; margin-top: 4px; }
+  .btn-en, .btn-el { font-size: 1.1rem; background: #fdf0ff; border: 3px solid #e0c8ff; border-radius: 14px; padding: 3px 9px; cursor: pointer; transition: all 0.15s; }
+  .btn-en:hover, .btn-el:hover { background: #f5d6ff; border-color: var(--violet); transform: scale(1.06); }
+
+  /* Phrase cards */
+  .phrase-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .phrase-card { background: rgba(255,255,255,.96); border-radius: 24px; padding: 1rem 1rem 0.8rem; border: 3px solid var(--violet); box-shadow: 0 10px 40px rgba(0,0,0,.2); transition: all 0.2s; cursor: pointer; }
+  .phrase-card:hover { border-color: var(--pink); transform: translateY(-2px); box-shadow: 0 12px 34px rgba(255,110,180,.4); }
+  .phrase-card.playing { border-color: var(--pink); background: #ffe0f5; }
+  .phrase-card .p-emoji { font-size: 1.8rem; margin-bottom: 6px; }
+  .phrase-card .p-en { font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 1.15rem; color: var(--dviolet); margin-bottom: 3px; }
+  .phrase-card .p-el { font-size: 0.9rem; color: #555; margin-bottom: 8px; }
+
+  .toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg,var(--pink),var(--violet)); color: white; padding: 12px 22px; border-radius: 30px; font-family: 'Fredoka One', cursive; font-weight: 400; font-size: 1.1rem; box-shadow: 0 6px 24px rgba(0,0,0,.3); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1100; white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+  .toast.show { opacity: 1; }
+  footer { position: relative; z-index: 2; text-align: center; padding: 2rem; color: #ffd6f0; font-size: 0.85rem; margin-top: 2rem; }
+  @media (max-width: 500px) { .cards { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); } header h1 { font-size: 1.6rem; } .phrase-cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div><div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div><div class="deco">💜</div><div class="deco">🌸</div>
+<header>
+  <div class="unicorn-banner">🦄🇬🇷🇬🇧🦄</div>
+  <h1>Μάθετε Αγγλικά!</h1>
+  <p>Πάτησε οποιαδήποτε καρτούλα για να την ακούσεις ✨ Χρησιμοποίησε τα κουμπιά 🇬🇧 🇬🇷 για κάθε γλώσσα</p>
+  <div class="rainbow-bar"></div>
+</header>
+<div class="topbtns"><a href="index.html" class="glass" aria-label="Αρχική" title="Αρχική">🏰</a></div>
+<nav id="nav"></nav>
+<div id="content"></div>
+<div class="toast" id="toast"></div>
+<footer>Πάτησε μια κάρτα για να ακούσεις και τις δύο γλώσσες • Φτιαγμένο με πολλή αγάπη 💜</footer>
+
+<script>
+const data = [
+  { id:"big3", label:"⭐ Οι 3 Βασικές", icon:"⭐", words:[
+    {w:"Yes", m:"Ναι", e:"✅"},
+    {w:"No", m:"Όχι", e:"❌"},
+    {w:"Thank you", m:"Ευχαριστώ", e:"🙏"}
+  ]},
+  { id:"greetings", label:"👋 Χαιρετισμοί", icon:"👋", words:[
+    {w:"Hello", m:"Γεια σας", e:"😊"},
+    {w:"Hi", m:"Γεια σου", e:"✌️"},
+    {w:"Goodbye", m:"Αντίο", e:"👋"},
+    {w:"Please", m:"Παρακαλώ", e:"🤲"},
+    {w:"Sorry", m:"Συγγνώμη", e:"😅"},
+    {w:"Good luck!", m:"Καλή τύχη!", e:"🍀"},
+    {w:"How are you?", m:"Πώς είσαι;", e:"🤔"},
+    {w:"Fine / Good", m:"Καλά", e:"👍"}
+  ]},
+  { id:"family", label:"👨‍👩‍👧 Οικογένεια", icon:"👨‍👩‍👧", words:[
+    {w:"Mother / Mom", m:"Μητέρα / Μαμά", e:"👩"},
+    {w:"Father / Dad", m:"Πατέρας / Μπαμπάς", e:"👨"},
+    {w:"Grandfather", m:"Παππούς", e:"👴"},
+    {w:"Grandmother", m:"Γιαγιά", e:"👵"},
+    {w:"Brother", m:"Αδελφός", e:"👦"},
+    {w:"Sister", m:"Αδελφή", e:"👧"},
+    {w:"Child", m:"Παιδί", e:"🧒"},
+    {w:"Family", m:"Οικογένεια", e:"👨‍👩‍👧"},
+    {w:"Friend", m:"Φίλος", e:"🤗"}
+  ]},
+  { id:"animals", label:"🐾 Ζωάκια", icon:"🐾", words:[
+    {w:"Dog", m:"Σκύλος", e:"🐕"},
+    {w:"Cat", m:"Γάτα", e:"🐈"},
+    {w:"Fox", m:"Αλεπού", e:"🦊"},
+    {w:"Rooster", m:"Κόκορας", e:"🐓"},
+    {w:"Chicken", m:"Κότα", e:"🐔"},
+    {w:"Duck", m:"Πάπια", e:"🦆"},
+    {w:"Goose", m:"Χήνα", e:"🪿"},
+    {w:"Wolf", m:"Λύκος", e:"🐺"},
+    {w:"Bear", m:"Αρκούδα", e:"🐻"},
+    {w:"Deer", m:"Ελάφι", e:"🦌"},
+    {w:"Horse", m:"Άλογο", e:"🐴"},
+    {w:"Cow", m:"Αγελάδα", e:"🐄"},
+    {w:"Pig", m:"Γουρουνάκι", e:"🐷"},
+    {w:"Sheep", m:"Πρόβατο", e:"🐑"},
+    {w:"Fish", m:"Ψάρι", e:"🐟"},
+    {w:"Bird", m:"Πουλί", e:"🐦"},
+    {w:"Frog", m:"Βάτραχος", e:"🐸"},
+    {w:"Rabbit", m:"Κουνελάκι", e:"🐰"}
+  ]},
+  { id:"nature", label:"🌸 Φύση", icon:"🌸", words:[
+    {w:"Flower", m:"Λουλούδι", e:"🌸"},
+    {w:"Tree", m:"Δέντρο", e:"🌳"},
+    {w:"Grass", m:"Γρασίδι", e:"🌿"},
+    {w:"Sun", m:"Ήλιος", e:"☀️"},
+    {w:"Moon", m:"Φεγγάρι", e:"🌙"},
+    {w:"Star", m:"Αστέρι", e:"⭐"},
+    {w:"Rain", m:"Βροχή", e:"🌧️"},
+    {w:"Snow", m:"Χιόνι", e:"❄️"},
+    {w:"Water", m:"Νερό", e:"💧"},
+    {w:"Sea", m:"Θάλασσα", e:"🌊"}
+  ]},
+  { id:"nouns", label:"🍞 Καθημερινά", icon:"🍞", words:[
+    {w:"Food", m:"Φαγητό", e:"🍲"},
+    {w:"Bread", m:"Ψωμί", e:"🍞"},
+    {w:"Milk", m:"Γάλα", e:"🥛"},
+    {w:"Book", m:"Βιβλίο", e:"📚"},
+    {w:"Phone", m:"Τηλέφωνο", e:"📱"},
+    {w:"Car", m:"Αυτοκίνητο", e:"🚗"},
+    {w:"House", m:"Σπίτι", e:"🏠"},
+    {w:"School", m:"Σχολείο", e:"🏫"}
+  ]},
+  { id:"numbers", label:"🔢 Αριθμοί", icon:"🔢", words:[
+    {w:"One", m:"1 – Ένα", e:"1️⃣"},
+    {w:"Two", m:"2 – Δύο", e:"2️⃣"},
+    {w:"Three", m:"3 – Τρία", e:"3️⃣"},
+    {w:"Four", m:"4 – Τέσσερα", e:"4️⃣"},
+    {w:"Five", m:"5 – Πέντε", e:"5️⃣"},
+    {w:"Six", m:"6 – Έξι", e:"6️⃣"},
+    {w:"Seven", m:"7 – Επτά", e:"7️⃣"},
+    {w:"Eight", m:"8 – Οκτώ", e:"8️⃣"},
+    {w:"Nine", m:"9 – Εννέα", e:"9️⃣"},
+    {w:"Ten", m:"10 – Δέκα", e:"🔟"}
+  ]}
+];
+
+const phrases = [
+  {w:"How are you?", m:"Πώς είσαι;", e:"😊"},
+  {w:"I am fine, thank you!", m:"Είμαι καλά, ευχαριστώ!", e:"👍"},
+  {w:"What is your name?", m:"Πώς σε λένε;", e:"🙋"},
+  {w:"My name is...", m:"Το όνομά μου είναι...", e:"🏷️"},
+  {w:"Good morning!", m:"Καλημέρα!", e:"🌅"},
+  {w:"Good evening!", m:"Καλησπέρα!", e:"🌆"},
+  {w:"Good night!", m:"Καληνύχτα!", e:"🌙"},
+  {w:"I love you", m:"Σ' αγαπώ", e:"❤️"},
+  {w:"Happy birthday!", m:"Χρόνια πολλά!", e:"🎂"},
+  {w:"See you later!", m:"Τα λέμε αργότερα!", e:"👋"}
+];
+
+const nav = document.getElementById('nav');
+const content = document.getElementById('content');
+const toast = document.getElementById('toast');
+let toastTimer;
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// Built-in speech synthesis (Zero audio files needed!)
+function speak(text, lang) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const ut = new SpeechSynthesisUtterance(text);
+  ut.lang = lang === 'en' ? 'en-US' : 'el-GR';
+  ut.rate = 0.85; // slightly slower for kids
+  window.speechSynthesis.speak(ut);
+}
+
+function speakBoth(enWord, elWord) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const uEn = new SpeechSynthesisUtterance(enWord);
+  uEn.lang = 'en-US';
+  uEn.rate = 0.85;
+
+  const uEl = new SpeechSynthesisUtterance(elWord);
+  uEl.lang = 'el-GR';
+  uEl.rate = 0.85;
+
+  uEn.onend = () => window.speechSynthesis.speak(uEl);
+  window.speechSynthesis.speak(uEn);
+}
+
+// Build Navigation & Sections
+data.forEach((cat, idx) => {
+  const btn = document.createElement('button');
+  btn.innerHTML = `${cat.icon} ${cat.label}`;
+  btn.onclick = () => {
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(cat.id).scrollIntoView({ behavior: 'smooth' });
+  };
+  if (idx === 0) btn.classList.add('active');
+  nav.appendChild(btn);
+
+  const sec = document.createElement('div');
+  sec.className = 'section';
+  sec.id = cat.id;
+  sec.innerHTML = `<h2>${cat.icon} ${cat.label}</h2><div class="cards"></div>`;
+  const cardsWrap = sec.querySelector('.cards');
+
+  cat.words.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="emoji">${item.e}</div>
+      <div class="word">${item.w}</div>
+      <div class="meaning">${item.m}</div>
+      <div class="btn-row">
+        <button class="btn-en" title="English">🇬🇧</button>
+        <button class="btn-el" title="Ελληνικά">🇬🇷</button>
+      </div>
+    `;
+    card.onclick = (e) => {
+      if (e.target.tagName === 'BUTTON') return;
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 700);
+      showToast(`${item.w} • ${item.m}`);
+      speakBoth(item.w, item.m);
+    };
+    card.querySelector('.btn-en').onclick = (e) => {
+      e.stopPropagation();
+      showToast(item.w);
+      speak(item.w, 'en');
+    };
+    card.querySelector('.btn-el').onclick = (e) => {
+      e.stopPropagation();
+      showToast(item.m);
+      speak(item.m, 'el');
+    };
+    cardsWrap.appendChild(card);
+  });
+  content.appendChild(sec);
+});
+
+// Phrases section
+const pSec = document.createElement('div');
+pSec.className = 'section';
+pSec.id = 'phrases';
+pSec.innerHTML = `<h2>💬 Φράσεις (Phrases)</h2><div class="phrase-cards"></div>`;
+const pCardsWrap = pSec.querySelector('.phrase-cards');
+
+phrases.forEach(item => {
+  const pCard = document.createElement('div');
+  pCard.className = 'phrase-card';
+  pCard.innerHTML = `
+    <div class="p-emoji">${item.e}</div>
+    <div class="p-en">${item.w}</div>
+    <div class="p-el">${item.m}</div>
+    <div class="btn-row">
+      <button class="btn-en" title="English">🇬🇧</button>
+      <button class="btn-el" title="Ελληνικά">🇬🇷</button>
+    </div>
+  `;
+  pCard.onclick = (e) => {
+    if (e.target.tagName === 'BUTTON') return;
+    pCard.classList.add('playing');
+    setTimeout(() => pCard.classList.remove('playing'), 700);
+    showToast(`${item.w} • ${item.m}`);
+    speakBoth(item.w, item.m);
+  };
+  pCard.querySelector('.btn-en').onclick = (e) => {
+    e.stopPropagation();
+    showToast(item.w);
+    speak(item.w, 'en');
+  };
+  pCard.querySelector('.btn-el').onclick = (e) => {
+    e.stopPropagation();
+    showToast(item.m);
+    speak(item.m, 'el');
+  };
+  pCardsWrap.appendChild(pCard);
+});
+content.appendChild(pSec);
+</script>
+</body>
+</html>
