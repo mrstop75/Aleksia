@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Βασίλειο της Αλεξίας🦄 – Παραμύθι</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+:root{--pink:#ff6eb4;--dpink:#e91e8c;--violet:#9b59b6;--dviolet:#6c3483;--gold:#ffd700}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;font-weight:700;color:#334155;background:linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%);background-attachment:fixed;min-height:100vh;padding:0 0 40px;overflow-x:hidden;position:relative;touch-action:manipulation}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+a{text-decoration:none}
+
+/* Floating decorations */
+.deco{position:fixed;pointer-events:none;z-index:0;font-size:2rem;animation:fd 8s ease-in-out infinite;opacity:.45}
+.deco:nth-child(1){top:5%;left:2%;font-size:2.4rem}.deco:nth-child(2){top:12%;right:3%;font-size:1.8rem;animation-delay:1.2s}
+.deco:nth-child(3){top:32%;left:1%;animation-delay:2s}.deco:nth-child(4){top:48%;right:2%;font-size:2.6rem;animation-delay:.6s}
+.deco:nth-child(5){top:65%;left:3%;font-size:1.6rem;animation-delay:3s}.deco:nth-child(6){top:78%;right:4%;animation-delay:1.8s}
+.deco:nth-child(7){top:88%;left:2%;font-size:2.2rem;animation-delay:2.5s}.deco:nth-child(8){top:22%;left:46%;font-size:1.5rem;animation-delay:4s}
+@keyframes fd{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+
+/* Header */
+.header{position:relative;z-index:2;text-align:center;padding:24px 20px 6px}
+.unicorn-banner{font-size:3rem;margin-bottom:4px}
+h1.site{font-family:'Fredoka One',cursive;font-weight:400;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(255,110,180,.5));line-height:1.15}
+.tagline{color:#ffd6f0;font-size:.95rem;margin-top:5px}
+.rainbow-bar{height:6px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);max-width:500px;margin:10px auto 0}
+.topbtns{position:relative;z-index:2;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.glass{display:inline-block;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-family:'Fredoka One',cursive;font-size:.9rem;padding:6px 18px;backdrop-filter:blur(4px)}
+
+/* Story */
+main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:18px 14px 0}
+.story{background:rgba(255,255,255,.96);border-radius:28px;padding:26px 26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.2);border:3px solid var(--violet);text-align:center}
+
+/* Picture holder: replace the image file name below */
+.pic{width:min(260px,70%);aspect-ratio:1/1;margin:0 auto 16px;border-radius:50%;border:5px solid var(--pink);box-shadow:0 6px 24px rgba(255,110,180,.45);overflow:hidden;background:#fdf0ff;display:flex;align-items:center;justify-content:center}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic .fallback{font-size:5rem}
+
+.story h2{font-family:'Fredoka One',cursive;font-weight:400;font-size:clamp(2rem,7vw,3.2rem);line-height:1.15;color:var(--dviolet);margin-bottom:14px}
+
+/* Audio button */
+.listen{margin:4px auto 18px}
+.say{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;border-radius:40px;padding:14px 32px;font-size:1.25rem;font-family:'Fredoka One',cursive;box-shadow:0 4px 16px rgba(255,180,0,.4);transition:transform .15s}
+.say:hover{transform:scale(1.05)}
+.say .ic{font-size:1.6rem;line-height:1}
+.say.playing{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;box-shadow:0 4px 18px rgba(255,110,180,.5)}
+.barw{height:15px;background:#f0e8ff;border-radius:20px;overflow:hidden;margin:16px auto 4px;max-width:420px;cursor:pointer}
+.barw i{display:block;height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .25s linear}
+.time{font-size:.85rem;color:#aaa}
+.fb{min-height:22px;font-size:1rem;font-weight:800;color:#e11d48}
+
+.divider{height:4px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);opacity:.6;margin:6px auto 22px;max-width:260px}
+
+/* Story text: big letters for reading on a tablet */
+.text{text-align:left;font-size:clamp(1.25rem,3.6vw,1.7rem);line-height:1.8;font-weight:700;color:#3b3552}
+.text p{margin-bottom:1.1em}
+.text p:last-child{margin-bottom:0}
+
+.endmark{text-align:center;font-size:2rem;margin-top:20px}
+
+@media(max-width:500px){.story{padding:20px 16px 24px}.say{padding:12px 24px;font-size:1.1rem}}
+</style>
+</head>
+<body>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div><div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div><div class="deco">💜</div><div class="deco">🌸</div>
+
+<div class="header"><div class="unicorn-banner">🦄🌈🦄</div><h1 class="site">Βασίλειο της Αλεξίας</h1><p class="tagline">✨ Ώρα για παραμύθι! ✨</p><div class="rainbow-bar"></div></div>
+<div class="topbtns"><a href="index.html" class="glass" aria-label="Πίσω στην αρχική" title="Αρχική">🏰</a></div>
+
+<main>
+<article class="story">
+
+  <!-- 1. PICTURE: change picture-lorem-ipsum.jpg to your image file -->
+  <div class="pic">
+    <img src="lagosxelwna.jpg" alt="Lorem ipsum" onerror="this.outerHTML='<span class=&quot;fallback&quot;>📖</span>'">
+  </div>
+
+  <!-- 2. STORY TITLE -->
+  <h2>Ο Λαγός και η Χελώνα</h2>
+
+  <!-- 3. AUDIO: change lagosxelwna.mp3 to your audio file -->
+  <div class="listen">
+    <button class="say" id="playBtn" onclick="toggleAudio()" aria-label="Άκουσε το παραμύθι">
+      <span class="ic" id="playIcon">▶️</span><span id="playLabel">Άκουσε το παραμύθι</span>
+    </button>
+    <div class="barw" id="bar" onclick="seek(event)"><i id="barFill"></i></div>
+    <div class="time" id="time">0:00 / 0:00</div>
+    <div class="fb" id="fb"></div>
+    <audio id="audio" src="lagosxelwna.mp3" preload="metadata"></audio>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. STORY TEXT -->
+  <div class="text"><p>Μια φορά κι έναν καιρό, μέσα σε ένα καταπράσινο δάσος, ζούσε ένας λαγός που καυχιόταν διαρκώς σε όλα τα ζώα για το πόσο γρήγορα έτρεχε.</p>
+<p>«Κανείς δεν μπορεί να με νικήσει στο τρέξιμο!» έλεγε με ύφος γεμάτο περηφάνια. «Είμαι το πιο γρήγορο ζώο σε ολόκληρο το δάσος!»</p>
+<p>Τα άλλα ζώα είχαν κουραστεί να ακούνε τα μεγάλα του λόγια. Μια μέρα, η χελώνα, που περπατούσε αργά και σταθερά κουβαλώντας το βαρύ της καβούκι, τον πλησίασε ήσυχα και του είπε: «Αν θέλεις, τρέχω εγώ μαζί σου σε έναν αγώνα δρόμου».</p>
+<p>Μόλις το άκουσε ο λαγός, ξέσπασε σε τρανταχτά γέλια: «Εσύ; Θέλεις να αγωνιστείς μαζί μου; Μα μέχρι να κάνεις εσύ ένα βήμα, εγώ θα έχω φτάσει στην άλλη άκρη του βουνού!»</p>
+<p>«Μην γελάς τόσο πολύ», απάντησε ψύχραιμα η χελώνα. «Ας βάλουμε ένα στοίχημα και θα δούμε στο τέλος ποιος θα νικήσει».</p>
+<p>Τα ζώα του δάσους ενθουσιάστηκαν με την ιδέα. Όρισαν τη γραμμή εκκίνησης κάτω από μια μεγάλη βελανιδιά και τη γραμμή του τερματισμού δίπλα στο ποτάμι. Η σοφή αλεπού ανέλαβε να δώσει το σύνθημα.</p>
+<p>«Ένα, δύο, τρία... φύγατε!» φώναξε η αλεπού.</p>
+<p>Ο λαγός πετάχτηκε σαν βέλος κι εξαφανίστηκε σε λίγα δευτερόλεπτα μέσα στη σκόνη. Η χελώνα ξεκίνησε με τον δικό της αργό, αλλά απόλυτα σταθερό ρυθμό, κοιτάζοντας μπροστά και χωρίς να σταματά καθόλου.</p>
+<p>Σε λίγη ώρα, ο λαγός είχε φτάσει σχεδόν στη μέση της διαδρομής. Γύρισε πίσω, κοίταξε, αλλά η χελώνα δεν φαινόταν πουθενά.</p>
+<p>«Τι ανόητη!» σκέφτηκε γελώντας. «Έχω τόσο πολύ χρόνο μπροστά μου που μπορώ να ξαπλώσω κάτω από αυτό το σκιερό δέντρο, να φάω λίγο δροσερό γρασίδι και να πάρω έναν υπνάκο. Ακόμα κι αν με πλησιάσει, με δύο άλματα θα την περάσω και θα κόψω πρώτος το νήμα».</p>
+<p>Έτσι, ο λαγός ξάπλωσε στο μαλακό χορτάρι, έκλεισε τα μάτια του και τον πήρε ένας βαθύς ύπνος.</p>
+<p>Η ώρα περνούσε. Ο ήλιος άρχισε να γέρνει πίσω από τα βουνά. Η χελώνα συνέχιζε να προχωράει: βήμα το βήμα, αγάλι-αγάλι, χωρίς να απογοητεύεται, χωρίς να βιάζεται και κυρίως χωρίς να σταματά πουθενά.</p>
+<p>Πέρασε δίπλα από το δέντρο όπου ο λαγός ροχάλιζε ανενόχλητος. Δεν έκανε τον παραμικρό θόρυβο και συνέχισε την πορεία της ίσια προς το ποτάμι.</p>
+<p>Όταν ο λαγός ξύπνησε ξαφνικά, τεντώθηκε, χασμουρήθηκε και κοίταξε πίσω του στο μονοπάτι. «Ακόμα δεν φάνηκε η αργοκίνητη!» είπε χαμογελώντας.</p>
+<p>Όμως, όταν γύρισε το βλέμμα του προς τη γραμμή του τερματισμού, τα μάτια του άνοιξαν διάπλατα από τρόμο: η χελώνα απείχε μόλις λίγα εκατοστά από το νήμα, ενώ όλα τα ζώα του δάσους χειροκροτούσαν και ζητωκραύγαζαν γεμάτα ενθουσιασμό!</p>
+<p>Ο λαγός πετάχτηκε πάνω και άρχισε να τρέχει με όλη του τη δύναμη, πηδώντας πέτρες και θάμνους. Ήταν όμως πολύ αργά. Με ένα τελευταίο, αποφασιστικό βήμα, η χελώνα πέρασε τη γραμμή του τερματισμού πρώτη!</p>
+<p>Όλα τα ζώα σήκωσαν τη χελώνα ψηλά για να πανηγυρίσουν τη νίκη της. Ο λαγός έσκυψε το κεφάλι του ντροπιασμένος, καταλαβαίνοντας το λάθος του.</p>
+<p>Η χελώνα τον κοίταξε με καλοσύνη και του είπε: «Βλέπεις; Δεν αρκεί να είσαι γρήγορος αν καυχιέσαι και τεμπελιάζεις. Η υπομονή, η επιμονή και η σταθερή προσπάθεια είναι αυτά που σε φτάνουν στον στόχο σου!»</p>
+  <div class="endmark">🌙⭐💤</div>
+</article>
+</main>
+
+<script>
+const a=document.getElementById('audio'),btn=document.getElementById('playBtn'),ic=document.getElementById('playIcon'),lb=document.getElementById('playLabel'),fillEl=document.getElementById('barFill'),tm=document.getElementById('time'),fbEl=document.getElementById('fb');
+const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function ui(){const p=!a.paused&&!a.ended;btn.classList.toggle('playing',p);ic.textContent=p?'⏸️':'▶️';lb.textContent=p?'Παύση':'Άκουσε το παραμύθι'}
+function toggleAudio(){fbEl.textContent='';if(a.paused){a.play().catch(()=>{fbEl.textContent='Δεν βρέθηκε το αρχείο ήχου 🎧'})}else a.pause()}
+function seek(e){if(!a.duration)return;const r=e.currentTarget.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration}
+a.addEventListener('play',ui);a.addEventListener('pause',ui);a.addEventListener('ended',()=>{ui();fillEl.style.width='0';a.currentTime=0});
+a.addEventListener('timeupdate',()=>{fillEl.style.width=(a.duration?a.currentTime/a.duration*100:0)+'%';tm.textContent=fmt(a.currentTime)+' / '+fmt(a.duration)});
+a.addEventListener('loadedmetadata',()=>{tm.textContent='0:00 / '+fmt(a.duration)});
+a.addEventListener('error',()=>{fbEl.textContent='Δεν βρέθηκε το αρχείο ήχου 🎧'});
+</script>
+</body>
+</html>
