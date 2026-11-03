@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Βασίλειο της Αλεξίας🦄 – Παραμύθι</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+:root{--pink:#ff6eb4;--dpink:#e91e8c;--violet:#9b59b6;--dviolet:#6c3483;--gold:#ffd700}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;font-weight:700;color:#334155;background:linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%);background-attachment:fixed;min-height:100vh;padding:0 0 40px;overflow-x:hidden;position:relative;touch-action:manipulation}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+a{text-decoration:none}
+
+/* Floating decorations */
+.deco{position:fixed;pointer-events:none;z-index:0;font-size:2rem;animation:fd 8s ease-in-out infinite;opacity:.45}
+.deco:nth-child(1){top:5%;left:2%;font-size:2.4rem}.deco:nth-child(2){top:12%;right:3%;font-size:1.8rem;animation-delay:1.2s}
+.deco:nth-child(3){top:32%;left:1%;animation-delay:2s}.deco:nth-child(4){top:48%;right:2%;font-size:2.6rem;animation-delay:.6s}
+.deco:nth-child(5){top:65%;left:3%;font-size:1.6rem;animation-delay:3s}.deco:nth-child(6){top:78%;right:4%;animation-delay:1.8s}
+.deco:nth-child(7){top:88%;left:2%;font-size:2.2rem;animation-delay:2.5s}.deco:nth-child(8){top:22%;left:46%;font-size:1.5rem;animation-delay:4s}
+@keyframes fd{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+
+/* Header */
+.header{position:relative;z-index:2;text-align:center;padding:24px 20px 6px}
+.unicorn-banner{font-size:3rem;margin-bottom:4px}
+h1.site{font-family:'Fredoka One',cursive;font-weight:400;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(255,110,180,.5));line-height:1.15}
+.tagline{color:#ffd6f0;font-size:.95rem;margin-top:5px}
+.rainbow-bar{height:6px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);max-width:500px;margin:10px auto 0}
+.topbtns{position:relative;z-index:2;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.glass{display:inline-block;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-family:'Fredoka One',cursive;font-size:.9rem;padding:6px 18px;backdrop-filter:blur(4px)}
+
+/* Story */
+main{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:18px 14px 0}
+.story{background:rgba(255,255,255,.96);border-radius:28px;padding:26px 26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.2);border:3px solid var(--violet);text-align:center}
+
+/* Picture holder: replace the image file name below */
+.pic{width:min(260px,70%);aspect-ratio:1/1;margin:0 auto 16px;border-radius:50%;border:5px solid var(--pink);box-shadow:0 6px 24px rgba(255,110,180,.45);overflow:hidden;background:#fdf0ff;display:flex;align-items:center;justify-content:center}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic .fallback{font-size:5rem}
+
+.story h2{font-family:'Fredoka One',cursive;font-weight:400;font-size:clamp(2rem,7vw,3.2rem);line-height:1.15;color:var(--dviolet);margin-bottom:14px}
+
+/* Audio button */
+.listen{margin:4px auto 18px}
+.say{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;border-radius:40px;padding:14px 32px;font-size:1.25rem;font-family:'Fredoka One',cursive;box-shadow:0 4px 16px rgba(255,180,0,.4);transition:transform .15s}
+.say:hover{transform:scale(1.05)}
+.say .ic{font-size:1.6rem;line-height:1}
+.say.playing{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;box-shadow:0 4px 18px rgba(255,110,180,.5)}
+.barw{height:15px;background:#f0e8ff;border-radius:20px;overflow:hidden;margin:16px auto 4px;max-width:420px;cursor:pointer}
+.barw i{display:block;height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .25s linear}
+.time{font-size:.85rem;color:#aaa}
+.fb{min-height:22px;font-size:1rem;font-weight:800;color:#e11d48}
+
+.divider{height:4px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);opacity:.6;margin:6px auto 22px;max-width:260px}
+
+/* Story text: big letters for reading on a tablet */
+.text{text-align:left;font-size:clamp(1.25rem,3.6vw,1.7rem);line-height:1.8;font-weight:700;color:#3b3552}
+.text p{margin-bottom:1.1em}
+.text p:last-child{margin-bottom:0}
+
+.endmark{text-align:center;font-size:2rem;margin-top:20px}
+
+@media(max-width:500px){.story{padding:20px 16px 24px}.say{padding:12px 24px;font-size:1.1rem}}
+</style>
+</head>
+<body>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div><div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div><div class="deco">💜</div><div class="deco">🌸</div>
+
+<div class="header"><div class="unicorn-banner">🦄🌈🦄</div><h1 class="site">Βασίλειο της Αλεξίας</h1><p class="tagline">✨ Ώρα για παραμύθι! ✨</p><div class="rainbow-bar"></div></div>
+<div class="topbtns"><a href="index.html" class="glass" aria-label="Πίσω στην αρχική" title="Αρχική">🏰</a></div>
+
+<main>
+<article class="story">
+
+  <!-- 1. PICTURE: change picture-lorem-ipsum.jpg to your image file -->
+  <div class="pic">
+    <img src="staxtopouta.jpg" alt="staxtopouta" onerror="this.outerHTML='<span class=&quot;fallback&quot;>📖</span>'">
+  </div>
+
+  <!-- 2. STORY TITLE -->
+  <h2>Η Σταχτοπούτα</h2>
+
+  <!-- 3. AUDIO: change staxtopouta.mp3 to your audio file -->
+  <div class="listen">
+    <button class="say" id="playBtn" onclick="toggleAudio()" aria-label="Άκουσε το παραμύθι">
+      <span class="ic" id="playIcon">▶️</span><span id="playLabel">Άκουσε το παραμύθι</span>
+    </button>
+    <div class="barw" id="bar" onclick="seek(event)"><i id="barFill"></i></div>
+    <div class="time" id="time">0:00 / 0:00</div>
+    <div class="fb" id="fb"></div>
+    <audio id="audio" src="staxtopouta.mp3" preload="metadata"></audio>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. STORY TEXT -->
+  <div class="text"><p>Μια φορά κι έναν καιρό, σε μια όμορφη πόλη, ζούσε ένα γλυκό και καλόκαρδο κορίτσι. Το πρόσωπό της έλαμπε από καλοσύνη και η καρδιά της ήταν γεμάτη αγάπη για όλα τα πλάσματα του κόσμου. Όμως, η μοίρα της έπαιξε άσχημο παιχνίδι. Η μητέρα της έφυγε από τη ζωή, και ο πατέρας της παντρεύτηκε μια γυναίκα υπερόπτη και κακότροπη, που είχε δύο δικές της κόρες, εξίσου ζηλιάρες και σκληρές.</p>
+<p>Όταν ο πατέρας έλειπε σε μακρινά ταξίδια, η μητριά έδειξε το πραγματικό της πρόσωπο. Πήρε από το κορίτσι τα όμορφα ρούχα του, του φόρεσε ένα παλιό, μπαλωμένο φόρεμα και το ανάγκασε να κάνει όλες τις βαριές δουλειές του σπιτιού: να καθαρίζει τα πατώματα, να πλένει τα βαριά καζάνια, να μαγειρεύει και να ανάβει τα τζάκια.</p>
+<p>Το βράδυ, κουρασμένη καθώς ήταν, πήγαινε και καθόταν στη γωνιά της κουζίνας, δίπλα στο τζάκι, για να ζεσταθεί ανάμεσα στις στάχτες. Οι κακές αδελφές της την κορόιδευαν και την φώναζαν περιφρονητικά: «Κοίτα πώς είναι λερωμένη από τις στάχτες! Είσαι μια σκέτη Σταχτοπούτα!»</p>
+<p>Κι έτσι, όλοι ξέχασαν το πραγματικό της όνομα και την έλεγαν μόνο Σταχτοπούτα. Εκείνη όμως δεν παραπονιόταν ποτέ. Έβρισκε παρηγοριά στα μικρά πουλιά του κήπου και στα ποντικάκια της κουζίνας, που έρχονταν κοντά της γιατί ένιωθαν την αγνή της καρδιά.</p>
+<p>Μια μέρα, σάλπιγγες ακούστηκαν σε όλη την πόλη. Ένας βασιλικός κήρυκας στάθηκε στην πλατεία και ανακοίνωσε: «Ακούσατε, ακούσατε! Ο Βασιλιάς παραθέτει έναν μεγάλο χορό στο παλάτι προς τιμήν του γιου του, του Πρίγκιπα. Όλες οι νέες κοπέλες του βασιλείου είναι καλεσμένες!»</p>
+<p>Στο σπίτι επικράτησε αναστάτωση. Οι δύο αδελφές δοκίμαζαν φορέματα, κορδέλες και μεταξωτά φουλάρια. «Σταχτοπούτα, σιδέρωσε τη φούστα μου!» φώναζε η μία. «Σταχτοπούτα, χτένισε τα μαλλιά μου και δέσε τις κορδέλες!» φώναζε η άλλη.</p>
+<p>Η Σταχτοπούτα τις βοηθούσε υπομονετικά. Με τρεμάμενη φωνή, τόλμησε να ρωτήσει: «Μπορώ να έρθω κι εγώ μαζί σας στον χορό;» Οι αδελφές ξέσπασαν σε γέλια: «Εσύ; Στον βασιλικό χορό; Με αυτά τα κουρέλια και λερωμένη με στάχτη; Θα γελάσει όλο το παλάτι!»</p>
+<p>Όταν η μητριά και οι κόρες έφυγαν με την άμαξα, η Σταχτοπούτα έμεινε μόνη. Κάθισε στον κήπο, έκρυψε το πρόσωπό της στα χέρια της και άρχισε να κλαίει πικρά.</p>
+<p>Ξαφνικά, ένα απαλό, χρυσό φως τύλιξε τα δέντρα. Μπροστά της εμφανίστηκε μια γυναίκα με γλυκό βλέμμα, κρατώντας ένα λαμπερό ραβδί. Ήταν η Νεράιδα Νονά της. «Γιατί κλαις, παιδί μου;» ρώτησε με φωνή ζεστή. «Ήθελα… ήθελα τόσο πολύ να πάω κι εγώ στον χορό», ψιθύρισε η Σταχτοπούτα μέσα από τα δάκρυά της. «Επειδή είσαι καλό και ευγενικό κορίτσι, θα πας!» είπε η Νεράιδα χαμογελώντας. «Τρέξε στον κήπο και φέρε μου τη μεγαλύτερη κολοκύθα που θα βρεις».</p>
+<p>Η Σταχτοπούτα έφερε μια μεγάλη, στρογγυλή κολοκύθα. Η Νεράιδα την άγγιξε με το ραβδί της και η κολοκύθα μεταμορφώθηκε αμέσως σε μια υπέροχη, ολόχρυση άμαξα. Έπειτα, άγγιξε έξι μικρά ποντικάκια, και εκείνα έγιναν έξι πανέμορφα άσπρα άλογα. Ένας αρουραίος μεταμορφώθηκε σε σοβαρό αμαξά, και τέσσερις σαύρες έγιναν ψηλοί, κομψοί υπηρέτες με στολές.</p>
+<p>Τέλος, η Νεράιδα άγγιξε τα κουρέλια της Σταχτοπούτας. Αμέσως, το παλιό φόρεμα μετατράπηκε σε ένα παραμυθένιο φόρεμα από ασήμι και μετάξι, που λαμπύριζε σαν έναστρος ουρανός. Στα πόδια της εμφανίστηκαν δύο διάφανα, λεπτοκαμωμένα γυάλινα γοβάκια, τα πιο όμορφα που είχε δει ποτέ ανθρώπινο μάτι.</p>
+<p>«Τώρα είσαι έτοιμη», είπε η Νεράιδα. «Όμως, πρόσεξε καλά! Πρέπει να φύγεις από το παλάτι πριν σημάνουν μεσάνυχτα. Αν μείνεις έστω κι ένα λεπτό παραπάνω, η άμαξα θα ξαναγίνει κολοκύθα, τα άλογα ποντικάκια, και τα ρούχα σου τα παλιά κουρέλια». «Το υπόσχομαι!» ευχαρίστησε η Σταχτοπούτα γεμάτη χαρά και ανέβηκε στην άμαξα.</p>
+<p>Όταν η Σταχτοπούτα μπήκε στη μεγάλη σάλα του παλατιού, η μουσική σταμάτησε. Όλοι σώπασαν. Κανείς δεν ήξερε ποια ήταν αυτή η λαμπερή, άγνωστη πριγκίπισσα. Ούτε η μητριά ούτε οι αδελφές της την αναγνώρισαν.</p>
+<p>Ο νεαρός Πρίγκιπας την πλησίασε μαγεμένος. Της υποκλίθηκε και της ζήτησε να χορέψουν. Χόρεψαν μαζί όλη τη νύχτα. Ο Πρίγκιπας δεν είχε μάτια για καμία άλλη, γοητευμένος όχι μόνο από την ομορφιά της, αλλά κυρίως από τη γλυκύτητα και την καλοσύνη της.</p>
+<p>Η ώρα περνούσε σαν νερό. Ξαφνικά, το μεγάλο ρολόι του παλατιού άρχισε να χτυπά βαριά: Νταν... Νταν... Νταν... Μεσάνυχτα!</p>
+<p>Η Σταχτοπούτα θυμήθηκε τα λόγια της Νονάς της. Τρομαγμένη, άφησε το χέρι του Πρίγκιπα: «Πρέπει να φύγω!» είπε λαχανιασμένη. «Περίμενε! Ποια είσαι; Πώς σε λένε;» φώναξε ο Πρίγκιπας, τρέχοντας ξωπίσω της.</p>
+<p>Εκείνη έτρεξε όσο πιο γρήγορα μπορούσε στις μαρμάρινες σκάλες. Μέσα στη βιασύνη της, ένα από τα γυάλινα γοβάκια γλίστρησε από το πόδι της κι έμεινε πίσω στο σκαλοπάτι. Δεν πρόλαβε να γυρίσει να το πάρει. Πήδηξε στην άμαξα κι εξαφανίστηκε στη νύχτα.</p>
+<p>Στο δωδέκατο χτύπημα του ρολογιού, τα μάγια λύθηκαν. Η Σταχτοπούτα βρέθηκε στον σκοτεινό δρόμο με τα παλιά της κουρέλια, κρατώντας μόνο το δεύτερο γυάλινο γοβάκι στην τσέπη της.</p>
+<p>Ο Πρίγκιπας βγήκε στις σκάλες και βρήκε το μικροσκοπικό γυάλινο παπούτσι. Το πήρε στα χέρια του και ορκίστηκε: «Θα παντρευτώ μόνο εκείνη που το πόδι της ταιριάζει απόλυτα σε αυτό το γοβάκι!»</p>
+<p>Τις επόμενες μέρες, οι απεσταλμένοι του βασιλιά γύρισαν όλη τη χώρα. Όλες οι κοπέλες δοκίμασαν το γοβάκι, μα σε καμία δεν ταίριαζε. Άλλες είχαν πολύ μεγάλα πόδια, άλλες πολύ φαρδιά.</p>
+<p>Έφτασαν τελικά και στο σπίτι της Σταχτοπούτας. Οι δύο αδελφές έσπρωχναν και πίεζαν τα πόδια τους με όλη τους τη δύναμη, πονώντας και ιδρώνοντας, αλλά μάταια· το γοβάκι δεν έμπαινε με τίποτα.</p>
+<p>«Δεν υπάρχει άλλη κοπέλα σε αυτό το σπίτι;» ρώτησε ο αξιωματικός του παλατιού. «Όχι, καμία άλλη», βιάστηκε να πει η μητριά. «Μόνο μια παραδουλεύτρα, μια ασήμαντη Σταχτοπούτα». «Η διαταγή του Πρίγκιπα είναι ξεκάθαρη: πρέπει να το δοκιμάσουν όλες οι κοπέλες», απάντησε εκείνος.</p>
+<p>Η Σταχτοπούτα πλησίασε ήσυχα, κάθισε στην καρέκλα και άπλωσε το πόδι της. Το γυάλινο γοβάκι γλίστρησε απαλά και ταίριαξε τέλεια, σαν να είχε φτιαχτεί μόνο γι' αυτήν!</p>
+<p>Η μητριά και οι αδελφές πάγωσαν από την έκπληξη. Τότε, η Σταχτοπούτα έβγαλε ήρεμα από την ποδιά της και το δεύτερο γυάλινο γοβάκι και το φόρεσε στο άλλο της πόδι. Εκείνη τη στιγμή, όλοι κατάλαβαν την αλήθεια.</p>
+<p>Ο Πρίγκιπας ειδοποιήθηκε αμέσως και ήρθε να τη βρει. Όταν την κοίταξε στα μάτια, αναγνώρισε αμέσως την αγαπημένη του. Της ζήτησε να γίνει γυναίκα του κι εκείνη δέχτηκε με χαρά.</p>
+<p>Η Σταχτοπούτα, με την καλή καρδιά που είχε, συγχώρεσε τις αδελφές της για όλα τα άσχημα που της είχαν κάνει και τις πήρε μαζί της στο παλάτι. Έγιναν λαμπροί γάμοι, γεμάτοι γέλια, φως και μουσική, κι έζησαν αυτοί καλά κι εμείς καλύτερα!</p> </div>
+
+  <div class="endmark">🌙⭐💤</div>
+</article>
+</main>
+
+<script>
+const a=document.getElementById('audio'),btn=document.getElementById('playBtn'),ic=document.getElementById('playIcon'),lb=document.getElementById('playLabel'),fillEl=document.getElementById('barFill'),tm=document.getElementById('time'),fbEl=document.getElementById('fb');
+const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function ui(){const p=!a.paused&&!a.ended;btn.classList.toggle('playing',p);ic.textContent=p?'⏸️':'▶️';lb.textContent=p?'Παύση':'Άκουσε το παραμύθι'}
+function toggleAudio(){fbEl.textContent='';if(a.paused){a.play().catch(()=>{fbEl.textContent='Δεν βρέθηκε το αρχείο ήχου 🎧'})}else a.pause()}
+function seek(e){if(!a.duration)return;const r=e.currentTarget.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration}
+a.addEventListener('play',ui);a.addEventListener('pause',ui);a.addEventListener('ended',()=>{ui();fillEl.style.width='0';a.currentTime=0});
+a.addEventListener('timeupdate',()=>{fillEl.style.width=(a.duration?a.currentTime/a.duration*100:0)+'%';tm.textContent=fmt(a.currentTime)+' / '+fmt(a.duration)});
+a.addEventListener('loadedmetadata',()=>{tm.textContent='0:00 / '+fmt(a.duration)});
+a.addEventListener('error',()=>{fbEl.textContent='Δεν βρέθηκε το αρχείο ήχου 🎧'});
+</script>
+</body>
+</html>
