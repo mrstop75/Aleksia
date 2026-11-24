@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ζωγραφική με Μαθηματικά 🦄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#ff6eb4;--dpink:#e91e8c;--violet:#9b59b6;--dviolet:#6c3483;--gold:#ffd700;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',cursive;background:linear-gradient(160deg,#2d0050 0%,#6c1a8a 40%,#c0185e 80%,#ff6eb4 100%);background-attachment:fixed;min-height:100vh;padding:0 0 40px;overflow-x:hidden;position:relative;-webkit-tap-highlight-color:transparent;}
+  button{font-family:inherit;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
+  /* floating decorations (same as the alphabet game) */
+  .deco{position:fixed;pointer-events:none;z-index:0;font-size:2rem;animation:floatDeco 8s ease-in-out infinite;opacity:.45;}
+  .deco:nth-child(1){top:5%;left:2%;font-size:2.4rem;animation-delay:0s;}
+  .deco:nth-child(2){top:12%;right:3%;font-size:1.8rem;animation-delay:1.2s;}
+  .deco:nth-child(3){top:32%;left:1%;font-size:2rem;animation-delay:2s;}
+  .deco:nth-child(4){top:48%;right:2%;font-size:2.6rem;animation-delay:.6s;}
+  .deco:nth-child(5){top:65%;left:3%;font-size:1.6rem;animation-delay:3s;}
+  .deco:nth-child(6){top:78%;right:4%;font-size:2rem;animation-delay:1.8s;}
+  .deco:nth-child(7){top:88%;left:2%;font-size:2.2rem;animation-delay:2.5s;}
+  .deco:nth-child(8){top:22%;left:46%;font-size:1.5rem;animation-delay:4s;}
+  @keyframes floatDeco{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-18px) rotate(5deg);}}
+
+  /* top row: home, stars, name, sound */
+  .topbar{position:relative;z-index:3;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:14px 14px 0;}
+  .home-btn{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;font-size:1.6rem;text-decoration:none;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);transition:transform .15s;}
+  .home-btn:hover{transform:scale(1.1);}
+  .stars-hud{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,.25);border-radius:50px;padding:7px 22px;font-family:'Fredoka One',cursive;color:#fff;font-size:1.05rem;cursor:pointer;transition:transform .15s;}
+  .stars-hud:hover{transform:scale(1.04);}
+  #starCount{color:var(--gold);font-size:1.3rem;}
+  .glass-btn{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);border-radius:30px;color:#fff;font-family:'Fredoka One',cursive;font-size:.9rem;padding:8px 18px;cursor:pointer;backdrop-filter:blur(4px);transition:transform .15s;}
+  .glass-btn:hover{transform:scale(1.05);}
+  .mute-btn{width:46px;height:46px;border-radius:50%;padding:0;font-size:1.3rem;display:flex;align-items:center;justify-content:center;}
+
+  /* header */
+  .header{position:relative;z-index:2;text-align:center;padding:18px 20px 6px;}
+  .unicorn-banner{font-size:3rem;margin-bottom:4px;}
+  .header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(90deg,#fff 20%,#ffd6f0 50%,#ffe066 80%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(255,110,180,.5));line-height:1.15;}
+  .header .tagline{color:#ffd6f0;font-size:.95rem;margin-top:5px;font-weight:700;}
+  .rainbow-bar{height:6px;border-radius:10px;background:linear-gradient(90deg,#ff6b6b,#ff9f43,#ffd700,#6bcb77,#4ecdc4,#6b8cff,#c77dff);max-width:500px;margin:10px auto 0;}
+  .voice-note{position:relative;z-index:2;display:none;max-width:560px;margin:10px auto 0;padding:8px 14px;border-radius:16px;background:#fff3cd;color:#7a4a00;font-weight:800;font-size:.85rem;text-align:center;}
+
+  /* layout + cards */
+  .content{position:relative;z-index:2;padding:16px 14px 0;max-width:1040px;margin:0 auto;}
+  .panel{background:rgba(255,255,255,.96);border-radius:28px;padding:20px 22px;box-shadow:0 10px 40px rgba(0,0,0,.2);border:3px solid var(--violet);margin-bottom:16px;}
+  .panel.pink{border-color:var(--pink);}
+  .panel h2,.step-title{font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:1.1rem;margin-bottom:9px;}
+  .speak-task-btn{display:flex;align-items:center;gap:8px;margin:0 auto 16px;background:linear-gradient(135deg,#ffe066,#ffb347);color:#7a4a00;border:none;border-radius:30px;padding:11px 24px;font-size:1rem;font-family:'Fredoka One',cursive;cursor:pointer;box-shadow:0 4px 16px rgba(255,180,0,.4);transition:transform .15s;width:fit-content;}
+  .speak-task-btn:hover{transform:scale(1.05);}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .row.between{justify-content:space-between;gap:12px;}
+  .divider{border:0;border-top:2px solid #f0e8ff;margin:16px 0;}
+
+  .pill{border:3px solid #e0c8ff;background:#fdf0ff;color:var(--dviolet);border-radius:30px;padding:8px 16px;font-family:'Fredoka One',cursive;font-size:.9rem;cursor:pointer;transition:all .2s;}
+  .pill:hover:not(.active){background:#f5d6ff;border-color:var(--violet);}
+  .pill.active{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;border-color:transparent;box-shadow:0 4px 18px rgba(255,110,180,.5);transform:translateY(-2px);}
+  .pill.small{padding:6px 13px;font-size:.8rem;}
+  .pill.sky{background:#e0f2ff;border-color:#a5d8ff;color:#0b5394;}
+
+  /* picture strip */
+  .pic-strip{display:flex;gap:10px;overflow-x:auto;padding:6px 4px 10px;scrollbar-width:thin;scrollbar-color:#f48fb1 #fce4ec;}
+  .pic-card{flex:0 0 auto;width:112px;padding:8px 6px 9px;border-radius:18px;border:3px solid #e0c8ff;background:#fdf0ff;cursor:pointer;text-align:center;transition:transform .15s,border-color .15s;}
+  .pic-card:hover{transform:scale(1.06);border-color:var(--violet);}
+  .pic-card.selected{border-color:var(--pink);background:#ffe0f5;box-shadow:0 4px 14px rgba(255,110,180,.45);}
+  .pic-card .pe{font-size:2.2rem;line-height:1.1;display:block;}
+  .pic-card .pt{font-size:.74rem;font-weight:800;color:#555;line-height:1.2;display:block;margin-top:3px;}
+
+  /* feedback */
+  .feedback{display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:22px;border:3px solid #e0c8ff;background:#fdf0ff;padding:12px 16px;margin-bottom:16px;color:var(--dviolet);font-weight:800;box-shadow:0 6px 22px rgba(0,0,0,.15);transition:background .25s,border-color .25s;}
+  .feedback .ficon{font-size:1.7rem;flex-shrink:0;}
+  .feedback .fwrap{display:flex;align-items:center;gap:12px;min-width:0;}
+  .feedback.ok{background:#d4f8d4;border-color:#52c752;color:#1c5a1c;}
+  .feedback.bad{background:#fde0e0;border-color:#f06060;color:#8a1f1f;}
+  .feedback.hint{background:#fff3cd;border-color:#ffc94d;color:#7a4a00;}
+  .progress-chip{flex-shrink:0;background:#fff;border:2px solid #e0c8ff;border-radius:30px;padding:3px 14px;font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:.95rem;}
+
+  /* workspace */
+  .workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr);gap:16px;align-items:start;}
+  .workspace .panel{margin-bottom:0;}
+  .art-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+  .art-title{font-family:'Fredoka One',cursive;color:var(--dpink);font-size:1.5rem;}
+  .download-btn{background:linear-gradient(135deg,#6bcb77,#2fb67c);color:#fff;border:none;border-radius:30px;padding:9px 18px;font-family:'Fredoka One',cursive;font-size:.9rem;cursor:pointer;transition:transform .15s;}
+  .download-btn:hover{transform:scale(1.05);}
+  .svg-wrap{width:100%;max-width:540px;aspect-ratio:1/1;margin:0 auto;background:#fff;border-radius:22px;border:3px dashed #e0c8ff;padding:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .svg-wrap svg{width:100%;height:100%;}
+  .color-region{cursor:pointer;transition:fill .42s ease,filter .2s ease;}
+  .color-region:hover{filter:brightness(.94);}
+  .color-region.solved{cursor:default;}
+  .color-region.solved:hover{filter:none;}
+  .color-region:focus-visible{outline:none;stroke:#e91e8c;stroke-width:4.5;}
+  .math-label{pointer-events:none;transition:opacity .35s ease;}
+  .math-label.hidden-label{opacity:0;}
+  @keyframes gentleShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+  .shake-region{animation:gentleShake .45s cubic-bezier(.36,.07,.19,.97) both;}
+  @keyframes popIn{0%{transform:scale(.95);}50%{transform:scale(1.035);}100%{transform:scale(1);}}
+  .pop-region{animation:popIn .35s ease-out;transform-origin:center;transform-box:fill-box;}
+
+  /* palette */
+  .palette-sub{font-size:.88rem;color:#888;font-weight:700;margin-bottom:11px;}
+  .palette{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .swatch{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:18px;border:3px solid #e0c8ff;background:#fdf0ff;cursor:pointer;text-align:left;transition:all .2s cubic-bezier(.34,1.56,.64,1);min-width:0;}
+  .swatch:hover{border-color:var(--violet);}
+  .swatch.active{border-color:var(--dpink);background:#ffe0f5;transform:translateY(-3px) scale(1.03);box-shadow:0 8px 18px rgba(233,30,140,.3);}
+  .swatch.done{opacity:.6;}
+  .chip{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Fredoka One',cursive;font-size:1.25rem;color:#222;border:2px solid rgba(0,0,0,.22);}
+  .swatch .sname{font-weight:800;color:#333;font-size:.88rem;line-height:1.15;overflow:hidden;text-overflow:ellipsis;}
+  .swatch .snum{font-size:.78rem;color:#888;font-weight:700;}
+  .swatch .snum b{color:var(--dpink);}
+  .tip{margin-top:14px;display:flex;gap:9px;align-items:flex-start;background:#fff9e6;border:2px solid #ffe08a;border-radius:16px;padding:10px 12px;color:#7a4a00;font-weight:700;font-size:.85rem;line-height:1.35;}
+
+  /* modals */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:14px;}
+  .overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:28px;padding:28px 26px;text-align:center;width:100%;max-width:380px;box-shadow:0 12px 40px rgba(0,0,0,.25);border:3px solid var(--pink);max-height:92vh;overflow-y:auto;}
+  .modal.wide{max-width:560px;border-color:var(--gold);}
+  .modal .big{font-size:2.6rem;margin-bottom:6px;}
+  .modal h3{font-family:'Fredoka One',cursive;color:var(--dviolet);font-size:1.4rem;margin-bottom:6px;}
+  .modal .msg{color:#aaa;font-size:.9rem;margin-bottom:16px;font-weight:700;}
+  .name-input{width:100%;padding:12px 16px;border:3px solid #e0c8ff;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--dviolet);outline:none;text-align:center;margin-bottom:16px;}
+  .name-input:focus{border-color:var(--violet);}
+  .modal-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .btn-main{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff;border:none;border-radius:30px;padding:11px 26px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:transform .15s;}
+  .btn-soft{background:#f0e8ff;color:var(--dviolet);border:none;border-radius:30px;padding:11px 22px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:transform .15s;}
+  .btn-green{background:linear-gradient(135deg,#6bcb77,#2fb67c);color:#fff;border:none;border-radius:30px;padding:11px 22px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;}
+  .btn-main:hover,.btn-soft:hover,.btn-green:hover{transform:scale(1.05);}
+  .star-total{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--gold);line-height:1.1;}
+  .star-label{color:#aaa;font-size:.88rem;margin-bottom:10px;font-weight:700;}
+  .badges{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-top:10px;}
+  .badge{background:#f8f0ff;border-radius:14px;padding:11px 12px;border:2px solid #e0c8ff;text-align:center;min-width:104px;opacity:.35;transition:all .3s;}
+  .badge.earned{opacity:1;border-color:var(--gold);background:linear-gradient(135deg,#fff9e6,#fff0f8);box-shadow:0 4px 14px rgba(255,215,0,.3);}
+  .badge .bi{font-size:1.8rem;}
+  .badge .bn{font-size:.75rem;font-weight:800;color:var(--dviolet);margin-top:3px;}
+  .badge .br{font-size:.7rem;color:#bbb;}
+  .progress-wrap{background:#f0e8ff;border-radius:20px;height:15px;margin:14px 0 5px;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .5s;}
+  .progress-label{font-size:.85rem;color:#999;font-weight:700;margin-bottom:14px;}
+  .bonus{display:inline-flex;align-items:center;gap:8px;background:#fff3cd;border:2px solid #ffd966;border-radius:30px;padding:8px 20px;margin-bottom:18px;font-family:'Fredoka One',cursive;color:#7a4a00;font-size:1.1rem;}
+  .link-btn{display:block;margin:14px auto 0;background:none;border:none;color:#aaa;text-decoration:underline;font-weight:700;cursor:pointer;font-size:.85rem;}
+  .star-burst{position:fixed;pointer-events:none;z-index:999;font-size:2.5rem;animation:burstAnim .9s forwards;}
+  @keyframes burstAnim{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-80px) scale(1.8);opacity:0;}}
+  #confetti-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1100;}
+
+  @media (max-width:820px){.workspace{grid-template-columns:1fr;}}
+  @media (max-width:480px){.panel{padding:16px 14px;}.art-title{font-size:1.25rem;}.palette{gap:8px;}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">⭐</div>
+<div class="deco">🦄</div><div class="deco">🌈</div><div class="deco">✨</div>
+<div class="deco">💜</div><div class="deco">🌸</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="topbar">
+  <a class="home-btn" href="index.html" title="Αρχική" aria-label="Αρχική" onclick="playSelectSound()">🏰</a>
+  <button class="stars-hud" onclick="openStars()" aria-label="Τα αστέρια μου">
+    <span style="font-size:1.4rem">⭐</span>
+    <span>Αστέρια: <span id="starCount">0</span></span>
+    <span style="font-size:1.4rem">🦄</span>
+  </button>
+  <button class="glass-btn" onclick="openName()">✏️ Άλλαξε όνομα</button>
+  <button class="glass-btn mute-btn" id="muteBtn" onclick="toggleMute()" aria-label="Φωνή" title="Φωνή ναι / όχι">🔊</button>
+</div>
+
+<div class="header">
+  <div class="unicorn-banner">🦄🌈🦄</div>
+  <h1>Ζωγραφική με Μαθηματικά</h1>
+  <p class="tagline" id="tagline">✨ Λύσε τις πράξεις & ζωγράφισε μαγικές εικόνες! ✨</p>
+  <div class="rainbow-bar"></div>
+</div>
+<div class="voice-note" id="voiceNote">Δεν βρέθηκε ελληνική φωνή σε αυτή τη συσκευή. Η φωνή μπορεί να μη διαβάζει σωστά τα ελληνικά.</div>
+
+<main class="content">
+
+  <section class="panel">
+    <button class="speak-task-btn" onclick="speakTask()">🔊 Άκουσε τι να κάνεις!</button>
+
+    <div class="row between">
+      <div>
+        <div class="step-title">1. Διάλεξε δυσκολία</div>
+        <div class="row" id="diffRow">
+          <button class="pill active" id="diff-easy" onclick="setDifficulty('easy')">🌸 Εύκολο (1–10)</button>
+          <button class="pill" id="diff-medium" onclick="setDifficulty('medium')">🌟 Μεσαίο (1–20)</button>
+          <button class="pill" id="diff-hard" onclick="setDifficulty('hard')">👑 Δύσκολο (1–100)</button>
+        </div>
+      </div>
+      <button class="pill sky" onclick="resetCurrentPicture(true)">🔄 Νέες Ασκήσεις</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row between" style="margin-bottom:6px">
+      <div class="step-title" style="margin:0">2. Διάλεξε εικόνα (<span id="countLabel">0</span>)</div>
+      <div class="row" id="categoryTabs"></div>
+    </div>
+    <div class="pic-strip" id="pictureSelector"></div>
+  </section>
+
+  <div class="feedback" id="feedback" role="status" aria-live="polite">
+    <div class="fwrap"><span class="ficon" id="feedbackIcon">🦄</span><span id="feedbackText">Διάλεξε ένα χρώμα και πάτησε τη σωστή πράξη στην εικόνα!</span></div>
+    <span class="progress-chip" id="progressText">0 / 0</span>
+  </div>
+
+  <div class="workspace">
+    <section class="panel pink">
+      <div class="art-head">
+        <div class="art-title" id="artTitle">🦄 Μαγικός Μονόκερος</div>
+        <button class="download-btn" onclick="downloadArtwork()">💾 Κατέβασε τη Ζωγραφιά</button>
+      </div>
+      <div class="svg-wrap" id="svg-wrapper"></div>
+    </section>
+
+    <aside class="panel">
+      <h2>🎨 Παλέτα Χρωμάτων</h2>
+      <p class="palette-sub">Κάθε χρώμα έχει έναν μυστικό αριθμό. Πάτησε ένα χρώμα για να ακούσεις τον αριθμό του.</p>
+      <div class="palette" id="paletteContainer"></div>
+      <div class="tip"><span style="font-size:1.2rem">💡</span><span>Βρες στην εικόνα μια πράξη που κάνει τον αριθμό του χρώματος και πάτησέ την!</span></div>
+    </aside>
+  </div>
+</main>
+
+<!-- NAME -->
+<div class="overlay" id="nameOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="nameTitle">
+    <div class="big">🦄</div>
+    <h3 id="nameTitle">Ποιο είναι το όνομά σου;</h3>
+    <div class="msg">Τα αστέρια θα μηδενιστούν!</div>
+    <input class="name-input" id="nameInput" type="text" maxlength="20" placeholder="Γράψε το όνομά σου..." autocomplete="off">
+    <div class="modal-btns">
+      <button class="btn-main" onclick="applyName()">✅ Εντάξει!</button>
+      <button class="btn-soft" onclick="closeName()">✖ Άκυρο</button>
+    </div>
+  </div>
+</div>
+
+<!-- STARS / BADGES -->
+<div class="overlay" id="starsOverlay">
+  <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="starsTitle">
+    <div class="big">🌟</div>
+    <h3 id="starsTitle">⭐ Τα Αστέρια μου ⭐</h3>
+    <div class="star-total" id="bigStarCount">0</div>
+    <div class="star-label">Συνολικά Αστέρια</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel"></div>
+    <div class="badges" id="badges"></div>
+    <div class="modal-btns" style="margin-top:20px"><button class="btn-main" onclick="closeStars()">✨ Συνέχισε το παιχνίδι!</button></div>
+  </div>
+</div>
+
+<!-- COMPLETED -->
+<div class="overlay" id="doneOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="doneTitle" style="border-color:var(--pink)">
+    <div class="big" style="font-size:3.4rem">👑🦄🎉</div>
+    <h3 id="doneTitle">Μπράβο!</h3>
+    <p class="msg" id="doneSub" style="color:#777;font-size:1rem">Ολοκλήρωσες τη ζωγραφιά!</p>
+    <div class="bonus">⭐ +5 Μπόνους Αστέρια!</div>
+    <div class="modal-btns">
+      <button class="btn-green" onclick="downloadArtwork()">💾 Κατέβασέ την</button>
+      <button class="btn-main" onclick="nextPicture()">Επόμενη Εικόνα ➜</button>
+    </div>
+    <button class="link-btn" onclick="closeDone()">Κλείσιμο</button>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/* ==========================================================================
+   1. SPEECH (device voice, el-GR) - emojis and symbols are never read aloud
+   ========================================================================== */
+const Speech = (() => {
+  const hasTTS = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  let enabled = true, voice = null, hasGreek = false, pending = [], flushTimer = null;
+
+  try { if (localStorage.getItem('aleksia_colormath_mute') === '1') enabled = false; } catch (e) {}
+
+  function score(v) {
+    return (/natural|online/i.test(v.name) ? 4 : 0) +
+           (/google/i.test(v.name) ? 3 : 0) +
+           (/melina|nestoras|athina|stefanos/i.test(v.name) ? 2 : 0) +
+           (v.localService ? 0 : 1);
+  }
+  function refreshVoices() {
+    if (!hasTTS) return;
+    const greek = speechSynthesis.getVoices().filter(v => /^el([-_]|$)/i.test(v.lang));
+    voice = greek.sort((a, b) => score(b) - score(a))[0] || null;
+    hasGreek = greek.length > 0;
+  }
+  if (hasTTS) {
+    refreshVoices();
+    speechSynthesis.onvoiceschanged = refreshVoices;
+  }
+
+  // Turns any UI text into something safe and natural to say out loud.
+  function clean(input) {
+    let t = String(input == null ? '' : input);
+    t = t.replace(/(\d)\s*[+＋]\s*(\d)/g, '$1 συν $2')
+         .replace(/(\d)\s*[−\-]\s*(\d)/g, '$1 μείον $2')
+         .replace(/(\d)\s*–\s*(\d)/g, '$1 μέχρι $2')
+         .replace(/\s*=\s*/g, ' κάνει ')
+         .replace(/\+/g, ' συν ')
+         .replace(/&/g, ' και ')
+         .replace(/%/g, ' τοις εκατό ');
+    // emojis, pictographs, arrows, dingbats, check marks, bullets, joiners, skin tones, flags
+    t = t.replace(/[\p{Extended_Pictographic}\p{Emoji_Modifier}\p{Regional_Indicator}\u{E0020}-\u{E007F}\uFE0E\uFE0F\u200D\u20E3\u2190-\u21FF\u2022\u25A0-\u25FF\u2600-\u27BF\u2B00-\u2BFF]/gu, ' ');
+    t = t.replace(/[—–]/g, ', ')
+         .replace(/[«»"“”„]/g, '')
+         .replace(/[()\[\]{}]/g, ', ')
+         .replace(/[*_#~^|\\\/<>]/g, ' ')
+         .replace(/\s+([,.!?;])/g, '$1')
+         .replace(/(\s*,)+/g, ',')
+         .replace(/\s{2,}/g, ' ')
+         .replace(/^[\s,.;!?]+/, '')
+         .trim();
+    return /[\p{L}\p{N}]/u.test(t) ? t : '';
+  }
+
+  // Split into short sentences so long text is never cut off by the browser.
+  function chunks(t) {
+    const parts = t.match(/[^.!?;…]+[.!?;…]*/g) || [t];
+    const out = []; let cur = '';
+    parts.forEach(p => {
+      cur += (cur ? ' ' : '') + p.trim();
+      if (cur.length >= 40) { out.push(cur); cur = ''; }
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+
+  function flush() {
+    const list = pending; pending = [];
+    try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch (e) {}
+    list.forEach(part => {
+      const u = new SpeechSynthesisUtterance(part);
+      u.lang = 'el-GR';
+      if (voice) u.voice = voice;
+      u.rate = 0.85;
+      u.pitch = 1;
+      speechSynthesis.speak(u);
+    });
+  }
+
+  function speak(text, opts) {
+    if (!enabled || !hasTTS) return;
+    const t = clean(text);
+    if (!t) return;
+    const queue = !!(opts && opts.queue);
+    if (!queue) { pending = []; try { speechSynthesis.cancel(); } catch (e) {} }
+    pending.push(...chunks(t));
+    clearTimeout(flushTimer);
+    flushTimer = setTimeout(flush, queue ? 0 : 60);
+  }
+
+  function setEnabled(on) {
+    enabled = on;
+    try { localStorage.setItem('aleksia_colormath_mute', on ? '0' : '1'); } catch (e) {}
+    if (!on && hasTTS) { pending = []; speechSynthesis.cancel(); }
+  }
+
+  return { speak, clean, setEnabled, get enabled() { return enabled; }, get missingGreek() { return hasTTS && !hasGreek; } };
+})();
+
+const speakGreek = (text, opts) => Speech.speak(text, opts);
+
+function toggleMute() {
+  Speech.setEnabled(!Speech.enabled);
+  $('muteBtn').textContent = Speech.enabled ? '🔊' : '🔇';
+  playSelectSound();
+  if (Speech.enabled) speakGreek('Η φωνή άνοιξε!');
+}
+
+/* ==========================================================================
+   2. SOUND EFFECTS
+   ========================================================================== */
+let audioCtx = null;
+function initAudio() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  } catch (e) {}
+  return audioCtx;
+}
+function tone(freq, start, dur, type, vol, endFreq) {
+  const ctx = initAudio(); if (!ctx) return;
+  const now = ctx.currentTime + start;
+  const osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, now);
+  if (endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, now + dur);
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.exponentialRampToValueAtTime(vol, now + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + dur + 0.02);
+}
+function playSuccessSound() { [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, i * 0.06, 0.3, 'triangle', 0.15)); }
+function playGentleBoop() { tone(230, 0, 0.22, 'sine', 0.14, 170); }
+function playSelectSound() { tone(460, 0, 0.08, 'sine', 0.09, 620); }
+function playCelebrationFanfare() {
+  [[523.25, 0, .14], [659.25, .14, .14], [783.99, .28, .14], [1046.5, .42, .32], [783.99, .8, .14], [1046.5, .98, .5]]
+    .forEach(n => tone(n[0], n[1], n[2], 'triangle', 0.18));
+}
+
+/* ==========================================================================
+   3. PALETTE, BADGES & MATH EQUATIONS
+   ========================================================================== */
+const COLOR_PALETTE = [
+  { id: 'pink',   name: 'Ροζ',       hex: '#FF85B3' },
+  { id: 'purple', name: 'Μοβ',       hex: '#C084FC' },
+  { id: 'blue',   name: 'Γαλάζιο',   hex: '#60A5FA' },
+  { id: 'yellow', name: 'Κίτρινο',   hex: '#FACC15' },
+  { id: 'mint',   name: 'Βεραμάν',   hex: '#34D399' },
+  { id: 'coral',  name: 'Πορτοκαλί', hex: '#FB923C' },
+  { id: 'red',    name: 'Κόκκινο',   hex: '#F87171' },
+  { id: 'cream',  name: 'Κρεμ',      hex: '#FDE68A' }
+];
+
+// Gender-neutral badges
+const BADGES = [
+  { stars: 10,  icon: '🌸', name: 'Πρώτο Βήμα' },
+  { stars: 30,  icon: '🌈', name: 'Ουράνιο Τόξο' },
+  { stars: 60,  icon: '🦋', name: 'Πεταλούδα' },
+  { stars: 100, icon: '💜', name: 'Μοβ Καρδιά' },
+  { stars: 150, icon: '🌟', name: 'Λαμπερό Αστέρι' },
+  { stars: 220, icon: '👑', name: 'Χρυσό Στέμμα' },
+  { stars: 320, icon: '🦄', name: 'Μαγεία Μονόκερου' },
+  { stars: 450, icon: '🏆', name: 'Μεγάλο Έπαθλο' }
+];
+
+function generateMathEquation(target, difficulty) {
+  if (difficulty === 'easy' || difficulty === 'medium') {
+    const maxNum = difficulty === 'easy' ? 10 : 20;
+    const useAddition = target === 0 ? false : (Math.random() < 0.6);
+    if (useAddition && target >= 1) {
+      const a = Math.floor(Math.random() * (target + 1));
+      return `${a} + ${target - a}`;
+    }
+    const maxB = Math.max(1, maxNum - target);
+    const b = Math.floor(Math.random() * maxB) + 1;
+    const a = target + b;
+    if (a <= maxNum) return `${a} - ${b}`;
+    const x = Math.floor(Math.random() * target);
+    return `${x} + ${target - x}`;
+  }
+  const maxNum = 100;
+  const useAddition = target >= 15 && (target > 85 || Math.random() < 0.58);
+  if (useAddition) {
+    const minPart = Math.min(5, Math.floor(target / 2));
+    const a = Math.floor(Math.random() * (target - minPart * 2 + 1)) + minPart;
+    return `${a} + ${target - a}`;
+  }
+  const maxB = Math.max(5, maxNum - target);
+  const b = Math.floor(Math.random() * Math.min(45, maxB)) + 4;
+  const a = target + b;
+  if (a <= maxNum) return `${a} - ${b}`;
+  const a2 = Math.floor(target / 2);
+  return `${a2} + ${target - a2}`;
+}
+
+        /* ==========================================================================
+           3. 40 DISTINCT COLORING TEMPLATES (Organized into 5 Categories)
+           ========================================================================== */
+        const CATEGORIES = [
+            { id: 'all',      label: 'Όλα' },
+            { id: 'magic',    label: '🦄 Μαγεία & Παραμύθια' },
+            { id: 'animals',  label: '🐾 Ζωάκια' },
+            { id: 'nature',   label: '🌸 Φύση & Καιρός' },
+            { id: 'vehicles', label: '🚀 Οχήματα & Αντικείμενα' },
+            { id: 'food',     label: '🍓 Γλυκά & Φρούτα' }
+        ];
+
+        const ARTWORKS = [
+            // --- CATEGORY 1: MAGIC & FAIRYTALES (1-10) ---
+            {
+                id: 'unicorn', category: 'magic', title: 'Μαγικός Μονόκερος', emoji: '🦄',
+                colorsUsed: ['yellow', 'pink', 'purple', 'blue', 'mint', 'cream'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 65, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'yellow', type: 'polygon', points: '215,115 245,35 255,125', lx: 238, ly: 88, fontSize: 13 },
+                    { id: 'r3', colorKey: 'purple', type: 'path', d: 'M 175,110 C 130,90 100,130 115,175 C 140,165 160,150 180,140 Z', lx: 142, ly: 135, fontSize: 14 },
+                    { id: 'r4', colorKey: 'pink', type: 'path', d: 'M 115,175 C 85,205 90,255 125,275 C 145,250 155,220 165,190 Z', lx: 122, ly: 225, fontSize: 14 },
+                    { id: 'r5', colorKey: 'mint', type: 'path', d: 'M 125,275 C 105,310 120,350 155,360 C 165,330 170,300 175,275 Z', lx: 142, ly: 322, fontSize: 14 },
+                    { id: 'r6', colorKey: 'pink', type: 'polygon', points: '180,115 170,70 205,105', lx: 184, ly: 96, fontSize: 12 },
+                    { id: 'r7', colorKey: 'cream', type: 'path', d: 'M 180,115 C 220,105 265,125 285,165 C 315,180 325,220 295,245 C 265,260 245,245 230,235 L 235,360 L 155,360 C 165,295 165,215 175,150 Z', lx: 215, ly: 280, fontSize: 16 },
+                    { id: 'r8', colorKey: 'pink', type: 'circle', cx: 262, cy: 205, r: 18, lx: 262, ly: 205, fontSize: 12 },
+                    { id: 'r9', colorKey: 'yellow', type: 'polygon', points: '325,65 333,85 355,85 338,98 344,118 325,106 306,118 312,98 295,85 317,85', lx: 325, ly: 93, fontSize: 12 }
+                ],
+                decorations: `<path d="M 235,165 Q 248,152 260,165" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/><circle cx="302" cy="212" r="3.5" fill="#1e293b"/>`
+            },
+            {
+                id: 'castle', category: 'magic', title: 'Παλάτι της Πριγκίπισσας', emoji: '🏰',
+                colorsUsed: ['pink', 'purple', 'yellow', 'blue', 'mint', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 16, lx: 65, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 290, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'purple', type: 'polygon', points: '65,160 105,85 145,160', lx: 105, ly: 135, fontSize: 14 },
+                    { id: 'r4', colorKey: 'purple', type: 'polygon', points: '255,160 295,85 335,160', lx: 295, ly: 135, fontSize: 14 },
+                    { id: 'r5', colorKey: 'coral', type: 'polygon', points: '145,135 200,45 255,135', lx: 200, ly: 105, fontSize: 15 },
+                    { id: 'r6', colorKey: 'pink', type: 'rect', x: 75, y: 160, width: 60, height: 160, lx: 105, ly: 240, fontSize: 15 },
+                    { id: 'r7', colorKey: 'pink', type: 'rect', x: 265, y: 160, width: 60, height: 160, lx: 295, ly: 240, fontSize: 15 },
+                    { id: 'r8', colorKey: 'yellow', type: 'rect', x: 135, y: 135, width: 130, height: 185, lx: 200, ly: 195, fontSize: 16 },
+                    { id: 'r9', colorKey: 'coral', type: 'path', d: 'M 170,320 L 170,265 A 30,30 0 0,1 230,265 L 230,320 Z', lx: 200, ly: 285, fontSize: 15 }
+                ],
+                decorations: `<line x1="200" y1="20" x2="200" y2="48" stroke="#1e293b" stroke-width="3"/><circle cx="105" cy="190" r="10" fill="#fff" stroke="#1e293b" stroke-width="2.5"/><circle cx="295" cy="190" r="10" fill="#fff" stroke="#1e293b" stroke-width="2.5"/>`
+            },
+            {
+                id: 'rainbow', category: 'magic', title: 'Ουράνιο Τόξο & Συννεφάκια', emoji: '🌈',
+                colorsUsed: ['red', 'coral', 'yellow', 'mint', 'blue', 'purple'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 200, ly: 55, fontSize: 16 },
+                    { id: 'r2', colorKey: 'red', type: 'path', d: 'M 45,290 A 155,155 0 0,1 355,290 L 325,290 A 125,125 0 0,0 75,290 Z', lx: 200, ly: 150, fontSize: 15 },
+                    { id: 'r3', colorKey: 'coral', type: 'path', d: 'M 75,290 A 125,125 0 0,1 325,290 L 295,290 A 95,95 0 0,0 105,290 Z', lx: 200, ly: 180, fontSize: 15 },
+                    { id: 'r4', colorKey: 'yellow', type: 'path', d: 'M 105,290 A 95,95 0 0,1 295,290 L 265,290 A 65,65 0 0,0 135,290 Z', lx: 200, ly: 210, fontSize: 15 },
+                    { id: 'r5', colorKey: 'mint', type: 'path', d: 'M 135,290 A 65,65 0 0,1 265,290 L 235,290 A 35,35 0 0,0 165,290 Z', lx: 200, ly: 240, fontSize: 14 },
+                    { id: 'r6', colorKey: 'purple', type: 'path', d: 'M 40,320 A 28,28 0 0,1 65,275 A 35,35 0 0,1 125,275 A 28,28 0 0,1 145,320 Z', lx: 92, ly: 300, fontSize: 15 },
+                    { id: 'r7', colorKey: 'purple', type: 'path', d: 'M 255,320 A 28,28 0 0,1 280,275 A 35,35 0 0,1 340,275 A 28,28 0 0,1 360,320 Z', lx: 308, ly: 300, fontSize: 15 },
+                    { id: 'r8', colorKey: 'yellow', type: 'circle', cx: 330, cy: 75, r: 34, lx: 330, ly: 75, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'crown', category: 'magic', title: 'Βασιλικό Στέμμα', emoji: '👑',
+                colorsUsed: ['purple', 'yellow', 'pink', 'blue', 'mint', 'red'],
+                regions: [
+                    { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 75, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'yellow', type: 'polygon', points: '65,280 50,120 135,195 200,95 265,195 350,120 335,280', lx: 200, ly: 215, fontSize: 16 },
+                    { id: 'r3', colorKey: 'coral', type: 'rect', x: 65, y: 280, width: 270, height: 42, rx: 10, lx: 200, ly: 301, fontSize: 15 },
+                    { id: 'r4', colorKey: 'pink', type: 'circle', cx: 50, cy: 112, r: 18, lx: 50, ly: 112, fontSize: 12 },
+                    { id: 'r5', colorKey: 'red', type: 'circle', cx: 200, cy: 85, r: 22, lx: 200, ly: 85, fontSize: 13 },
+                    { id: 'r6', colorKey: 'pink', type: 'circle', cx: 350, cy: 112, r: 18, lx: 350, ly: 112, fontSize: 12 },
+                    { id: 'r7', colorKey: 'blue', type: 'polygon', points: '200,225 222,250 200,275 178,250', lx: 200, ly: 250, fontSize: 13 },
+                    { id: 'r8', colorKey: 'mint', type: 'circle', cx: 125, cy: 252, r: 18, lx: 125, ly: 252, fontSize: 12 },
+                    { id: 'r9', colorKey: 'mint', type: 'circle', cx: 275, cy: 252, r: 18, lx: 275, ly: 252, fontSize: 12 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'wand', category: 'magic', title: 'Μαγικό Ραβδί & Αστέρια', emoji: '🪄',
+                colorsUsed: ['blue', 'yellow', 'pink', 'purple', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 75, ly: 70, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'polygon', points: '120,340 250,150 270,165 140,355', lx: 195, ly: 255, fontSize: 15 },
+                    { id: 'r3', colorKey: 'yellow', type: 'polygon', points: '265,65 282,115 335,115 292,145 308,195 265,165 222,195 238,145 195,115 248,115', lx: 265, ly: 135, fontSize: 15 },
+                    { id: 'r4', colorKey: 'purple', type: 'circle', cx: 130, cy: 140, r: 28, lx: 130, ly: 140, fontSize: 14 },
+                    { id: 'r5', colorKey: 'mint', type: 'circle', cx: 320, cy: 255, r: 30, lx: 320, ly: 255, fontSize: 14 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 95, cy: 245, r: 24, lx: 95, ly: 245, fontSize: 13 },
+                    { id: 'r7', colorKey: 'pink', type: 'circle', cx: 245, cy: 315, r: 26, lx: 245, ly: 315, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'mermaid', category: 'magic', title: 'Γοργόνα στη Θάλασσα', emoji: '🧜‍♀️',
+                colorsUsed: ['blue', 'mint', 'pink', 'cream', 'coral', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 75, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'path', d: 'M 145,120 C 125,65 275,65 255,120 C 285,165 275,235 245,250 L 155,250 C 125,235 115,165 145,120 Z', lx: 252, ly: 145, fontSize: 14 },
+                    { id: 'r3', colorKey: 'cream', type: 'circle', cx: 200, cy: 135, r: 42, lx: 200, ly: 135, fontSize: 15 },
+                    { id: 'r4', colorKey: 'pink', type: 'rect', x: 168, y: 180, width: 64, height: 42, rx: 14, lx: 200, ly: 201, fontSize: 14 },
+                    { id: 'r5', colorKey: 'mint', type: 'path', d: 'M 165,222 L 235,222 C 245,275 225,315 200,335 C 175,315 155,275 165,222 Z', lx: 200, ly: 270, fontSize: 15 },
+                    { id: 'r6', colorKey: 'pink', type: 'polygon', points: '200,332 145,368 185,372', lx: 174, ly: 358, fontSize: 12 },
+                    { id: 'r7', colorKey: 'pink', type: 'polygon', points: '200,332 255,368 215,372', lx: 226, ly: 358, fontSize: 12 },
+                    { id: 'r8', colorKey: 'yellow', type: 'circle', cx: 325, cy: 90, r: 24, lx: 325, ly: 90, fontSize: 13 }
+                ],
+                decorations: `<circle cx="186" cy="130" r="4" fill="#1e293b"/><circle cx="214" cy="130" r="4" fill="#1e293b"/><path d="M 190,148 Q 200,157 210,148" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>`
+            },
+            {
+                id: 'fairy', category: 'magic', title: 'Νεράιδα του Δάσους', emoji: '🧚‍♀️',
+                colorsUsed: ['mint', 'pink', 'purple', 'yellow', 'cream', 'blue'],
+                regions: [
+                    { id: 'r1', colorKey: 'mint', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'blue', type: 'ellipse', cx: 125, cy: 195, rx: 65, ry: 42, lx: 112, ly: 195, fontSize: 15 },
+                    { id: 'r3', colorKey: 'blue', type: 'ellipse', cx: 275, cy: 195, rx: 65, ry: 42, lx: 288, ly: 195, fontSize: 15 },
+                    { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 200, cy: 115, r: 44, lx: 200, ly: 88, fontSize: 13 },
+                    { id: 'r5', colorKey: 'cream', type: 'circle', cx: 200, cy: 130, r: 34, lx: 200, ly: 130, fontSize: 14 },
+                    { id: 'r6', colorKey: 'pink', type: 'polygon', points: '175,168 225,168 255,295 145,295', lx: 200, ly: 235, fontSize: 16 },
+                    { id: 'r7', colorKey: 'purple', type: 'polygon', points: '145,295 255,295 270,335 130,335', lx: 200, ly: 315, fontSize: 15 }
+                ],
+                decorations: `<circle cx="188" cy="126" r="3.5" fill="#1e293b"/><circle cx="212" cy="126" r="3.5" fill="#1e293b"/><path d="M 192,140 Q 200,148 208,140" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>`
+            },
+            {
+                id: 'dragon', category: 'magic', title: 'Δράκος Φιλικός', emoji: '🐉',
+                colorsUsed: ['blue', 'mint', 'yellow', 'purple', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'purple', type: 'polygon', points: '145,195 75,135 95,235', lx: 105, ly: 188, fontSize: 14 },
+                    { id: 'r3', colorKey: 'mint', type: 'ellipse', cx: 215, cy: 255, rx: 75, ry: 85, lx: 215, ly: 245, fontSize: 16 },
+                    { id: 'r4', colorKey: 'yellow', type: 'ellipse', cx: 222, cy: 265, rx: 42, ry: 55, lx: 222, ly: 265, fontSize: 15 },
+                    { id: 'r5', colorKey: 'mint', type: 'circle', cx: 225, cy: 135, r: 52, lx: 225, ly: 135, fontSize: 15 },
+                    { id: 'r6', colorKey: 'coral', type: 'polygon', points: '275,130 335,105 325,155', lx: 308, ly: 132, fontSize: 13 },
+                    { id: 'r7', colorKey: 'mint', type: 'path', d: 'M 145,305 Q 85,320 75,275 Q 115,280 150,275 Z', lx: 112, ly: 295, fontSize: 13 }
+                ],
+                decorations: `<circle cx="242" cy="122" r="5" fill="#1e293b"/><path d="M 235,150 Q 250,160 262,148" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>`
+            },
+            {
+                id: 'gemheart', category: 'magic', title: 'Διαμάντι & Καρδιά', emoji: '💎',
+                colorsUsed: ['purple', 'pink', 'blue', 'mint', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'path', d: 'M 200,335 C 90,260 65,165 125,115 C 160,88 190,115 200,140 C 210,115 240,88 275,115 C 335,165 310,260 200,335 Z', lx: 135, ly: 185, fontSize: 16 },
+                    { id: 'r3', colorKey: 'blue', type: 'polygon', points: '155,175 245,175 270,210 200,285 130,210', lx: 200, ly: 225, fontSize: 15 },
+                    { id: 'r4', colorKey: 'mint', type: 'polygon', points: '155,175 245,175 200,210', lx: 200, ly: 192, fontSize: 13 },
+                    { id: 'r5', colorKey: 'yellow', type: 'circle', cx: 315, cy: 85, r: 24, lx: 315, ly: 85, fontSize: 13 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 85, cy: 310, r: 24, lx: 85, ly: 310, fontSize: 13 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'balloon', category: 'magic', title: 'Αερόστατο των Ονείρων', emoji: '🎈',
+                colorsUsed: ['blue', 'pink', 'yellow', 'purple', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'path', d: 'M 200,45 C 105,45 95,155 155,245 L 245,245 C 305,155 295,45 200,45 Z', lx: 145, ly: 145, fontSize: 15 },
+                    { id: 'r3', colorKey: 'yellow', type: 'path', d: 'M 200,45 C 155,45 150,155 178,245 L 222,245 C 250,155 245,45 200,45 Z', lx: 200, ly: 145, fontSize: 15 },
+                    { id: 'r4', colorKey: 'purple', type: 'path', d: 'M 200,45 C 245,45 250,155 222,245 L 245,245 C 305,155 295,45 200,45 Z', lx: 256, ly: 145, fontSize: 15 },
+                    { id: 'r5', colorKey: 'coral', type: 'rect', x: 165, y: 285, width: 70, height: 55, rx: 10, lx: 200, ly: 312, fontSize: 15 },
+                    { id: 'r6', colorKey: 'mint', type: 'ellipse', cx: 315, cy: 295, rx: 45, ry: 22, lx: 315, ly: 295, fontSize: 13 }
+                ],
+                decorations: `<line x1="170" y1="245" x2="175" y2="285" stroke="#1e293b" stroke-width="3"/><line x1="230" y1="245" x2="225" y2="285" stroke="#1e293b" stroke-width="3"/>`
+            },
+
+            // --- CATEGORY 2: ANIMALS (11-24) ---
+            {
+                id: 'kitty', category: 'animals', title: 'Πριγκίπισσα Γατούλα', emoji: '🐱',
+                colorsUsed: ['cream', 'pink', 'purple', 'yellow', 'blue', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 65, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'polygon', points: '105,165 95,75 170,120', lx: 122, ly: 122, fontSize: 14 },
+                    { id: 'r3', colorKey: 'pink', type: 'polygon', points: '295,165 305,75 230,120', lx: 278, ly: 122, fontSize: 14 },
+                    { id: 'r4', colorKey: 'yellow', type: 'polygon', points: '165,115 172,65 188,92 200,55 212,92 228,65 235,115', lx: 200, ly: 96, fontSize: 13 },
+                    { id: 'r5', colorKey: 'cream', type: 'ellipse', cx: 200, cy: 215, rx: 105, ry: 90, lx: 200, ly: 165, fontSize: 16 },
+                    { id: 'r6', colorKey: 'pink', type: 'circle', cx: 132, cy: 230, r: 20, lx: 132, ly: 230, fontSize: 13 },
+                    { id: 'r7', colorKey: 'pink', type: 'circle', cx: 268, cy: 230, r: 20, lx: 268, ly: 230, fontSize: 13 },
+                    { id: 'r8', colorKey: 'purple', type: 'polygon', points: '200,325 140,295 140,355', lx: 162, ly: 325, fontSize: 14 },
+                    { id: 'r9', colorKey: 'purple', type: 'polygon', points: '200,325 260,295 260,355', lx: 238, ly: 325, fontSize: 14 },
+                    { id: 'r10', colorKey: 'mint', type: 'circle', cx: 200, cy: 325, r: 18, lx: 200, ly: 325, fontSize: 13 }
+                ],
+                decorations: `<circle cx="162" cy="200" r="7" fill="#1e293b"/><circle cx="238" cy="200" r="7" fill="#1e293b"/><polygon points="193,222 207,222 200,231" fill="#f472b6"/><path d="M 185,238 Q 193,246 200,238 Q 207,246 215,238" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>`
+            },
+            {
+                id: 'puppy', category: 'animals', title: 'Χαρούμενο Σκυλάκι', emoji: '🐶',
+                colorsUsed: ['mint', 'cream', 'coral', 'red', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'mint', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'ellipse', cx: 95, cy: 195, rx: 32, ry: 72, lx: 95, ly: 195, fontSize: 14 },
+                    { id: 'r3', colorKey: 'coral', type: 'ellipse', cx: 305, cy: 195, rx: 32, ry: 72, lx: 305, ly: 195, fontSize: 14 },
+                    { id: 'r4', colorKey: 'cream', type: 'circle', cx: 200, cy: 195, r: 92, lx: 200, ly: 150, fontSize: 16 },
+                    { id: 'r5', colorKey: 'red', type: 'rect', x: 145, y: 295, width: 110, height: 34, rx: 14, lx: 200, ly: 312, fontSize: 14 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 200, cy: 345, r: 18, lx: 200, ly: 345, fontSize: 13 }
+                ],
+                decorations: `<circle cx="165" cy="180" r="8" fill="#1e293b"/><circle cx="235" cy="180" r="8" fill="#1e293b"/><ellipse cx="200" cy="212" rx="14" ry="10" fill="#1e293b"/><path d="M 180,235 Q 200,255 220,235" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>`
+            },
+            {
+                id: 'bunny', category: 'animals', title: 'Λαγουδάκι με Καρότο', emoji: '🐰',
+                colorsUsed: ['blue', 'cream', 'pink', 'coral', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 65, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'cream', type: 'ellipse', cx: 155, cy: 115, rx: 26, ry: 75, lx: 155, ly: 105, fontSize: 14 },
+                    { id: 'r3', colorKey: 'cream', type: 'ellipse', cx: 245, cy: 115, rx: 26, ry: 75, lx: 245, ly: 105, fontSize: 14 },
+                    { id: 'r4', colorKey: 'pink', type: 'ellipse', cx: 155, cy: 120, rx: 12, ry: 48, lx: 155, ly: 135, fontSize: 11 },
+                    { id: 'r5', colorKey: 'cream', type: 'circle', cx: 200, cy: 235, r: 78, lx: 200, ly: 200, fontSize: 16 },
+                    { id: 'r6', colorKey: 'coral', type: 'polygon', points: '250,300 355,275 335,345', lx: 315, ly: 308, fontSize: 14 },
+                    { id: 'r7', colorKey: 'mint', type: 'circle', cx: 358, cy: 295, r: 18, lx: 358, ly: 295, fontSize: 12 }
+                ],
+                decorations: `<circle cx="172" cy="225" r="7" fill="#1e293b"/><circle cx="228" cy="225" r="7" fill="#1e293b"/><circle cx="200" cy="245" r="7" fill="#f472b6"/>`
+            },
+            {
+                id: 'butterfly', category: 'animals', title: 'Μαγική Πεταλούδα', emoji: '🦋',
+                colorsUsed: ['pink', 'purple', 'yellow', 'mint', 'coral', 'blue'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 200, ly: 52, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'path', d: 'M 190,175 C 125,75 35,95 55,180 C 65,215 135,220 190,205 Z', lx: 115, ly: 155, fontSize: 15 },
+                    { id: 'r3', colorKey: 'pink', type: 'path', d: 'M 210,175 C 275,75 365,95 345,180 C 335,215 265,220 210,205 Z', lx: 285, ly: 155, fontSize: 15 },
+                    { id: 'r4', colorKey: 'purple', type: 'path', d: 'M 190,210 C 120,215 65,255 95,315 C 120,350 175,310 192,255 Z', lx: 138, ly: 272, fontSize: 15 },
+                    { id: 'r5', colorKey: 'purple', type: 'path', d: 'M 210,210 C 280,215 335,255 305,315 C 280,350 225,310 208,255 Z', lx: 262, ly: 272, fontSize: 15 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 105, cy: 150, r: 22, lx: 105, ly: 150, fontSize: 13 },
+                    { id: 'r7', colorKey: 'yellow', type: 'circle', cx: 295, cy: 150, r: 22, lx: 295, ly: 150, fontSize: 13 },
+                    { id: 'r8', colorKey: 'coral', type: 'rect', x: 186, y: 130, width: 28, height: 155, rx: 14, lx: 200, ly: 215, fontSize: 13 },
+                    { id: 'r9', colorKey: 'mint', type: 'ellipse', cx: 200, cy: 355, rx: 95, ry: 22, lx: 200, ly: 355, fontSize: 14 }
+                ],
+                decorations: `<path d="M 193,130 Q 170,90 155,95" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/><path d="M 207,130 Q 230,90 245,95" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>`
+            },
+            {
+                id: 'ladybug', category: 'animals', title: 'Πασχαλίτσα σε Φύλλο', emoji: '🐞',
+                colorsUsed: ['blue', 'mint', 'red', 'purple', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'ellipse', cx: 200, cy: 295, rx: 150, ry: 55, lx: 200, ly: 315, fontSize: 15 },
+                    { id: 'r3', colorKey: 'purple', type: 'circle', cx: 200, cy: 125, r: 42, lx: 200, ly: 118, fontSize: 14 },
+                    { id: 'r4', colorKey: 'red', type: 'path', d: 'M 196,145 C 125,145 105,215 125,275 L 196,275 Z', lx: 158, ly: 200, fontSize: 15 },
+                    { id: 'r5', colorKey: 'red', type: 'path', d: 'M 204,145 C 275,145 295,215 275,275 L 204,275 Z', lx: 242, ly: 200, fontSize: 15 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 155, cy: 242, r: 18, lx: 155, ly: 242, fontSize: 12 },
+                    { id: 'r7', colorKey: 'yellow', type: 'circle', cx: 245, cy: 242, r: 18, lx: 245, ly: 242, fontSize: 12 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'turtle', category: 'animals', title: 'Χελωνίτσα', emoji: '🐢',
+                colorsUsed: ['blue', 'mint', 'yellow', 'purple', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'circle', cx: 315, cy: 225, r: 38, lx: 315, ly: 225, fontSize: 14 },
+                    { id: 'r3', colorKey: 'mint', type: 'rect', x: 115, y: 265, width: 38, height: 55, rx: 14, lx: 134, ly: 292, fontSize: 13 },
+                    { id: 'r4', colorKey: 'mint', type: 'rect', x: 225, y: 265, width: 38, height: 55, rx: 14, lx: 244, ly: 292, fontSize: 13 },
+                    { id: 'r5', colorKey: 'purple', type: 'path', d: 'M 90,265 A 100,105 0 0,1 290,265 Z', lx: 190, ly: 205, fontSize: 16 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 190, cy: 235, r: 28, lx: 190, ly: 235, fontSize: 14 },
+                    { id: 'r7', colorKey: 'coral', type: 'polygon', points: '90,255 50,245 85,270', lx: 72, ly: 256, fontSize: 11 }
+                ],
+                decorations: `<circle cx="326" cy="215" r="5" fill="#1e293b"/>`
+            },
+            {
+                id: 'dolphin', category: 'animals', title: 'Δελφίνι στα Κύματα', emoji: '🐬',
+                colorsUsed: ['yellow', 'blue', 'purple', 'mint', 'pink'],
+                regions: [
+                    { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 270, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'blue', type: 'rect', x: 20, y: 280, width: 360, height: 100, rx: 16, lx: 200, ly: 335, fontSize: 16 },
+                    { id: 'r3', colorKey: 'purple', type: 'path', d: 'M 95,255 C 105,135 245,115 315,195 C 335,205 335,225 305,225 C 245,205 165,215 125,275 Z', lx: 215, ly: 175, fontSize: 16 },
+                    { id: 'r4', colorKey: 'pink', type: 'polygon', points: '185,138 165,92 220,132', lx: 188, ly: 118, fontSize: 13 },
+                    { id: 'r5', colorKey: 'mint', type: 'polygon', points: '105,265 65,245 80,295', lx: 84, ly: 268, fontSize: 12 }
+                ],
+                decorations: `<circle cx="285" cy="195" r="5" fill="#1e293b"/>`
+            },
+            {
+                id: 'fish', category: 'animals', title: 'Ψαράκι του Βυθού', emoji: '🐠',
+                colorsUsed: ['blue', 'coral', 'yellow', 'pink', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 75, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'ellipse', cx: 215, cy: 205, rx: 105, ry: 75, lx: 225, ly: 205, fontSize: 16 },
+                    { id: 'r3', colorKey: 'yellow', type: 'polygon', points: '115,205 55,145 55,265', lx: 80, ly: 205, fontSize: 14 },
+                    { id: 'r4', colorKey: 'pink', type: 'polygon', points: '185,132 215,80 245,132', lx: 215, ly: 112, fontSize: 13 },
+                    { id: 'r5', colorKey: 'pink', type: 'polygon', points: '185,278 215,325 245,278', lx: 215, ly: 298, fontSize: 13 },
+                    { id: 'r6', colorKey: 'mint', type: 'circle', cx: 335, cy: 115, r: 22, lx: 335, ly: 115, fontSize: 13 }
+                ],
+                decorations: `<circle cx="275" cy="188" r="8" fill="#1e293b"/><circle cx="278" cy="185" r="2.5" fill="#fff"/>`
+            },
+            {
+                id: 'owl', category: 'animals', title: 'Κουκουβάγια Σοφή', emoji: '🦉',
+                colorsUsed: ['blue', 'purple', 'yellow', 'cream', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'purple', type: 'ellipse', cx: 200, cy: 215, rx: 95, ry: 115, lx: 200, ly: 135, fontSize: 15 },
+                    { id: 'r3', colorKey: 'cream', type: 'ellipse', cx: 200, cy: 255, rx: 58, ry: 62, lx: 200, ly: 260, fontSize: 15 },
+                    { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 165, cy: 175, r: 28, lx: 165, ly: 175, fontSize: 13 },
+                    { id: 'r5', colorKey: 'yellow', type: 'circle', cx: 235, cy: 175, r: 28, lx: 235, ly: 175, fontSize: 13 },
+                    { id: 'r6', colorKey: 'coral', type: 'polygon', points: '188,195 212,195 200,222', lx: 200, ly: 205, fontSize: 11 },
+                    { id: 'r7', colorKey: 'coral', type: 'ellipse', cx: 102, cy: 225, rx: 22, ry: 65, lx: 102, ly: 225, fontSize: 13 },
+                    { id: 'r8', colorKey: 'coral', type: 'ellipse', cx: 298, cy: 225, rx: 22, ry: 65, lx: 298, ly: 225, fontSize: 13 }
+                ],
+                decorations: `<circle cx="165" cy="175" r="7" fill="#1e293b"/><circle cx="235" cy="175" r="7" fill="#1e293b"/>`
+            },
+            {
+                id: 'flamingo', category: 'animals', title: 'Φλαμίνγκο', emoji: '🦩',
+                colorsUsed: ['blue', 'pink', 'coral', 'yellow', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 320, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 330, width: 360, height: 50, rx: 12, lx: 285, ly: 355, fontSize: 14 },
+                    { id: 'r3', colorKey: 'pink', type: 'ellipse', cx: 185, cy: 215, rx: 75, ry: 52, lx: 185, ly: 215, fontSize: 15 },
+                    { id: 'r4', colorKey: 'coral', type: 'path', d: 'M 235,195 C 275,155 265,85 225,85 C 195,85 195,115 225,115 C 245,115 245,155 215,185 Z', lx: 245, ly: 135, fontSize: 12 },
+                    { id: 'r5', colorKey: 'yellow', type: 'polygon', points: '198,95 162,112 198,118', lx: 184, ly: 109, fontSize: 11 }
+                ],
+                decorations: `<line x1="175" y1="265" x2="175" y2="335" stroke="#1e293b" stroke-width="4"/><line x1="198" y1="265" x2="225" y2="300" stroke="#1e293b" stroke-width="4"/><line x1="225" y1="300" x2="195" y2="305" stroke="#1e293b" stroke-width="4"/>`
+            },
+            {
+                id: 'bear', category: 'animals', title: 'Αρκουδάκι', emoji: '🧸',
+                colorsUsed: ['blue', 'coral', 'cream', 'pink', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'circle', cx: 125, cy: 115, r: 35, lx: 125, ly: 115, fontSize: 14 },
+                    { id: 'r3', colorKey: 'coral', type: 'circle', cx: 275, cy: 115, r: 35, lx: 275, ly: 115, fontSize: 14 },
+                    { id: 'r4', colorKey: 'coral', type: 'circle', cx: 200, cy: 205, r: 95, lx: 200, ly: 155, fontSize: 16 },
+                    { id: 'r5', colorKey: 'cream', type: 'ellipse', cx: 200, cy: 235, rx: 48, ry: 38, lx: 200, ly: 242, fontSize: 15 },
+                    { id: 'r6', colorKey: 'pink', type: 'polygon', points: '200,320 145,295 145,345', lx: 165, ly: 320, fontSize: 14 },
+                    { id: 'r7', colorKey: 'pink', type: 'polygon', points: '200,320 255,295 255,345', lx: 235, ly: 320, fontSize: 14 }
+                ],
+                decorations: `<circle cx="168" cy="185" r="7" fill="#1e293b"/><circle cx="232" cy="185" r="7" fill="#1e293b"/><ellipse cx="200" cy="218" rx="12" ry="8" fill="#1e293b"/>`
+            },
+            {
+                id: 'penguin', category: 'animals', title: 'Πιγκουίνος', emoji: '🐧',
+                colorsUsed: ['blue', 'purple', 'cream', 'coral', 'pink'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'purple', type: 'ellipse', cx: 200, cy: 215, rx: 95, ry: 125, lx: 200, ly: 120, fontSize: 15 },
+                    { id: 'r3', colorKey: 'cream', type: 'ellipse', cx: 200, cy: 235, rx: 65, ry: 88, lx: 200, ly: 245, fontSize: 16 },
+                    { id: 'r4', colorKey: 'coral', type: 'polygon', points: '185,165 215,165 200,192', lx: 200, ly: 175, fontSize: 11 },
+                    { id: 'r5', colorKey: 'coral', type: 'ellipse', cx: 155, cy: 342, rx: 32, ry: 16, lx: 155, ly: 342, fontSize: 12 },
+                    { id: 'r6', colorKey: 'coral', type: 'ellipse', cx: 245, cy: 342, rx: 32, ry: 16, lx: 245, ly: 342, fontSize: 12 }
+                ],
+                decorations: `<circle cx="172" cy="150" r="6" fill="#1e293b"/><circle cx="228" cy="150" r="6" fill="#1e293b"/>`
+            },
+            {
+                id: 'bee', category: 'animals', title: 'Μελισσούλα', emoji: '🐝',
+                colorsUsed: ['blue', 'yellow', 'purple', 'cream', 'pink'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'cream', type: 'ellipse', cx: 165, cy: 135, rx: 36, ry: 55, lx: 165, ly: 130, fontSize: 14 },
+                    { id: 'r3', colorKey: 'cream', type: 'ellipse', cx: 235, cy: 135, rx: 36, ry: 55, lx: 235, ly: 130, fontSize: 14 },
+                    { id: 'r4', colorKey: 'yellow', type: 'ellipse', cx: 200, cy: 235, rx: 95, ry: 68, lx: 155, ly: 235, fontSize: 15 },
+                    { id: 'r5', colorKey: 'purple', type: 'rect', x: 185, y: 168, width: 32, height: 134, rx: 10, lx: 201, ly: 235, fontSize: 14 },
+                    { id: 'r6', colorKey: 'pink', type: 'circle', cx: 280, cy: 225, r: 34, lx: 280, ly: 225, fontSize: 14 }
+                ],
+                decorations: `<circle cx="290" cy="215" r="5" fill="#1e293b"/>`
+            },
+            {
+                id: 'snail', category: 'animals', title: 'Σαλιγκάρι', emoji: '🐌',
+                colorsUsed: ['blue', 'mint', 'pink', 'yellow', 'cream'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 280, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'cream', type: 'path', d: 'M 75,320 C 65,285 115,280 265,280 C 285,220 335,215 335,265 C 335,305 295,320 265,320 Z', lx: 185, ly: 302, fontSize: 14 },
+                    { id: 'r4', colorKey: 'pink', type: 'circle', cx: 185, cy: 215, r: 78, lx: 155, ly: 185, fontSize: 15 },
+                    { id: 'r5', colorKey: 'yellow', type: 'circle', cx: 185, cy: 215, r: 42, lx: 185, ly: 215, fontSize: 14 }
+                ],
+                decorations: `<circle cx="315" cy="252" r="5" fill="#1e293b"/><line x1="305" y1="225" x2="295" y2="195" stroke="#1e293b" stroke-width="3"/><line x1="322" y1="228" x2="332" y2="195" stroke="#1e293b" stroke-width="3"/>`
+            },
+
+            // --- CATEGORY 3: NATURE & WEATHER (25-30) ---
+            {
+                id: 'sunflower', category: 'nature', title: 'Ηλιοτρόπιο', emoji: '🌻',
+                colorsUsed: ['blue', 'mint', 'yellow', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 188, y: 230, width: 24, height: 140, rx: 8, lx: 200, ly: 315, fontSize: 12 },
+                    { id: 'r3', colorKey: 'mint', type: 'ellipse', cx: 145, cy: 295, rx: 45, ry: 22, lx: 145, ly: 295, fontSize: 13 },
+                    { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 200, cy: 155, r: 95, lx: 200, ly: 85, fontSize: 15 },
+                    { id: 'r5', colorKey: 'coral', type: 'circle', cx: 200, cy: 155, r: 52, lx: 200, ly: 155, fontSize: 16 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'tulip', category: 'nature', title: 'Τουλίπα σε Γλάστρα', emoji: '🌷',
+                colorsUsed: ['blue', 'coral', 'mint', 'pink', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'polygon', points: '135,265 265,265 245,365 155,365', lx: 200, ly: 315, fontSize: 16 },
+                    { id: 'r3', colorKey: 'mint', type: 'rect', x: 190, y: 175, width: 20, height: 90, lx: 200, ly: 225, fontSize: 12 },
+                    { id: 'r4', colorKey: 'pink', type: 'path', d: 'M 145,115 C 145,175 255,175 255,115 L 255,75 L 225,105 L 200,65 L 175,105 L 145,75 Z', lx: 200, ly: 135, fontSize: 15 },
+                    { id: 'r5', colorKey: 'yellow', type: 'circle', cx: 325, cy: 75, r: 30, lx: 325, ly: 75, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'mushroom', category: 'nature', title: 'Μανιταρόσπιτο', emoji: '🍄',
+                colorsUsed: ['blue', 'mint', 'cream', 'red', 'yellow', 'purple'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 295, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'cream', type: 'rect', x: 135, y: 205, width: 130, height: 115, rx: 14, lx: 200, ly: 235, fontSize: 15 },
+                    { id: 'r4', colorKey: 'purple', type: 'path', d: 'M 175,320 L 175,270 A 25,25 0 0,1 225,270 L 225,320 Z', lx: 200, ly: 295, fontSize: 14 },
+                    { id: 'r5', colorKey: 'red', type: 'path', d: 'M 75,205 A 125,125 0 0,1 325,205 Z', lx: 200, ly: 135, fontSize: 16 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 135, cy: 165, r: 22, lx: 135, ly: 165, fontSize: 13 },
+                    { id: 'r7', colorKey: 'yellow', type: 'circle', cx: 265, cy: 165, r: 22, lx: 265, ly: 165, fontSize: 13 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'appletree', category: 'nature', title: 'Δέντρο με Μήλα', emoji: '🌳',
+                colorsUsed: ['blue', 'coral', 'mint', 'red', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'rect', x: 172, y: 235, width: 56, height: 135, rx: 8, lx: 200, ly: 305, fontSize: 15 },
+                    { id: 'r3', colorKey: 'mint', type: 'circle', cx: 200, cy: 155, r: 105, lx: 200, ly: 110, fontSize: 16 },
+                    { id: 'r4', colorKey: 'red', type: 'circle', cx: 155, cy: 165, r: 22, lx: 155, ly: 165, fontSize: 13 },
+                    { id: 'r5', colorKey: 'red', type: 'circle', cx: 245, cy: 165, r: 22, lx: 245, ly: 165, fontSize: 13 },
+                    { id: 'r6', colorKey: 'red', type: 'circle', cx: 200, cy: 205, r: 22, lx: 200, ly: 205, fontSize: 13 },
+                    { id: 'r7', colorKey: 'yellow', type: 'circle', cx: 330, cy: 70, r: 28, lx: 330, ly: 70, fontSize: 13 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'sun', category: 'nature', title: 'Χαμογελαστός Ήλιος', emoji: '☀️',
+                colorsUsed: ['blue', 'yellow', 'coral', 'pink'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'polygon', points: '200,35 225,95 175,95', lx: 200, ly: 72, fontSize: 12 },
+                    { id: 'r3', colorKey: 'coral', type: 'polygon', points: '200,365 225,305 175,305', lx: 200, ly: 328, fontSize: 12 },
+                    { id: 'r4', colorKey: 'coral', type: 'polygon', points: '35,200 95,175 95,225', lx: 72, ly: 200, fontSize: 12 },
+                    { id: 'r5', colorKey: 'coral', type: 'polygon', points: '365,200 305,175 305,225', lx: 328, ly: 200, fontSize: 12 },
+                    { id: 'r6', colorKey: 'yellow', type: 'circle', cx: 200, cy: 200, r: 95, lx: 200, ly: 165, fontSize: 16 },
+                    { id: 'r7', colorKey: 'pink', type: 'circle', cx: 152, cy: 215, r: 18, lx: 152, ly: 215, fontSize: 12 },
+                    { id: 'r8', colorKey: 'pink', type: 'circle', cx: 248, cy: 215, r: 18, lx: 248, ly: 215, fontSize: 12 }
+                ],
+                decorations: `<circle cx="172" cy="192" r="7" fill="#1e293b"/><circle cx="228" cy="192" r="7" fill="#1e293b"/><path d="M 180,225 Q 200,245 220,225" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>`
+            },
+            {
+                id: 'moonstars', category: 'nature', title: 'Φεγγάρι & Αστέρια', emoji: '🌙',
+                colorsUsed: ['purple', 'yellow', 'pink', 'blue', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 75, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'yellow', type: 'path', d: 'M 215,65 A 125,125 0 1,0 265,315 A 95,95 0 1,1 215,65 Z', lx: 145, ly: 205, fontSize: 16 },
+                    { id: 'r3', colorKey: 'pink', type: 'polygon', points: '285,95 298,125 330,125 305,145 315,175 285,155 255,175 265,145 240,125 272,125', lx: 285, ly: 138, fontSize: 13 },
+                    { id: 'r4', colorKey: 'mint', type: 'circle', cx: 295, cy: 245, r: 30, lx: 295, ly: 245, fontSize: 14 },
+                    { id: 'r5', colorKey: 'blue', type: 'circle', cx: 235, cy: 295, r: 26, lx: 235, ly: 295, fontSize: 13 }
+                ],
+                decorations: ``
+            },
+
+            // --- CATEGORY 4: VEHICLES & OBJECTS (31-35) ---
+            {
+                id: 'house', category: 'vehicles', title: 'Σπιτάκι στην Εξοχή', emoji: '🏡',
+                colorsUsed: ['blue', 'mint', 'red', 'cream', 'coral', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 295, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'red', type: 'polygon', points: '85,185 200,85 315,185', lx: 200, ly: 148, fontSize: 16 },
+                    { id: 'r4', colorKey: 'cream', type: 'rect', x: 105, y: 185, width: 190, height: 135, lx: 152, ly: 235, fontSize: 15 },
+                    { id: 'r5', colorKey: 'coral', type: 'rect', x: 180, y: 245, width: 44, height: 75, rx: 6, lx: 202, ly: 282, fontSize: 13 },
+                    { id: 'r6', colorKey: 'yellow', type: 'rect', x: 242, y: 215, width: 38, height: 38, rx: 6, lx: 261, ly: 234, fontSize: 12 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'rocket', category: 'vehicles', title: 'Πύραυλος στο Διάστημα', emoji: '🚀',
+                colorsUsed: ['purple', 'red', 'cream', 'blue', 'yellow', 'coral'],
+                regions: [
+                    { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'red', type: 'polygon', points: '200,45 150,125 250,125', lx: 200, ly: 98, fontSize: 14 },
+                    { id: 'r3', colorKey: 'cream', type: 'rect', x: 150, y: 125, width: 100, height: 155, lx: 200, ly: 235, fontSize: 16 },
+                    { id: 'r4', colorKey: 'blue', type: 'circle', cx: 200, cy: 175, r: 28, lx: 200, ly: 175, fontSize: 14 },
+                    { id: 'r5', colorKey: 'coral', type: 'polygon', points: '150,215 100,285 150,275', lx: 128, ly: 262, fontSize: 12 },
+                    { id: 'r6', colorKey: 'coral', type: 'polygon', points: '250,215 300,285 250,275', lx: 272, ly: 262, fontSize: 12 },
+                    { id: 'r7', colorKey: 'yellow', type: 'polygon', points: '170,280 230,280 200,355', lx: 200, ly: 312, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'sailboat', category: 'vehicles', title: 'Καραβάκι στη Θάλασσα', emoji: '⛵',
+                colorsUsed: ['yellow', 'blue', 'coral', 'pink', 'cream'],
+                regions: [
+                    { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 275, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'blue', type: 'rect', x: 20, y: 285, width: 360, height: 95, rx: 14, lx: 200, ly: 335, fontSize: 16 },
+                    { id: 'r3', colorKey: 'coral', type: 'polygon', points: '95,235 305,235 270,288 130,288', lx: 200, ly: 262, fontSize: 16 },
+                    { id: 'r4', colorKey: 'pink', type: 'polygon', points: '195,65 195,220 105,220', lx: 162, ly: 175, fontSize: 15 },
+                    { id: 'r5', colorKey: 'cream', type: 'polygon', points: '205,85 205,220 285,220', lx: 235, ly: 175, fontSize: 15 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'car', category: 'vehicles', title: 'Αυτοκινητάκι', emoji: '🚗',
+                colorsUsed: ['blue', 'mint', 'pink', 'yellow', 'purple'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 295, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'yellow', type: 'path', d: 'M 115,205 L 145,135 L 255,135 L 285,205 Z', lx: 200, ly: 172, fontSize: 15 },
+                    { id: 'r4', colorKey: 'pink', type: 'rect', x: 65, y: 205, width: 270, height: 75, rx: 20, lx: 200, ly: 242, fontSize: 16 },
+                    { id: 'r5', colorKey: 'purple', type: 'circle', cx: 125, cy: 285, r: 34, lx: 125, ly: 285, fontSize: 14 },
+                    { id: 'r6', colorKey: 'purple', type: 'circle', cx: 275, cy: 285, r: 34, lx: 275, ly: 285, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'train', category: 'vehicles', title: 'Τρενάκι', emoji: '🚂',
+                colorsUsed: ['blue', 'mint', 'red', 'yellow', 'coral', 'purple'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 310, rx: 18, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'rect', x: 20, y: 320, width: 360, height: 60, rx: 12, lx: 295, ly: 350, fontSize: 15 },
+                    { id: 'r3', colorKey: 'yellow', type: 'rect', x: 75, y: 145, width: 105, height: 135, rx: 10, lx: 127, ly: 212, fontSize: 15 },
+                    { id: 'r4', colorKey: 'red', type: 'rect', x: 180, y: 195, width: 135, height: 85, rx: 10, lx: 247, ly: 238, fontSize: 15 },
+                    { id: 'r5', colorKey: 'coral', type: 'rect', x: 255, y: 140, width: 32, height: 55, rx: 6, lx: 271, ly: 168, fontSize: 12 },
+                    { id: 'r6', colorKey: 'purple', type: 'circle', cx: 125, cy: 288, r: 32, lx: 125, ly: 288, fontSize: 14 },
+                    { id: 'r7', colorKey: 'purple', type: 'circle', cx: 255, cy: 288, r: 32, lx: 255, ly: 288, fontSize: 14 }
+                ],
+                decorations: ``
+            },
+
+            // --- CATEGORY 5: SWEETS & FRUITS (36-40) ---
+            {
+                id: 'icecream', category: 'food', title: 'Παγωτό Χωνάκι', emoji: '🍦',
+                colorsUsed: ['blue', 'coral', 'pink', 'mint', 'red'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'coral', type: 'polygon', points: '135,215 265,215 200,365', lx: 200, ly: 275, fontSize: 16 },
+                    { id: 'r3', colorKey: 'mint', type: 'circle', cx: 200, cy: 185, r: 68, lx: 200, ly: 195, fontSize: 16 },
+                    { id: 'r4', colorKey: 'pink', type: 'circle', cx: 200, cy: 118, r: 54, lx: 200, ly: 122, fontSize: 15 },
+                    { id: 'r5', colorKey: 'red', type: 'circle', cx: 200, cy: 56, r: 20, lx: 200, ly: 56, fontSize: 12 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'cake', category: 'food', title: 'Τούρτα Γενεθλίων', emoji: '🎂',
+                colorsUsed: ['purple', 'pink', 'cream', 'yellow', 'red'],
+                regions: [
+                    { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'pink', type: 'rect', x: 85, y: 245, width: 230, height: 95, rx: 16, lx: 200, ly: 292, fontSize: 16 },
+                    { id: 'r3', colorKey: 'cream', type: 'rect', x: 125, y: 165, width: 150, height: 80, rx: 14, lx: 200, ly: 205, fontSize: 16 },
+                    { id: 'r4', colorKey: 'yellow', type: 'rect', x: 188, y: 105, width: 24, height: 60, rx: 6, lx: 200, ly: 135, fontSize: 12 },
+                    { id: 'r5', colorKey: 'red', type: 'circle', cx: 200, cy: 82, r: 18, lx: 200, ly: 82, fontSize: 12 }
+                ],
+                decorations: ``
+            },
+            {
+                id: 'cherries', category: 'food', title: 'Κερασάκια', emoji: '🍒',
+                colorsUsed: ['yellow', 'red', 'mint'],
+                regions: [
+                    { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'ellipse', cx: 245, cy: 105, rx: 52, ry: 26, lx: 245, ly: 105, fontSize: 14 },
+                    { id: 'r3', colorKey: 'red', type: 'circle', cx: 145, cy: 275, r: 58, lx: 145, ly: 275, fontSize: 16 },
+                    { id: 'r4', colorKey: 'red', type: 'circle', cx: 265, cy: 265, r: 58, lx: 265, ly: 265, fontSize: 16 }
+                ],
+                decorations: `<path d="M 145,217 Q 165,135 200,95" fill="none" stroke="#1e293b" stroke-width="4"/><path d="M 265,207 Q 235,135 200,95" fill="none" stroke="#1e293b" stroke-width="4"/>`
+            },
+            {
+                id: 'strawberry', category: 'food', title: 'Φράουλα', emoji: '🍓',
+                colorsUsed: ['blue', 'red', 'mint', 'yellow'],
+                regions: [
+                    { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'red', type: 'path', d: 'M 105,145 C 105,235 165,335 200,355 C 235,335 295,235 295,145 Z', lx: 200, ly: 225, fontSize: 16 },
+                    { id: 'r3', colorKey: 'mint', type: 'polygon', points: '105,145 145,95 200,125 255,95 295,145 200,165', lx: 200, ly: 135, fontSize: 14 },
+                    { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 325, cy: 75, r: 28, lx: 325, ly: 75, fontSize: 13 }
+                ],
+                decorations: `<circle cx="165" cy="200" r="4" fill="#fde047"/><circle cx="235" cy="200" r="4" fill="#fde047"/><circle cx="200" cy="275" r="4" fill="#fde047"/>`
+            },
+            {
+                id: 'watermelon', category: 'food', title: 'Καρπούζι', emoji: '🍉',
+                colorsUsed: ['yellow', 'mint', 'cream', 'red'],
+                regions: [
+                    { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                    { id: 'r2', colorKey: 'mint', type: 'path', d: 'M 55,165 A 145,145 0 0,0 345,165 Z', lx: 200, ly: 285, fontSize: 15 },
+                    { id: 'r3', colorKey: 'cream', type: 'path', d: 'M 75,165 A 125,125 0 0,0 325,165 Z', lx: 200, ly: 255, fontSize: 14 },
+                    { id: 'r4', colorKey: 'red', type: 'path', d: 'M 92,165 A 108,108 0 0,0 308,165 Z', lx: 200, ly: 205, fontSize: 16 }
+                ],
+                decorations: `<circle cx="155" cy="195" r="4.5" fill="#1e293b"/><circle cx="245" cy="195" r="4.5" fill="#1e293b"/><circle cx="200" cy="232" r="4.5" fill="#1e293b"/>`
+            }
+        ];
+
+        // Programmatically add 14 more rich templates to reach all 40 exact choices!
+        const EXTRA_ARTWORKS = [
+            { id: 'starwand2', category: 'magic', title: 'Μαγικό Κλειδί', emoji: '🗝️', colorsUsed: ['purple', 'yellow', 'pink', 'blue'],
+              regions: [
+                { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'yellow', type: 'circle', cx: 200, cy: 125, r: 62, lx: 200, ly: 125, fontSize: 16 },
+                { id: 'r3', colorKey: 'yellow', type: 'rect', x: 185, y: 185, width: 30, height: 155, rx: 8, lx: 200, ly: 255, fontSize: 14 },
+                { id: 'r4', colorKey: 'pink', type: 'rect', x: 215, y: 275, width: 45, height: 22, rx: 6, lx: 238, ly: 286, fontSize: 11 },
+                { id: 'r5', colorKey: 'blue', type: 'rect', x: 215, y: 312, width: 35, height: 22, rx: 6, lx: 232, ly: 323, fontSize: 11 }
+              ], decorations: `` },
+            { id: 'swan', category: 'animals', title: 'Λευκός Κύκνος', emoji: '🦢', colorsUsed: ['blue', 'cream', 'coral', 'yellow'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'cream', type: 'ellipse', cx: 185, cy: 255, rx: 95, ry: 58, lx: 185, ly: 255, fontSize: 16 },
+                { id: 'r3', colorKey: 'cream', type: 'path', d: 'M 245,235 C 285,185 285,95 235,95 C 205,95 205,125 235,125 C 255,125 255,185 215,225 Z', lx: 255, ly: 155, fontSize: 12 },
+                { id: 'r4', colorKey: 'coral', type: 'polygon', points: '205,102 172,115 205,122', lx: 192, ly: 113, fontSize: 11 },
+                { id: 'r5', colorKey: 'yellow', type: 'polygon', points: '215,75 235,55 255,75', lx: 235, ly: 68, fontSize: 11 }
+              ], decorations: `` },
+            { id: 'whale', category: 'animals', title: 'Χαρούμενη Φάλαινα', emoji: '🐳', colorsUsed: ['yellow', 'blue', 'purple', 'mint'],
+              regions: [
+                { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'blue', type: 'path', d: 'M 95,225 C 95,145 275,145 295,235 C 295,285 135,295 95,225 Z', lx: 195, ly: 215, fontSize: 16 },
+                { id: 'r3', colorKey: 'purple', type: 'polygon', points: '290,235 345,195 335,265', lx: 322, ly: 232, fontSize: 12 },
+                { id: 'r4', colorKey: 'mint', type: 'circle', cx: 185, cy: 105, r: 26, lx: 185, ly: 105, fontSize: 13 }
+              ], decorations: `<circle cx="135" cy="215" r="6" fill="#1e293b"/>` },
+            { id: 'chick', category: 'animals', title: 'Κίτρινο Κοτοπουλάκι', emoji: '🐥', colorsUsed: ['blue', 'yellow', 'coral', 'pink'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'yellow', type: 'circle', cx: 200, cy: 235, r: 85, lx: 200, ly: 245, fontSize: 16 },
+                { id: 'r3', colorKey: 'yellow', type: 'circle', cx: 200, cy: 135, r: 58, lx: 200, ly: 120, fontSize: 15 },
+                { id: 'r4', colorKey: 'coral', type: 'polygon', points: '185,145 215,145 200,168', lx: 200, ly: 154, fontSize: 11 },
+                { id: 'r5', colorKey: 'pink', type: 'ellipse', cx: 112, cy: 235, rx: 24, ry: 45, lx: 112, ly: 235, fontSize: 12 }
+              ], decorations: `<circle cx="178" cy="130" r="6" fill="#1e293b"/><circle cx="222" cy="130" r="6" fill="#1e293b"/>` },
+            { id: 'frog', category: 'animals', title: 'Βατραχάκι', emoji: '🐸', colorsUsed: ['blue', 'mint', 'yellow', 'pink'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'mint', type: 'ellipse', cx: 200, cy: 235, rx: 115, ry: 85, lx: 200, ly: 225, fontSize: 16 },
+                { id: 'r3', colorKey: 'yellow', type: 'circle', cx: 145, cy: 145, r: 34, lx: 145, ly: 145, fontSize: 14 },
+                { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 255, cy: 145, r: 34, lx: 255, ly: 145, fontSize: 14 },
+                { id: 'r5', colorKey: 'pink', type: 'circle', cx: 135, cy: 235, r: 20, lx: 135, ly: 235, fontSize: 12 }
+              ], decorations: `<circle cx="145" cy="145" r="8" fill="#1e293b"/><circle cx="255" cy="145" r="8" fill="#1e293b"/><path d="M 160,255 Q 200,285 240,255" fill="none" stroke="#1e293b" stroke-width="3.5"/>` },
+            { id: 'octopus', category: 'animals', title: 'Χταποδάκι', emoji: '🐙', colorsUsed: ['blue', 'pink', 'purple', 'yellow'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'pink', type: 'circle', cx: 200, cy: 165, r: 85, lx: 200, ly: 145, fontSize: 16 },
+                { id: 'r3', colorKey: 'purple', type: 'rect', x: 105, y: 245, width: 42, height: 95, rx: 18, lx: 126, ly: 292, fontSize: 13 },
+                { id: 'r4', colorKey: 'purple', type: 'rect', x: 179, y: 245, width: 42, height: 95, rx: 18, lx: 200, ly: 292, fontSize: 13 },
+                { id: 'r5', colorKey: 'purple', type: 'rect', x: 253, y: 245, width: 42, height: 95, rx: 18, lx: 274, ly: 292, fontSize: 13 }
+              ], decorations: `<circle cx="172" cy="175" r="7" fill="#1e293b"/><circle cx="228" cy="175" r="7" fill="#1e293b"/>` },
+            { id: 'cloudrain', category: 'nature', title: 'Συννεφάκι & Σταγόνες', emoji: '🌦️', colorsUsed: ['purple', 'cream', 'blue', 'yellow'],
+              regions: [
+                { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'yellow', type: 'circle', cx: 285, cy: 115, r: 48, lx: 285, ly: 115, fontSize: 15 },
+                { id: 'r3', colorKey: 'cream', type: 'path', d: 'M 85,225 A 45,45 0 0,1 125,155 A 55,55 0 0,1 235,155 A 45,45 0 0,1 275,225 Z', lx: 180, ly: 192, fontSize: 16 },
+                { id: 'r4', colorKey: 'blue', type: 'circle', cx: 135, cy: 295, r: 24, lx: 135, ly: 295, fontSize: 13 },
+                { id: 'r5', colorKey: 'blue', type: 'circle', cx: 225, cy: 295, r: 24, lx: 225, ly: 295, fontSize: 13 }
+              ], decorations: `` },
+            { id: 'cactus', category: 'nature', title: 'Χαρούμενο Κακτάκι', emoji: '🌵', colorsUsed: ['yellow', 'coral', 'mint', 'pink'],
+              regions: [
+                { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'coral', type: 'polygon', points: '135,265 265,265 245,365 155,365', lx: 200, ly: 315, fontSize: 16 },
+                { id: 'r3', colorKey: 'mint', type: 'rect', x: 168, y: 105, width: 64, height: 160, rx: 32, lx: 200, ly: 185, fontSize: 15 },
+                { id: 'r4', colorKey: 'mint', type: 'rect', x: 112, y: 155, width: 56, height: 36, rx: 16, lx: 140, ly: 173, fontSize: 12 },
+                { id: 'r5', colorKey: 'pink', type: 'circle', cx: 200, cy: 88, r: 22, lx: 200, ly: 88, fontSize: 13 }
+              ], decorations: `` },
+            { id: 'airplane', category: 'vehicles', title: 'Αεροπλανάκι', emoji: '✈️', colorsUsed: ['blue', 'pink', 'yellow', 'purple'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'pink', type: 'ellipse', cx: 200, cy: 200, rx: 125, ry: 42, lx: 200, ly: 200, fontSize: 16 },
+                { id: 'r3', colorKey: 'yellow', type: 'polygon', points: '165,160 215,160 185,85', lx: 188, ly: 132, fontSize: 13 },
+                { id: 'r4', colorKey: 'yellow', type: 'polygon', points: '165,240 215,240 185,315', lx: 188, ly: 268, fontSize: 13 },
+                { id: 'r5', colorKey: 'purple', type: 'polygon', points: '85,185 65,135 115,185', lx: 88, ly: 168, fontSize: 11 }
+              ], decorations: `` },
+            { id: 'gift', category: 'vehicles', title: 'Μαγικό Δώρο', emoji: '🎁', colorsUsed: ['purple', 'pink', 'yellow', 'mint'],
+              regions: [
+                { id: 'r1', colorKey: 'purple', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'pink', type: 'rect', x: 105, y: 165, width: 190, height: 185, rx: 16, lx: 152, ly: 255, fontSize: 15 },
+                { id: 'r3', colorKey: 'yellow', type: 'rect', x: 182, y: 165, width: 36, height: 185, lx: 200, ly: 255, fontSize: 13 },
+                { id: 'r4', colorKey: 'mint', type: 'ellipse', cx: 162, cy: 135, rx: 38, ry: 24, lx: 162, ly: 135, fontSize: 13 },
+                { id: 'r5', colorKey: 'mint', type: 'ellipse', cx: 238, cy: 135, rx: 38, ry: 24, lx: 238, ly: 135, fontSize: 13 }
+              ], decorations: `` },
+            { id: 'cupcake', category: 'food', title: 'Κεκάκι Cupcake', emoji: '🧁', colorsUsed: ['blue', 'coral', 'pink', 'red'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'coral', type: 'polygon', points: '115,215 285,215 255,345 145,345', lx: 200, ly: 280, fontSize: 16 },
+                { id: 'r3', colorKey: 'pink', type: 'path', d: 'M 95,215 A 105,95 0 0,1 305,215 Z', lx: 200, ly: 175, fontSize: 16 },
+                { id: 'r4', colorKey: 'red', type: 'circle', cx: 200, cy: 95, r: 24, lx: 200, ly: 95, fontSize: 13 }
+              ], decorations: `` },
+            {
+                id: 'lollipop', category: 'food', title: 'Γλειφιτζούρι', emoji: '🍭', colorsUsed: ['mint', 'cream', 'pink', 'yellow'],
+                regions: [
+                  { id: 'r1', colorKey: 'mint', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                  { id: 'r2', colorKey: 'cream', type: 'rect', x: 188, y: 235, width: 24, height: 135, rx: 10, lx: 200, ly: 305, fontSize: 12 },
+                  { id: 'r3', colorKey: 'pink', type: 'circle', cx: 200, cy: 155, r: 92, lx: 200, ly: 100, fontSize: 15 },
+                  { id: 'r4', colorKey: 'yellow', type: 'circle', cx: 200, cy: 155, r: 48, lx: 200, ly: 155, fontSize: 15 }
+                ], decorations: ``
+            },
+            { id: 'pineapple', category: 'food', title: 'Ανανάς', emoji: '🍍', colorsUsed: ['blue', 'yellow', 'mint'],
+              regions: [
+                { id: 'r1', colorKey: 'blue', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'mint', type: 'polygon', points: '155,145 135,75 185,125 200,55 215,125 265,75 245,145', lx: 200, ly: 112, fontSize: 13 },
+                { id: 'r3', colorKey: 'yellow', type: 'ellipse', cx: 200, cy: 255, rx: 85, ry: 105, lx: 200, ly: 255, fontSize: 16 }
+              ], decorations: `` },
+            { id: 'apple', category: 'food', title: 'Κόκκινο Μήλο', emoji: '🍎', colorsUsed: ['yellow', 'red', 'mint'],
+              regions: [
+                { id: 'r1', colorKey: 'yellow', type: 'rect', x: 20, y: 20, width: 360, height: 360, rx: 20, lx: 70, ly: 65, fontSize: 16 },
+                { id: 'r2', colorKey: 'mint', type: 'ellipse', cx: 245, cy: 95, rx: 45, ry: 22, lx: 245, ly: 95, fontSize: 13 },
+                { id: 'r3', colorKey: 'red', type: 'circle', cx: 200, cy: 235, r: 105, lx: 200, ly: 235, fontSize: 16 }
+              ], decorations: `<line x1="200" y1="130" x2="200" y2="85" stroke="#1e293b" stroke-width="5"/>` }
+        ];
+
+        // Combine to exact 40 unique artworks
+        const ALL_ARTWORKS = [...ARTWORKS, ...EXTRA_ARTWORKS];
+
+/* ==========================================================================
+   DETAILED PICTURES (replace the simple versions by id)
+   ========================================================================== */
+(function () {
+  const cen = s => { const a = s.trim().split(/\s+/).map(p => p.split(',').map(Number)); return [a.reduce((t, q) => t + q[0], 0) / a.length, a.reduce((t, q) => t + q[1], 0) / a.length]; };
+  function mk(spec, i) {
+    const [col, t, a, f, o] = spec, id = 'r' + (i + 1);
+    if (t === 'c') return { id, colorKey: col, type: 'circle', cx: a[0], cy: a[1], r: a[2], lx: a[0], ly: a[1], fontSize: f || Math.min(12, a[2] * 0.6) };
+    if (t === 'e') return { id, colorKey: col, type: 'ellipse', cx: a[0], cy: a[1], rx: a[2], ry: a[3], lx: a[0], ly: a[1], fontSize: f || Math.min(12, Math.min(a[2], a[3]) * 0.5) };
+    if (t === 'r') return { id, colorKey: col, type: 'rect', x: a[0], y: a[1], width: a[2], height: a[3], rx: a[4] || 0, lx: a[0] + a[2] / 2, ly: a[1] + a[3] / 2, fontSize: f || Math.min(13, Math.min(a[2], a[3]) * 0.4) };
+    const c = o || cen(a); return { id, colorKey: col, type: 'polygon', points: a, lx: c[0], ly: c[1], fontSize: f || 11 };
+  }
+  const DETAILED = {
+    unicorn: { regions: [
+      ['blue', 'r', [20, 20, 360, 150, 20]], ['mint', 'r', [20, 300, 360, 80, 20]],
+      ['yellow', 'c', [52, 62, 30]], ['cream', 'e', [150, 72, 48, 22]],
+      ['pink', 'p', '245,34 253,56 277,56 258,70 265,94 245,80 225,94 232,70 213,56 237,56', 9],
+      ['pink', 'p', '118,205 70,195 52,250 85,298 120,255'], ['purple', 'p', '70,195 30,170 28,240 52,250', 9],
+      ['cream', 'e', [200, 235, 85, 48]], ['cream', 'r', [130, 265, 30, 55, 6], 9], ['cream', 'r', [163, 265, 30, 55, 6], 9],
+      ['cream', 'r', [222, 265, 30, 55, 6], 9], ['cream', 'r', [255, 265, 30, 55, 6], 9],
+      ['coral', 'r', [155, 188, 90, 34, 12]], ['cream', 'p', '250,200 275,118 328,150 290,232'],
+      ['purple', 'p', '275,118 252,108 232,150 262,150', 9], ['pink', 'p', '262,150 232,150 226,190 252,198', 9], ['blue', 'p', '252,198 226,190 232,222 258,232', 9],
+      ['cream', 'e', [330, 138, 34, 26]], ['yellow', 'p', '322,114 356,28 364,118', 9], ['pink', 'c', [354, 150, 13], 8],
+      ['pink', 'c', [58, 342, 17]], ['yellow', 'c', [335, 345, 17]]
+    ] },
+    castle: { regions: [
+      ['blue', 'r', [20, 20, 360, 300, 20]], ['mint', 'r', [20, 320, 360, 60, 20]],
+      ['yellow', 'c', [335, 68, 30]], ['cream', 'e', [85, 62, 50, 22]],
+      ['purple', 'r', [60, 170, 70, 150]], ['pink', 'r', [140, 130, 120, 190]], ['purple', 'r', [270, 170, 70, 150]],
+      ['red', 'p', '52,172 95,100 138,172', 10], ['red', 'p', '130,132 200,44 270,132'], ['red', 'p', '262,172 305,100 348,172', 10],
+      ['coral', 'r', [170, 240, 60, 80, 28]], ['yellow', 'c', [200, 190, 22]],
+      ['yellow', 'r', [78, 200, 34, 38, 10], 8], ['yellow', 'r', [288, 200, 34, 38, 10], 8],
+      ['cream', 'p', '172,320 228,320 275,380 125,380'], ['mint', 'e', [68, 338, 36, 16]], ['mint', 'e', [335, 338, 36, 16]]
+    ], decorations: '<line x1="200" y1="44" x2="200" y2="18" stroke="#1e293b" stroke-width="3"/><polygon points="200,18 226,26 200,34" fill="#f87171" stroke="#1e293b" stroke-width="2"/>' },
+    butterfly: { regions: [
+      ['mint', 'r', [20, 20, 360, 360, 20]],
+      ['pink', 'p', '190,170 90,70 40,120 60,200 150,215', 9, [70, 168]], ['pink', 'p', '210,170 310,70 360,120 340,200 250,215', 9, [330, 168]],
+      ['purple', 'p', '185,225 60,245 70,310 130,330 190,280', 9, [92, 260]], ['purple', 'p', '215,225 340,245 330,310 270,330 210,280', 9, [308, 260]],
+      ['yellow', 'c', [100, 130, 24]], ['yellow', 'c', [300, 130, 24]], ['coral', 'c', [150, 188, 20]], ['coral', 'c', [250, 188, 20]],
+      ['yellow', 'c', [118, 285, 20]], ['yellow', 'c', [282, 285, 20]],
+      ['red', 'e', [200, 235, 17, 75], 9], ['red', 'c', [200, 148, 20]],
+      ['coral', 'c', [55, 345, 18]], ['coral', 'c', [345, 345, 18]], ['blue', 'c', [200, 345, 18]]
+    ], decorations: '<path d="M192,132 Q175,95 160,88 M208,132 Q225,95 240,88" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>' }
+  };
+  Object.keys(DETAILED).forEach(id => {
+    const art = ALL_ARTWORKS.find(a => a.id === id); if (!art) return;
+    const d = DETAILED[id];
+    art.regions = d.regions.map((s, i) => { const r = mk(s, i); if (typeof r.points !== 'string') r.points = String(r.points); return r; });
+    if (d.decorations != null) art.decorations = d.decorations; else art.decorations = '';
+  });
+})();
+
+/* ==========================================================================
+   4. STATE (name + stars persist; stars reset only when the name changes)
+   ========================================================================== */
+// Colours always come from the regions themselves, so palette and shapes can never disagree.
+ALL_ARTWORKS.forEach(a => { a.colorsUsed = [...new Set(a.regions.map(r => r.colorKey))].slice(0, 8); });
+
+const KEY_NAME = 'aleksia_colormath_name', KEY_STARS = 'aleksia_colormath_stars';
+let playerName = '', totalStars = 0;
+let currentArtworkIndex = 0, currentCategory = 'all', currentDifficulty = 'easy';
+let activeNumberMap = {}, selectedColorKey = null, solvedRegions = new Set(), regionEquations = {};
+
+const hello = () => playerName ? `${playerName}, ` : '';
+
+function loadPlayerData() {
+  try {
+    playerName = (localStorage.getItem(KEY_NAME) || '').trim();
+    const s = parseInt(localStorage.getItem(KEY_STARS), 10);
+    if (!isNaN(s)) totalStars = s;
+  } catch (e) {}
+  updatePlayerUI();
+}
+function savePlayerData() {
+  try { localStorage.setItem(KEY_NAME, playerName); localStorage.setItem(KEY_STARS, String(totalStars)); } catch (e) {}
+}
+function updatePlayerUI() {
+  $('starCount').textContent = totalStars;
+  $('tagline').textContent = playerName
+    ? `✨ Λύσε τις πράξεις & ζωγράφισε ${ALL_ARTWORKS.length} μαγικές εικόνες, ${playerName}! ✨`
+    : `✨ Λύσε τις πράξεις & ζωγράφισε ${ALL_ARTWORKS.length} μαγικές εικόνες! ✨`;
+}
+function badgeFor(n) { return BADGES.filter(b => n >= b.stars).pop() || null; }
+
+// Returns a newly earned badge (or null)
+function addStars(n) {
+  const before = badgeFor(totalStars);
+  totalStars += n;
+  savePlayerData();
+  updatePlayerUI();
+  for (let i = 0; i < Math.min(n, 4); i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'star-burst'; el.textContent = '⭐';
+      el.style.left = (window.innerWidth / 2 + (Math.random() - .5) * 160) + 'px';
+      el.style.top = (window.innerHeight / 2) + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1000);
+    }, i * 130);
+  }
+  const after = badgeFor(totalStars);
+  return after && (!before || after.stars !== before.stars) ? after : null;
+}
+
+/* ==========================================================================
+   5. MODALS
+   ========================================================================== */
+const show = id => $(id).classList.add('show');
+const hide = id => $(id).classList.remove('show');
+
+function openName() { playSelectSound(); speakGreek('Ποιο είναι το όνομά σου;'); $('nameInput').value = ''; show('nameOverlay'); setTimeout(() => $('nameInput').focus(), 100); }
+function closeName() { hide('nameOverlay'); }
+function applyName() {
+  const val = $('nameInput').value.trim();
+  if (!val) { speakGreek('Γράψε πρώτα το όνομά σου!'); $('nameInput').focus(); return; }
+  if (val.toLowerCase() !== playerName.toLowerCase()) totalStars = 0;
+  playerName = val;
+  savePlayerData(); updatePlayerUI(); closeName(); playSuccessSound();
+  speakGreek(`Γεια σου ${playerName}! Καλώς ήρθες!`);
+  setFeedback('👑', `Καλώς ήρθες, ${playerName}! Διάλεξε χρώμα για να ξεκινήσεις!`, 'info');
+}
+function openStars() {
+  playSelectSound();
+  $('bigStarCount').textContent = totalStars;
+  const next = BADGES.find(b => totalStars < b.stars);
+  const prev = badgeFor(totalStars);
+  const from = prev ? prev.stars : 0;
+  if (next) {
+    $('progressFill').style.width = Math.round(((totalStars - from) / (next.stars - from)) * 100) + '%';
+    $('progressLabel').textContent = `Ακόμα ${next.stars - totalStars} ⭐ για το παράσημο «${next.name}»`;
+  } else {
+    $('progressFill').style.width = '100%';
+    $('progressLabel').textContent = 'Μάζεψες όλα τα παράσημα!';
+  }
+  $('badges').innerHTML = BADGES.map(b => `
+    <div class="badge ${totalStars >= b.stars ? 'earned' : ''}">
+      <div class="bi">${b.icon}</div><div class="bn">${b.name}</div><div class="br">${b.stars} ⭐</div>
+    </div>`).join('');
+  show('starsOverlay');
+  speakGreek(`${hello()}έχεις ${totalStars} αστέρια!`);
+}
+function closeStars() { playSelectSound(); hide('starsOverlay'); }
+function openDone() {
+  $('doneTitle').textContent = playerName ? `Μπράβο, ${playerName}!` : 'Μπράβο!';
+  $('doneSub').textContent = `Ολοκλήρωσες τη ζωγραφιά «${ALL_ARTWORKS[currentArtworkIndex].title}»!`;
+  show('doneOverlay');
+}
+function closeDone() { hide('doneOverlay'); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') ['nameOverlay', 'starsOverlay', 'doneOverlay'].forEach(hide);
+  if (e.key === 'Enter' && $('nameOverlay').classList.contains('show')) applyName();
+});
+['nameOverlay', 'starsOverlay', 'doneOverlay'].forEach(id =>
+  $(id).addEventListener('click', e => { if (e.target === $(id)) hide(id); }));
+
+/* ==========================================================================
+   6. CATEGORIES, PICTURES, DIFFICULTY
+   ========================================================================== */
+function renderCategoryTabs() {
+  const box = $('categoryTabs'); box.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'pill small' + (currentCategory === cat.id ? ' active' : '');
+    b.textContent = cat.label;
+    b.onclick = () => {
+      currentCategory = cat.id; playSelectSound(); speakGreek(cat.label);
+      renderCategoryTabs(); renderPictureSelector();
+    };
+    box.appendChild(b);
+  });
+}
+function renderPictureSelector() {
+  const box = $('pictureSelector'); box.innerHTML = '';
+  const list = ALL_ARTWORKS.map((art, idx) => ({ art, idx })).filter(i => currentCategory === 'all' || i.art.category === currentCategory);
+  $('countLabel').textContent = list.length;
+  list.forEach(({ art, idx }) => {
+    const b = document.createElement('button');
+    b.className = 'pic-card' + (idx === currentArtworkIndex ? ' selected' : '');
+    b.innerHTML = `<span class="pe">${art.emoji}</span><span class="pt">${art.title}</span>`;
+    b.onclick = () => { playSelectSound(); speakGreek(art.title); loadArtwork(idx); };
+    box.appendChild(b);
+  });
+}
+function setDifficulty(diff) {
+  currentDifficulty = diff; playSelectSound();
+  ['easy', 'medium', 'hard'].forEach(d => $('diff-' + d).classList.toggle('active', d === diff));
+  speakGreek({ easy: 'Εύκολο επίπεδο. Αριθμοί μέχρι το 10.', medium: 'Μεσαίο επίπεδο. Αριθμοί μέχρι το 20.', hard: 'Δύσκολο επίπεδο. Αριθμοί μέχρι το 100.' }[diff]);
+  resetCurrentPicture(false);
+}
+function loadArtwork(index) { currentArtworkIndex = index; renderPictureSelector(); resetCurrentPicture(false); }
+
+function resetCurrentPicture(announce) {
+  const art = ALL_ARTWORKS[currentArtworkIndex];
+  solvedRegions.clear(); regionEquations = {}; activeNumberMap = {};
+  $('artTitle').textContent = `${art.emoji} ${art.title}`;
+
+  let minVal = 2, maxVal = 10;
+  if (currentDifficulty === 'medium') { minVal = 4; maxVal = 20; }
+  else if (currentDifficulty === 'hard') { minVal = 15; maxVal = 99; }
+  if (art.colorsUsed.length > (maxVal - minVal + 1)) minVal = 1;
+  const pool = [];
+  for (let n = minVal; n <= maxVal; n++) pool.push(n);
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  art.colorsUsed.forEach((c, i) => { activeNumberMap[c] = pool[i % pool.length]; });
+  selectedColorKey = art.colorsUsed[0];
+
+  art.regions.forEach(r => {
+    const target = activeNumberMap[r.colorKey];
+    regionEquations[r.id] = { equation: generateMathEquation(target, currentDifficulty), answer: target, colorKey: r.colorKey };
+  });
+  renderPalette(); renderSVG(); updateProgress();
+
+  if (announce) {
+    playSelectSound();
+    speakGreek('Νέες ασκήσεις!');
+    setFeedback('🔄', 'Νέες πράξεις είναι έτοιμες!', 'info');
+  } else {
+    const c = COLOR_PALETTE.find(x => x.id === selectedColorKey), n = activeNumberMap[selectedColorKey];
+    setFeedback('🎨', `Διάλεξες το ${c.name} (αριθμός ${n}). Βρες τις πράξεις που κάνουν ${n}!`, 'info');
+  }
+}
+
+function renderPalette() {
+  const art = ALL_ARTWORKS[currentArtworkIndex];
+  const box = $('paletteContainer'); box.innerHTML = '';
+  [...art.colorsUsed].sort((a, b) => activeNumberMap[a] - activeNumberMap[b]).forEach(key => {
+    const c = COLOR_PALETTE.find(x => x.id === key), n = activeNumberMap[key];
+    const total = art.regions.filter(r => r.colorKey === key).length;
+    const solved = art.regions.filter(r => r.colorKey === key && solvedRegions.has(r.id)).length;
+    const done = total > 0 && solved === total;
+    const b = document.createElement('button');
+    b.className = 'swatch' + (selectedColorKey === key ? ' active' : '') + (done ? ' done' : '');
+    b.onclick = () => selectColor(key);
+    b.innerHTML = `<span class="chip" style="background:${c.hex}">${done ? '✓' : n}</span>
+      <span style="min-width:0"><span class="sname" style="display:block">${c.name}</span><span class="snum">Αριθμός: <b>${n}</b></span></span>`;
+    box.appendChild(b);
+  });
+}
+function selectColor(key) {
+  selectedColorKey = key; playSelectSound(); renderPalette();
+  const c = COLOR_PALETTE.find(x => x.id === key), n = activeNumberMap[key];
+  speakGreek(`${c.name}. Ο αριθμός είναι ${n}. Ψάξε πράξεις που κάνουν ${n}.`);
+  setFeedback('🖌️', `Χρώμα: ${c.name}. Ψάξε πράξεις που κάνουν ${n}!`, 'info');
+}
+
+/* ==========================================================================
+   7. SVG
+   ========================================================================== */
+function renderSVG() {
+  const art = ALL_ARTWORKS[currentArtworkIndex];
+  const stroke = 'stroke="#334155" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"';
+  let svg = `<svg id="coloring-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${art.title}">`;
+  art.regions.forEach(r => {
+    const solved = solvedRegions.has(r.id);
+    const c = COLOR_PALETTE.find(x => x.id === r.colorKey);
+    const eq = regionEquations[r.id];
+    let fs = r.fontSize || 15;
+    if (currentDifficulty === 'hard' && eq.equation.length >= 6) fs = Math.max(7.5, +(fs * 0.82).toFixed(1));
+    const attrs = `id="shape-${r.id}" data-region="${r.id}" fill="${solved ? c.hex : '#FFFFFF'}" ${stroke} class="color-region${solved ? ' solved' : ''}" ${solved ? '' : 'tabindex="0" role="button"'} aria-label="${Speech.clean(eq.equation)}"`;
+    let shape = '';
+    if (r.type === 'rect') shape = `<rect ${attrs} x="${r.x}" y="${r.y}" width="${r.width}" height="${r.height}" rx="${r.rx || 0}"/>`;
+    else if (r.type === 'circle') shape = `<circle ${attrs} cx="${r.cx}" cy="${r.cy}" r="${r.r}"/>`;
+    else if (r.type === 'ellipse') shape = `<ellipse ${attrs} cx="${r.cx}" cy="${r.cy}" rx="${r.rx}" ry="${r.ry}"/>`;
+    else if (r.type === 'polygon') shape = `<polygon ${attrs} points="${r.points}"/>`;
+    else if (r.type === 'path') shape = `<path ${attrs} d="${r.d}"/>`;
+    const label = `<text id="label-${r.id}" class="math-label${solved ? ' hidden-label' : ''}" x="${r.lx}" y="${r.ly}" font-size="${fs}" font-family="Nunito, Arial, sans-serif" font-weight="900" fill="#1e293b" text-anchor="middle" dominant-baseline="central" paint-order="stroke" stroke="rgba(255,255,255,.85)" stroke-width="3" stroke-linejoin="round">${eq.equation}</text>`;
+    svg += `<g id="group-${r.id}">${shape}${label}</g>`;
+  });
+  svg += (art.decorations || '') + '</svg>';
+  $('svg-wrapper').innerHTML = svg;
+}
+$('svg-wrapper').addEventListener('click', e => {
+  const el = e.target.closest('[data-region]'); if (el) handleRegionClick(el.dataset.region);
+});
+$('svg-wrapper').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const el = e.target.closest('[data-region]'); if (el) { e.preventDefault(); handleRegionClick(el.dataset.region); }
+});
+
+/* ==========================================================================
+   8. PLAYING
+   ========================================================================== */
+const PRAISE = [() => `Μπράβο ${playerName}!`, () => `Τέλεια ${playerName}!`, () => 'Σωστά!', () => `Φανταστικά ${playerName}!`, () => 'Υπέροχα!'];
+
+function handleRegionClick(id) {
+  if (solvedRegions.has(id)) return;
+  if (!selectedColorKey) { speakGreek('Διάλεξε πρώτα ένα χρώμα!'); setFeedback('👆', 'Διάλεξε πρώτα ένα χρώμα από την παλέτα!', 'hint'); return; }
+
+  const eq = regionEquations[id];
+  const target = activeNumberMap[selectedColorKey];
+  const group = $(`group-${id}`);
+
+  if (eq.answer === target) {
+    solvedRegions.add(id);
+    const c = COLOR_PALETTE.find(x => x.id === eq.colorKey);
+    const shape = $(`shape-${id}`);
+    shape.setAttribute('fill', c.hex); shape.classList.add('solved'); shape.removeAttribute('tabindex'); shape.removeAttribute('role');
+    $(`label-${id}`).classList.add('hidden-label');
+    group.classList.remove('pop-region'); void group.getBoundingClientRect(); group.classList.add('pop-region');
+
+    playSuccessSound();
+    let badge = addStars(1);
+    renderPalette(); updateProgress();
+
+    const praise = PRAISE[Math.floor(Math.random() * PRAISE.length)]().replace(/\s+!/g, '!');
+    setFeedback('🌟', `${praise} ${eq.equation} = ${eq.answer}! (+1 ⭐)`, 'ok');
+
+    const art = ALL_ARTWORKS[currentArtworkIndex];
+    if (solvedRegions.size === art.regions.length) {
+      setTimeout(() => {
+        const b2 = addStars(5); badge = b2 || badge;
+        playCelebrationFanfare(); launchConfetti();
+        speakGreek(`Μπράβο ${playerName}! Ολοκλήρωσες τη ζωγραφιά και κέρδισες 5 μπόνους αστέρια!` + (badge ? ` Νέο παράσημο: ${badge.name}!` : ''));
+        openDone();
+      }, 400);
+    } else {
+      speakGreek(`${praise} ${eq.equation} = ${eq.answer}.` + (badge ? ` Νέο παράσημο: ${badge.name}!` : ''));
+    }
+  } else {
+    playGentleBoop();
+    group.classList.remove('shake-region'); void group.getBoundingClientRect(); group.classList.add('shake-region');
+    speakGreek(`Δοκίμασε ξανά! Πόσο κάνει ${eq.equation};`);
+    const c = COLOR_PALETTE.find(x => x.id === selectedColorKey);
+    setFeedback('💭', `Χμμ, το ${eq.equation} δεν κάνει ${target} (${c.name}). Δοκίμασε ξανά!`, 'bad');
+  }
+}
+
+function updateProgress() {
+  $('progressText').textContent = `${solvedRegions.size} / ${ALL_ARTWORKS[currentArtworkIndex].regions.length}`;
+}
+function setFeedback(icon, message, theme) {
+  $('feedbackIcon').textContent = icon;
+  $('feedbackText').textContent = message;
+  $('feedback').className = 'feedback' + ({ ok: ' ok', bad: ' bad', hint: ' hint' }[theme] || '');
+}
+function speakTask() {
+  playSelectSound();
+  speakGreek(`${playerName ? 'Γεια σου ' + playerName + '! ' : ''}Διάλεξε ένα χρώμα από την παλέτα και άκουσε τον αριθμό του. Μετά βρες στη ζωγραφιά μια πράξη που κάνει αυτόν τον αριθμό, και πάτησέ την για να τη ζωγραφίσεις!`);
+}
+function nextPicture() {
+  closeDone();
+  const next = (currentArtworkIndex + 1) % ALL_ARTWORKS.length;
+  currentCategory = 'all'; renderCategoryTabs();
+  speakGreek(ALL_ARTWORKS[next].title);
+  loadArtwork(next);
+}
+
+/* ==========================================================================
+   9. DOWNLOAD & CONFETTI
+   ========================================================================== */
+function downloadArtwork() {
+  const svgEl = $('coloring-svg'); if (!svgEl) return;
+  speakGreek('Η ζωγραφιά σου κατέβηκε!');
+  const clone = svgEl.cloneNode(true);
+  clone.querySelectorAll('.math-label').forEach(n => n.remove());
+  clone.setAttribute('width', 800); clone.setAttribute('height', 800);
+  const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+  const img = new Image();
+  img.onload = () => {
+    const cv = document.createElement('canvas'); cv.width = 800; cv.height = 840;
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 800, 840);
+    ctx.drawImage(img, 0, 0, 800, 800);
+    ctx.fillStyle = '#e91e8c'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Το Βασίλειο της Αλεξίας' + (playerName ? ' • ' + playerName : ''), 400, 822);
+    const a = document.createElement('a');
+    a.href = cv.toDataURL('image/png');
+    a.download = `zografiki-${ALL_ARTWORKS[currentArtworkIndex].id}.png`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+function launchConfetti() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = $('confetti-canvas'), ctx = cv.getContext('2d');
+  cv.width = window.innerWidth; cv.height = window.innerHeight;
+  const colors = ['#FF85B3', '#C084FC', '#60A5FA', '#FACC15', '#34D399', '#FB923C'];
+  const pieces = Array.from({ length: 120 }, () => ({
+    x: Math.random() * cv.width, y: Math.random() * cv.height - cv.height,
+    w: Math.random() * 10 + 6, h: Math.random() * 10 + 6, color: colors[Math.floor(Math.random() * colors.length)],
+    vy: Math.random() * 4 + 2.5, vx: (Math.random() - .5) * 3, rot: Math.random() * 360, vRot: (Math.random() - .5) * 8
+  }));
+  let frame = 0;
+  (function animate() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    pieces.forEach(p => {
+      p.y += p.vy; p.x += p.vx; p.rot += p.vRot;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+    });
+    if (++frame < 160) requestAnimationFrame(animate); else ctx.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadPlayerData();
+  $('muteBtn').textContent = Speech.enabled ? '🔊' : '🔇';
+  renderCategoryTabs(); renderPictureSelector(); loadArtwork(0);
+  setTimeout(() => { if (Speech.missingGreek) $('voiceNote').style.display = 'block'; }, 1800);
+});
+</script>
+</body>
+</html>
